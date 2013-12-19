@@ -28,5 +28,16 @@ public:
 	string print();
 };
 
+class Line {
+private:
+	string _name;
+	int _bx, _by;
+	int _ex, _ey;
+public:
+	Line (int bx, int by, int ex, int ey);
+	string name();
+	string print();
+};
+
 string printShape(vector<void *> shapes);
 #endif

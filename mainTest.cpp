@@ -34,6 +34,19 @@ TEST (print, Shape){
 	v.push_back(&s);	
 	CHECK(string("circle(0,0,1)")==static_cast<Circle*>(v[0])->print());
 	CHECK(string("square(1,1,1)")==static_cast<Square*>(v[1])->print());
-	
 	CHECK(string("circle(0,0,1)\nsquare(1,1,1)\n")==printShape(v));
+}
+
+TEST (Line, Shape){
+	Line l(0,0,1,1);
+	Circle c(0,0,1);
+	Square s(1,1,1);
+
+	vector<void *>v;
+	v.push_back(&c);
+	v.push_back(&s);	
+	v.push_back(&l);	
+
+	CHECK(string("line(0,0,1,1)")==static_cast<Line*>(v[2])->print());
+	CHECK(string("circle(0,0,1)\nsquare(1,1,1)\nline(0,0,1,1)\n")==printShape(v));
 }

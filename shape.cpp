@@ -36,5 +36,21 @@ string printShape(vector<void *> shapes){
 			oss <<  static_cast<Circle *>(shapes[i])->print() << "\n";
 		else if (static_cast<Square *>(shapes[i])->name()=="square")
 			oss <<  static_cast<Square *>(shapes[i])->print() << "\n";
+		else if (static_cast<Line *>(shapes[i])->name()=="line")
+			oss <<  static_cast<Line *>(shapes[i])->print() << "\n";
 	return oss.str();
 } 
+
+Line::Line(int bx, int by, int ex, int ey)
+	:_name("line"),_bx(bx),_by(by),_ex(ex),_ey(ey){}
+
+string Line::name() {
+	return _name;
+}
+
+string Line::print() {
+	std::ostringstream oss;
+	oss << _name <<"("<<_bx<<","<<_by<<","<<_ex<<","<<_ey<<")";
+	return oss.str(); 
+}
+

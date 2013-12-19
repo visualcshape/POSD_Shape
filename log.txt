@@ -4,9 +4,21 @@ circle and square
 => commit 975f20a
 
 1. How to store a list of different shape objects in a vector?
+A vector canb only store object (or poiter to obejct) 
+of the same type. We need to have a type that fits all.
 -> convert to void *
-2. How to convert void * to Circle * and Square *?
+2. How to convert void * to Circle * and Square *? How do we know
+which type to convert to? Luckily each shape has a name!
 -> static_cast<Circle *>(p)
 3. write up the printShape function.
-=> commit
+=> commit 2971044
 Problem: now add a new class called Line.
+
+1. add the class Line.
+2. modify printShape function: add if check for line
+=> commit
+
+Look back:
+1. The need to modify printShape every time you add a new type
+2. Much duplicated code
+
