@@ -54,4 +54,8 @@ in Shape::print
 -> make Shape::print virtual
 all tests passing with one line change
 remove couts and commented code
+=> commit 2dd6d78
+4. add the point class w/0 modifying printShape.
+add test, add Point, test passing, done. 
+also drop static casts from tests, done.
 => commit 

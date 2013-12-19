@@ -48,3 +48,12 @@ string Line::print() {
 	return oss.str(); 
 }
 
+Point::Point(int x, int y)
+	:Shape("point"),_x(x),_y(y){}
+
+string Point::print() {
+	std::ostringstream oss;
+	oss << name() <<"("<<_x<<","<<_y<<")";
+	return oss.str(); 
+}
+

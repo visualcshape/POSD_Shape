@@ -42,5 +42,13 @@ public:
 	string print();
 };
 
+class Point : public Shape {
+private:
+	int _x, _y;
+public:
+	Point (int x, int y);
+	string print();
+};
+
 string printShape(vector<Shape *> shapes);
 #endif
