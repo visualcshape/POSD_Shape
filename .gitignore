@@ -1,0 +1,11 @@
+*.dev
+*.layout
+*.[oa]
+*.exe
+*~
+Makefile.win
+*out.txt
+cppunitlite/
+blah.txt
+bak-*
+new-*
