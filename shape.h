@@ -12,6 +12,7 @@ private:
 public:
 	Shape (string name);
 	string name();
+	virtual string print();
 };
 
 class Circle : public Shape {

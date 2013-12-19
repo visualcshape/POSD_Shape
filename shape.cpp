@@ -11,6 +11,9 @@ string Shape::name() {
 	return _name;
 }
 
+string Shape::print() {
+	return name();
+}
 Circle::Circle(int cx, int cy, int radius)
 	:Shape("circle"), _cx(cx), _cy(cy), _radius(radius){}
 	
@@ -32,12 +35,7 @@ string Square::print() {
 string printShape(vector<Shape *> shapes){
 	std::ostringstream oss;
 	for (int i=0; i<shapes.size(); ++i )
-		if (shapes[i]->name()=="circle")
-			oss <<  static_cast<Circle *>(shapes[i])->print() << "\n";
-		else if (shapes[i]->name()=="square")
-			oss <<  static_cast<Square *>(shapes[i])->print() << "\n";
-		else if (shapes[i]->name()=="line")
-			oss <<  static_cast<Line *>(shapes[i])->print() << "\n";
+		oss <<  shapes[i]->print() << "\n";
 	return oss.str();
 } 
 

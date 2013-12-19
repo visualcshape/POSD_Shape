@@ -34,22 +34,24 @@ explain how inheritance works. Draw class diagram before/after
 => commit 635181d
 How many line did we save?
 
-Next add yet another shape called point. But argue to solve printShape
-modification problem.
-
 1. review printShape, can we improve it?
 now that all shapes derive from Shape, we shopuld be able to chnage void * to 
 Shape *.
 modify test, printShape
-=> commit 
+=> commit 0dad724
 How much did we simplify?
 
-identify what makes printShape change.
+Next add yet another shape called point. 
+But argue to solve printShape modification problem.
+
+1. identify what makes printShape change.
 ->print() [name() is shared now, so no problem]
-Introduce virtual method.
- 
-
-
-
-   
-
+add Shape::print as non-virtual
+2. Change printSHape: comment out the if's; 
+-> tests failing, do cout, only shape name printed as 
+in Shape::print
+3. "Let C++ runtime decides what print() to call for you"
+-> make Shape::print virtual
+all tests passing with one line change
+remove couts and commented code
+=> commit 
