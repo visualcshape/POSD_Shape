@@ -6,36 +6,38 @@
 using std::string;
 using std::vector;
 
-class Circle {
+class Shape {
 private:
 	string _name;
+public:
+	Shape (string name);
+	string name();
+};
+
+class Circle : public Shape {
+private:
 	int _cx, _cy;
 	int _radius;
 public:
 	Circle (int cx, int cy, int radius);
-	string name();
 	string print();
 };
 
-class Square {
+class Square : public Shape{
 private:
-	string _name;
 	int _ulx, _uly;
 	int _length;
 public:
 	Square (int ulx, int uly, int length);
-	string name();
 	string print();
 };
 
-class Line {
+class Line : public Shape {
 private:
-	string _name;
 	int _bx, _by;
 	int _ex, _ey;
 public:
 	Line (int bx, int by, int ex, int ey);
-	string name();
 	string print();
 };
 

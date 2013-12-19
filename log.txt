@@ -16,9 +16,24 @@ Problem: now add a new class called Line.
 
 1. add the class Line.
 2. modify printShape function: add if check for line
-=> commit
+=> commit 8587bb1
 
 Look back:
-1. The need to modify printShape every time you add a new type
-2. Much duplicated code
+1. Much duplicated code
+2. The need to modify printShape every time you add a new type
+
+Remove duiplicated code: Inheritance. Should not do anything to the tests.
+explain how inheritance works.
+1. add class Shape with stuff to be shared. 
+2. Derive Circle from Shape:
+   modifying ctor, 
+   remove duplicated code: _name, name(),
+   modify print() (due to _name)
+3. ditto Square
+4. ditto Line
+=> commit
+How many line did we save?
+
+
+   
 

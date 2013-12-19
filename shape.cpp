@@ -4,28 +4,28 @@
 
 using std::vector;
 
+Shape::Shape(string name)
+	:_name(name){}
+
+string Shape::name() {
+	return _name;
+}
+
 Circle::Circle(int cx, int cy, int radius)
-	:_name("circle"), _cx(cx), _cy(cy), _radius(radius){}
+	:Shape("circle"), _cx(cx), _cy(cy), _radius(radius){}
+	
 string Circle::print() {
 	std::ostringstream oss;
-	oss << _name <<"("<<_cx<<","<<_cy<<","<<_radius<<")";
+	oss << name() <<"("<<_cx<<","<<_cy<<","<<_radius<<")";
 	return oss.str(); 
 }
 
-string Circle::name() {
-	return _name;
-}
-
 Square::Square(int ulx, int uly, int length)
-	:_name("square"),_ulx(ulx), _uly(uly), _length(length){}
-
-string Square::name() {
-	return _name;
-}
+	:Shape("square"),_ulx(ulx), _uly(uly), _length(length){}
 
 string Square::print() {
 	std::ostringstream oss;
-	oss << _name <<"("<<_ulx<<","<<_uly<<","<<_length<<")";
+	oss << name() <<"("<<_ulx<<","<<_uly<<","<<_length<<")";
 	return oss.str(); 
 }
 
@@ -42,15 +42,11 @@ string printShape(vector<void *> shapes){
 } 
 
 Line::Line(int bx, int by, int ex, int ey)
-	:_name("line"),_bx(bx),_by(by),_ex(ex),_ey(ey){}
-
-string Line::name() {
-	return _name;
-}
+	:Shape("line"),_bx(bx),_by(by),_ex(ex),_ey(ey){}
 
 string Line::print() {
 	std::ostringstream oss;
-	oss << _name <<"("<<_bx<<","<<_by<<","<<_ex<<","<<_ey<<")";
+	oss << name() <<"("<<_bx<<","<<_by<<","<<_ex<<","<<_ey<<")";
 	return oss.str(); 
 }
 
