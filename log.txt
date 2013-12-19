@@ -1,6 +1,12 @@
 1219-2013 use of inheritance, polymorphism, OCP
 
-void printShape(vector<?> shapes){
-	for (int i=0; i<shapes.size(); ++i)
-		cout << shapes[i].print() << "\n";
-} 
+circle and square
+=> commit 975f20a
+
+1. How to store a list of different shape objects in a vector?
+-> convert to void *
+2. How to convert void * to Circle * and Square *?
+-> static_cast<Circle *>(p)
+3. write up the printShape function.
+=> commit
+Problem: now add a new class called Line.
