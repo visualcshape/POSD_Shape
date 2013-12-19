@@ -23,7 +23,7 @@ Look back:
 2. The need to modify printShape every time you add a new type
 
 Remove duiplicated code: Inheritance. Should not do anything to the tests.
-explain how inheritance works.
+explain how inheritance works. Draw class diagram before/after
 1. add class Shape with stuff to be shared. 
 2. Derive Circle from Shape:
    modifying ctor, 
@@ -31,8 +31,24 @@ explain how inheritance works.
    modify print() (due to _name)
 3. ditto Square
 4. ditto Line
-=> commit
+=> commit 635181d
 How many line did we save?
+
+Next add yet another shape called point. But argue to solve printShape
+modification problem.
+
+1. review printShape, can we improve it?
+now that all shapes derive from Shape, we shopuld be able to chnage void * to 
+Shape *.
+modify test, printShape
+=> commit 
+How much did we simplify?
+
+identify what makes printShape change.
+->print() [name() is shared now, so no problem]
+Introduce virtual method.
+ 
+
 
 
    

@@ -28,8 +28,7 @@ TEST (constructor, Square) {
 TEST (print, Shape){
 	Circle c(0,0,1);
 	Square s(1,1,1);
-	vector<void *>v;
-	void *p = &c;
+	vector<Shape *>v;
 	v.push_back(&c);
 	v.push_back(&s);	
 	CHECK(string("circle(0,0,1)")==static_cast<Circle*>(v[0])->print());
@@ -42,7 +41,7 @@ TEST (Line, Shape){
 	Circle c(0,0,1);
 	Square s(1,1,1);
 
-	vector<void *>v;
+	vector<Shape *>v;
 	v.push_back(&c);
 	v.push_back(&s);	
 	v.push_back(&l);	

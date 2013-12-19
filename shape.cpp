@@ -29,14 +29,14 @@ string Square::print() {
 	return oss.str(); 
 }
 
-string printShape(vector<void *> shapes){
+string printShape(vector<Shape *> shapes){
 	std::ostringstream oss;
 	for (int i=0; i<shapes.size(); ++i )
-		if (static_cast<Circle *>(shapes[i])->name()=="circle")
+		if (shapes[i]->name()=="circle")
 			oss <<  static_cast<Circle *>(shapes[i])->print() << "\n";
-		else if (static_cast<Square *>(shapes[i])->name()=="square")
+		else if (shapes[i]->name()=="square")
 			oss <<  static_cast<Square *>(shapes[i])->print() << "\n";
-		else if (static_cast<Line *>(shapes[i])->name()=="line")
+		else if (shapes[i]->name()=="line")
 			oss <<  static_cast<Line *>(shapes[i])->print() << "\n";
 	return oss.str();
 } 

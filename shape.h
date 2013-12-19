@@ -41,5 +41,5 @@ public:
 	string print();
 };
 
-string printShape(vector<void *> shapes);
+string printShape(vector<Shape *> shapes);
 #endif
