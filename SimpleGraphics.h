@@ -11,6 +11,10 @@ public:
 	SimpleGraphics();
 
 	SimpleGraphics(Shape* shape);
+
+	void accept(GraphicsVisitor &graphicVisitor);
+
+    double calculateArea();
 };
 
 #endif

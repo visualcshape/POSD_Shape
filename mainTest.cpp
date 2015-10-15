@@ -11,6 +11,7 @@
 #include "Square.h"
 #include "Point.h"
 #include "Line.h"
+#include "AreaVisitor.h"
 
 using std::vector;
 
@@ -263,4 +264,20 @@ TEST(CompositeGraphics, SimpleAndCompositeChildrenAndGetBoundingBox) {
 	LONGS_EQUAL(-2, h.getBoundingBox().lly());
 	LONGS_EQUAL(1, h.getBoundingBox().urx());
 	LONGS_EQUAL(2, h.getBoundingBox().ury());
+}
+
+TEST(AreaVisitor, derivedFromGaphicsVisitor) {
+	CompositeGraphics g;
+	g.add(new SimpleGraphics(new Circle(0,0,1)));
+	g.add(new SimpleGraphics(new Square(-2,-2,2)));
+	SimpleGraphics r(new Rectangle (-1,-1,1,3));
+	CompositeGraphics h;
+
+	h.add(&g);
+	h.add(&r);
+
+	GraphicsVisitor * av = new AreaVisitor();
+	h.accept(*av);
+
+	LONGS_EQUAL(10, static_cast<AreaVisitor *>(av)->area());
 }

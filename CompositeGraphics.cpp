@@ -23,3 +23,20 @@ void CompositeGraphics::calculateBoundingBox(){
 		_boundingBox = BoundingBox(newllx, newlly, newL, newW);
 	}
 }
+
+void CompositeGraphics::accept(GraphicsVisitor &visitor) {
+	for(std::vector<Graphics*>::iterator itr = _graphics.begin()  ; itr != _graphics.end() ; itr++){
+        (*itr)->accept(visitor);
+    }
+    visitor.visitCompositeGraphic(this);
+}
+
+double CompositeGraphics::calculateArea() {
+    double retArea = 0.0;
+
+    for(std::vector<Graphics*>::iterator itr = _graphics.begin() ; itr != _graphics.end() ; itr++){
+        retArea += (*itr)->calculateArea();
+    }
+
+    return retArea;
+}

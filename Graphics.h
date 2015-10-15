@@ -2,6 +2,7 @@
 #define _GRAPHIC_H_
 #include <string>
 #include "BoundingBox.h"
+#include "GraphicsVisitor.h"
 
 class Graphics{
 protected:
@@ -12,6 +13,10 @@ public:
 	virtual BoundingBox getBoundingBox(){ return _boundingBox; }
 	
 	virtual void add(Graphics* graphic){ throw std::string("Cannot add child"); }
+
+	virtual void accept(GraphicsVisitor &graphicVisitor) {};
+
+	virtual double calculateArea(){return 0.;}
 };
 
 #endif
