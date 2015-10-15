@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.3.0)
 
 set(PROJECT_NAME "HW2")
-set(LIBRARY_CHOICE "CC")
+set(LIBRARY_CHOICE "C")
 
 project(${PROJECT_NAME})
 

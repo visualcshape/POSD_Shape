@@ -1,11 +1,10 @@
 *.dev
 *.layout
-*.[oa]
+*.o
 *.exe
 *~
 Makefile.win
 *out.txt
-cppunitlite/
 blah.txt
 bak-*
 new-*
