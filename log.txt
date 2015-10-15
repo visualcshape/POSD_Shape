@@ -4,7 +4,7 @@ circle and square
 => commit 975f20a
 
 1. How to store a list of different shape objects in a vector?
-A vector canb only store object (or poiter to obejct) 
+A vector can only store object (or poiter to obejct) 
 of the same type. We need to have a type that fits all.
 -> convert to void *
 2. How to convert void * to Circle * and Square *? How do we know
@@ -35,8 +35,8 @@ explain how inheritance works. Draw class diagram before/after
 How many line did we save?
 
 1. review printShape, can we improve it?
-now that all shapes derive from Shape, we shopuld be able to chnage void * to 
-Shape *.
+now that all shapes derive from Shape, we shopuld be 
+able to chnage void * to Shape *.
 modify test, printShape
 => commit 0dad724
 How much did we simplify?
@@ -58,4 +58,8 @@ remove couts and commented code
 4. add the point class w/0 modifying printShape.
 add test, add Point, test passing, done. 
 also drop static casts from tests, done.
-=> commit 
+=> commit 0c40c91
+
+OCP: "software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification"
+What is open for extension? New substypes of Shape.
+What is closed for modification? printShape and Existing shapes.

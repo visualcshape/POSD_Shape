@@ -1,0 +1,147 @@
+# depslib dependency file v1.0
+1441595054 source:d:\ycc\programming\cpp\shape\maintest.cpp
+	"cppunitlite/TestHarness.h"
+	"shape.h"
+	<iostream>
+	<vector>
+	<typeinfo>
+
+1406752454 d:\ycc\programming\cpp\shape\cppunitlite\testharness.h
+	"Test.h"
+	"TestResult.h"
+	"Failure.h"
+	"TestRegistry.h"
+
+1409082726 d:\ycc\programming\cpp\shape\cppunitlite\test.h
+	<cmath>
+	"SimpleString.h"
+
+1406752452 d:\ycc\programming\cpp\shape\cppunitlite\simplestring.h
+
+1406752454 d:\ycc\programming\cpp\shape\cppunitlite\testresult.h
+
+1406752452 d:\ycc\programming\cpp\shape\cppunitlite\failure.h
+	"SimpleString.h"
+
+1406752454 d:\ycc\programming\cpp\shape\cppunitlite\testregistry.h
+
+1388861668 d:\ycc\programming\cpp\shape\shape.h
+	<string>
+	<vector>
+	<iostream>
+
+1388861761 source:d:\ycc\programming\cpp\shape\shape.cpp
+	"shape.h"
+	<vector>
+	<sstream>
+
+1442990220 source:d:\googledrive\ntut_graduate\posd\hw1\shape\boundingbox.cpp
+	"BoundingBox.h"
+
+1442982407 d:\googledrive\ntut_graduate\posd\hw1\shape\boundingbox.h
+
+1442990322 source:d:\googledrive\ntut_graduate\posd\hw1\shape\compositegraphics.cpp
+	<algorithm>
+	<math.h>
+	"CompositeGraphics.h"
+
+1442985518 d:\googledrive\ntut_graduate\posd\hw1\shape\compositegraphics.h
+	"Graphics.h"
+	"SimpleGraphics.h"
+	<vector>
+
+1442984054 d:\googledrive\ntut_graduate\posd\hw1\shape\graphics.h
+	<string>
+	"BoundingBox.h"
+
+1442983541 d:\googledrive\ntut_graduate\posd\hw1\shape\simplegraphics.h
+	"Graphics.h"
+	"shape.h"
+
+1443465022 d:\googledrive\ntut_graduate\posd\hw1\shape\shape.h
+	<string>
+	<vector>
+	<iostream>
+	"BoundingBox.h"
+
+1442983259 source:d:\googledrive\ntut_graduate\posd\hw1\shape\graphic.cpp
+	"Graphics.h"
+
+1442983541 source:d:\googledrive\ntut_graduate\posd\hw1\shape\simplegraphic.cpp
+	"SimpleGraphics.h"
+
+1443464540 source:d:\googledrive\ntut_graduate\posd\hw1\shape\circle.cpp
+	"Circle.h"
+	<sstream>
+
+1443464545 d:\googledrive\ntut_graduate\posd\hw1\shape\circle.h
+	"shape.h"
+
+1443464777 source:d:\googledrive\ntut_graduate\posd\hw1\shape\line.cpp
+	"Line.h"
+	<sstream>
+
+1443464729 d:\googledrive\ntut_graduate\posd\hw1\shape\line.h
+	"shape.h"
+
+1443465092 source:d:\googledrive\ntut_graduate\posd\hw1\shape\maintest.cpp
+	"cppunitlite/TestHarness.h"
+	"shape.h"
+	"Graphics.h"
+	"CompositeGraphics.h"
+	"SimpleGraphics.h"
+	<iostream>
+	<vector>
+	<typeinfo>
+	"Circle.h"
+	"Rectangle.h"
+	"Square.h"
+	"Point.h"
+	"Line.h"
+
+1021612118 d:\googledrive\ntut_graduate\posd\hw1\shape\cppunitlite\testharness.h
+	"Test.h"
+	"TestResult.h"
+	"Failure.h"
+	"TestRegistry.h"
+
+1034763710 d:\googledrive\ntut_graduate\posd\hw1\shape\cppunitlite\test.h
+	<cmath>
+	"SimpleString.h"
+
+1034765034 d:\googledrive\ntut_graduate\posd\hw1\shape\cppunitlite\simplestring.h
+
+1021612138 d:\googledrive\ntut_graduate\posd\hw1\shape\cppunitlite\testresult.h
+
+1021612138 d:\googledrive\ntut_graduate\posd\hw1\shape\cppunitlite\failure.h
+	"SimpleString.h"
+
+1021612118 d:\googledrive\ntut_graduate\posd\hw1\shape\cppunitlite\testregistry.h
+
+1443464944 d:\googledrive\ntut_graduate\posd\hw1\shape\rectangle.h
+	"shape.h"
+	"Point.h"
+
+1443464827 d:\googledrive\ntut_graduate\posd\hw1\shape\point.h
+	"shape.h"
+
+1443464617 d:\googledrive\ntut_graduate\posd\hw1\shape\square.h
+	"shape.h"
+
+1443464880 source:d:\googledrive\ntut_graduate\posd\hw1\shape\point.cpp
+	"Point.h"
+	<sstream>
+
+1443465027 source:d:\googledrive\ntut_graduate\posd\hw1\shape\rectangle.cpp
+	"Rectangle.h"
+	<sstream>
+
+1443465016 source:d:\googledrive\ntut_graduate\posd\hw1\shape\shape.cpp
+	"shape.h"
+	<vector>
+	<sstream>
+
+1443464684 source:d:\googledrive\ntut_graduate\posd\hw1\shape\square.cpp
+	"Square.h"
+	<sstream>
+

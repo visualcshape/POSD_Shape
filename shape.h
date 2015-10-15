@@ -3,52 +3,37 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
+
+#include "BoundingBox.h"
+
 using std::string;
 using std::vector;
+using std::ostream;
 
-class Shape {
+class Shape{
 private:
 	string _name;
+protected:
+	BoundingBox _boundingBox;
+
+	//A pure virtual function generates the bounding box
+	virtual void generateBoundingBox(){}
 public:
-	Shape (string name);
+	Shape(string name);
 	string name();
 	virtual string print();
+	virtual int area() const;
+	inline virtual BoundingBox getBoundingBox(){ return _boundingBox; }
 };
 
-class Circle : public Shape {
-private:
-	int _cx, _cy;
-	int _radius;
-public:
-	Circle (int cx, int cy, int radius);
-	string print();
-};
-
-class Square : public Shape{
-private:
-	int _ulx, _uly;
-	int _length;
-public:
-	Square (int ulx, int uly, int length);
-	string print();
-};
-
-class Line : public Shape {
-private:
-	int _bx, _by;
-	int _ex, _ey;
-public:
-	Line (int bx, int by, int ex, int ey);
-	string print();
-};
-
-class Point : public Shape {
-private:
-	int _x, _y;
-public:
-	Point (int x, int y);
-	string print();
-};
-
+//Global Function
 string printShape(vector<Shape *> shapes);
+
+int totalArea(vector<Shape *> shapes);
+
+ostream & operator << (ostream &, Shape & s);
+
+double areaSum(std::vector<Shape*> shapes);
+
 #endif

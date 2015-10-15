@@ -1,0 +1,103 @@
+Lecture 1 and lecture 2(1st hour)
+
+This folder contains an example on shapes,
+to illustrate:
+
+x0. Hard and harder (Book opening)
+Design, OO, Reuse. Gave example with entrance design.
+x1. class and object, methods and data members
+x2. unit testing
+x3. inheritance:
+   Circle and Square, and Shape
+x4. function working with objects:
+   vector of of shapes, printing shapes
+x5. polymorphism: virtual, late binding
+x6. Incremental and iterative coding
+   (coding-refactoring cycles)
+
+UML should be used throughout the illustration.
+
+Problem. A program is needed for representing
+various 2D shapes including circles, squares,
+lines, etc. The program also computes sums of
+areas and perimeters of multiple shapes stored in
+a properly chosen container.
+
+Constraint: demonstrate the program through
+unit tests.
+
+When adding new features, we want to avoid changing
+existing code as much as possible
+
+Circle-> Circle area-> sum of areas of Circle
+repeat for squares
+repeat for circles and squares
+
+Lecture 2 (2 hrs): Introduction to Design patterns
+(minus Design, Design problem).
+Problem: Composite with shapes
+
+Week 2
+
+Summary of wk 1
+Program to an implementation (class)
+Cover basic object concepts and notations -
+"Specifying Object Implementations"
+Recite: p18
+
+Evolution
+When is a design stable?
+It is when you can extend it by adding
+similar things without
+changing the existing code.
+So when is  areaSum stable?
+It s so when you can have it compute
+area of any newly added
+shape without changing its code and
+other shapes code.
+
+So out goal has been making areaSum stable
+
+We need inheritance, virtual, overriding,
+pointer to object, container
+Polymorphism = inheritance + virtual +
+               override + pointer or ref to base class
+
+"Program to an interface, not an implementation."
+
+Anticipating pattern -
+problem: make area sum and existing classes stable
+Solution: polymorphism
+Consequence: new shapes added without cheating existing code
+At this stage, we say that polymorphism solves our design problem
+
+Onward composite pattern
+
+HW#1
+Previously, a program solving the following has been written:
+
+    Problem. A program is needed for representing
+    various 2D shapes including circles, squares,
+    lines, etc. The program also computes sums of
+    areas and perimeters of multiple shapes stored in
+    a properly chosen container.
+
+Making use of the program in of 0922-2015, complete the following requirements
+(1) Add Rectangle class to Shape family.
+(2) We need Graphics objects. A Graphics object is either a SimpleGraphics object,
+which refers to an object of the Shape family, or can be a CompositeGraphics objects,
+which refers to number of Graphics objects.
+(3) A Graphics object has a bounding box which is a Rectangle. Bounding boxes for circle,
+square, and rectangle are specified in the unit tests.
+(4) Similarly, bounding boxes for Graphics objects are specified in the unit tests.
+
+(a)  I have written 10 unit tests. Your job is to add code to project Shapes0915
+    (as of 0922-2015)so that the program compiles correctly and the tests pass.
+    (90 points; 9 points for passing a test)
+(b) Draw a UML class diagram for Shape family and Graphics family. Include in your
+    diagram the member functions and data members used in these programs. (10 points)
+
+Week 3:
+Other first principles: composition, delegate, generics
+Explain composition in SimpleGraphics->Shape
+"Favor object composition over class inheritance.

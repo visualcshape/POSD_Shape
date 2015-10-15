@@ -5,7 +5,7 @@
 using std::vector;
 
 Shape::Shape(string name)
-	:_name(name){}
+	:_name(name), _boundingBox(0, 0, 0, 0){}
 
 string Shape::name() {
 	return _name;
@@ -14,46 +14,36 @@ string Shape::name() {
 string Shape::print() {
 	return name();
 }
-Circle::Circle(int cx, int cy, int radius)
-	:Shape("circle"), _cx(cx), _cy(cy), _radius(radius){}
-	
-string Circle::print() {
-	std::ostringstream oss;
-	oss << name() <<"("<<_cx<<","<<_cy<<","<<_radius<<")";
-	return oss.str(); 
+
+int Shape::area() const {
+	return 0;
 }
 
-Square::Square(int ulx, int uly, int length)
-	:Shape("square"),_ulx(ulx), _uly(uly), _length(length){}
-
-string Square::print() {
-	std::ostringstream oss;
-	oss << name() <<"("<<_ulx<<","<<_uly<<","<<_length<<")";
-	return oss.str(); 
-}
-
+//Global Functions
 string printShape(vector<Shape *> shapes){
 	std::ostringstream oss;
-	for (int i=0; i<shapes.size(); ++i )
-		oss <<  shapes[i]->print() << "\n";
+	for (int i = 0; i < shapes.size(); ++i)
+		oss << shapes[i]->print() << "\n";
 	return oss.str();
-} 
-
-Line::Line(int bx, int by, int ex, int ey)
-	:Shape("line"),_bx(bx),_by(by),_ex(ex),_ey(ey){}
-
-string Line::print() {
-	std::ostringstream oss;
-	oss << name() <<"("<<_bx<<","<<_by<<","<<_ex<<","<<_ey<<")";
-	return oss.str(); 
 }
 
-Point::Point(int x, int y)
-	:Shape("point"),_x(x),_y(y){}
+int totalArea(vector<Shape *> shapes){
+	int area = 0;
+	for (int i = 0; i < shapes.size(); ++i)
+		area += shapes[i]->area();
+	return area;
+}
 
-string Point::print() {
-	std::ostringstream oss;
-	oss << name() <<"("<<_x<<","<<_y<<")";
-	return oss.str(); 
+double areaSum(vector<Shape*> shapes){
+	double returnArea = 0;
+
+	for (vector<Shape*>::iterator iterator = shapes.begin(); iterator != shapes.end(); iterator++)
+		returnArea += (*iterator)->area();
+
+	return returnArea;
+}
+
+ostream & operator << (ostream & os, Shape & s) {
+	return os << s.print();
 }
 

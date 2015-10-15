@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="CPP_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/BoundingBox.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/BoundingBox.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Circle.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Circle.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CompositeGraphicVisitor.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CompositeGraphicVisitor.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CompositeGraphics.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CompositeGraphics.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Graphic.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/GraphicVisitor.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/GraphicVisitor.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Graphics.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Line.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Line.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Point.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Point.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Rectangle.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Rectangle.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/SimpleGraphic.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/SimpleGraphicVisitor.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/SimpleGraphicVisitor.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/SimpleGraphics.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Square.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Square.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/mainTest.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/shape.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/shape.h" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="Header Search Paths">
+        <CLASSES>
+          <root url="file://C:/Qt/Qt5.5.0/Tools/mingw492_32/i686-w64-mingw32/include" />
+          <root url="file://C:/Qt/Qt5.5.0/Tools/mingw492_32/lib/gcc/i686-w64-mingw32/4.9.2/include" />
+          <root url="file://C:/Qt/Qt5.5.0/Tools/mingw492_32/lib/gcc/i686-w64-mingw32/4.9.2/include-fixed" />
+          <root url="file://C:/Qt/Qt5.5.0/Tools/mingw492_32/lib/gcc/i686-w64-mingw32/4.9.2/include/objc" />
+          <root url="file://C:/Qt/Qt5.5.0/Tools/mingw492_32/lib/gcc/i686-w64-mingw32/4.9.2/include/ssp" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://C:/Qt/Qt5.5.0/Tools/mingw492_32/i686-w64-mingw32/include" />
+          <root url="file://C:/Qt/Qt5.5.0/Tools/mingw492_32/lib/gcc/i686-w64-mingw32/4.9.2/include" />
+          <root url="file://C:/Qt/Qt5.5.0/Tools/mingw492_32/lib/gcc/i686-w64-mingw32/4.9.2/include-fixed" />
+          <root url="file://C:/Qt/Qt5.5.0/Tools/mingw492_32/lib/gcc/i686-w64-mingw32/4.9.2/include/objc" />
+          <root url="file://C:/Qt/Qt5.5.0/Tools/mingw492_32/lib/gcc/i686-w64-mingw32/4.9.2/include/ssp" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+  </component>
+</module>
