@@ -6,7 +6,7 @@
 #include "Graphics.h"
 
 void AreaVisitor::visitCompositeGraphic(Graphics *graphics) {
-    _area += graphics->calculateArea();
+
 }
 
 void AreaVisitor::visitSimpleGraphic(Graphics *graphics) {

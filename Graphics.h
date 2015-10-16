@@ -4,11 +4,16 @@
 #include "BoundingBox.h"
 #include "GraphicsVisitor.h"
 
+using std::string;
+
 class Graphics{
 protected:
 	BoundingBox _boundingBox;
+	int _compositeLevel;
 public:
-	Graphics():_boundingBox(0,0,0,0){}
+	bool isComposited;
+
+	Graphics():_boundingBox(0,0,0,0),isComposited(false),_compositeLevel(0){}
 
 	virtual BoundingBox getBoundingBox(){ return _boundingBox; }
 	
@@ -17,6 +22,14 @@ public:
 	virtual void accept(GraphicsVisitor &graphicVisitor) {};
 
 	virtual double calculateArea(){return 0.;}
+
+	virtual  string getDescription() {return "";}
+
+	virtual string getDescription(int level){return "";}
+
+	virtual  int getCompositeLevel(){return _compositeLevel;}
+
+	virtual void increaseCompositeLevel() {_compositeLevel++;}
 };
 
 #endif

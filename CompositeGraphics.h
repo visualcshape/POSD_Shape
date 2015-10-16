@@ -19,6 +19,12 @@ public:
 	void accept(GraphicsVisitor & visitor);
 
 	double calculateArea();
+
+	string getDescription();
+
+	string getDescription(int level);
+
+	void increaseCompositeLevel();
 };
 
 #endif

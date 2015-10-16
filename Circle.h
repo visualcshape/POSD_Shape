@@ -13,6 +13,7 @@ public:
 	Circle(int cx, int cy, int radius);
 	string print();
 	virtual int area() const;
+	string describe();
 };
 
 #endif

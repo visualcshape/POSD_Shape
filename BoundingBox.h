@@ -19,6 +19,10 @@ public:
 	inline double ury(){ return _y + _w; }
 
 	inline double area(){ return _l*_w; }
+
+	inline double l(){return _l;}
+
+	inline double w(){return _w;}
 };
 
 #endif

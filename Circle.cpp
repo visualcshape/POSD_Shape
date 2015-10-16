@@ -1,6 +1,8 @@
 #include "Circle.h"
 #include <sstream>
 
+using std::stringstream;
+
 Circle::Circle(int cx, int cy, int radius)
 	:Shape("circle"), _cx(cx), _cy(cy), _radius(radius){
 	generateBoundingBox();
@@ -18,4 +20,12 @@ void Circle::generateBoundingBox(){
 
 int Circle::area() const {
 	return 3 * _radius*_radius;
+}
+
+string Circle::describe() {
+	stringstream ss;
+
+	ss<< "C(" << _cx << "," << _cy << "," << _radius << ")" ;
+
+	return ss.str();
 }

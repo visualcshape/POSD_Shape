@@ -1,6 +1,8 @@
 #include "Square.h"
 #include <sstream>
 
+using std::stringstream;
+
 Square::Square(int ulx, int uly, int length)
 	:Shape("square"), _ulx(ulx), _uly(uly), _length(length){
 	generateBoundingBox();
@@ -19,4 +21,12 @@ void Square::generateBoundingBox(){
 
 int Square::area() const {
 	return _length*_length;
+}
+
+string Square::describe() {
+	stringstream ss;
+
+	ss << "S(" << _ulx << "," << _uly << "," << _length << ")";
+
+	return ss.str();
 }

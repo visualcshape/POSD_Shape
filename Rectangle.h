@@ -16,6 +16,7 @@ public:
 	Rectangle(int x, int y, int l, int w);
 	string print();
 	int area() const;
+	string describe();
 };
 
 #endif

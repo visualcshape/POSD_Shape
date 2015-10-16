@@ -25,6 +25,7 @@ public:
 	virtual string print();
 	virtual int area() const;
 	inline virtual BoundingBox getBoundingBox(){ return _boundingBox; }
+    virtual string describe(){};
 };
 
 //Global Function

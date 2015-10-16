@@ -1,8 +1,13 @@
 #include <algorithm>
 #include <math.h>
 #include "CompositeGraphics.h"
+#include <sstream>
+
+using std::vector;
 
 void CompositeGraphics::add(Graphics* graphic){
+    graphic->isComposited = true;
+    graphic->increaseCompositeLevel();
 	_graphics.push_back(graphic);
 	calculateBoundingBox();
 }
@@ -39,4 +44,38 @@ double CompositeGraphics::calculateArea() {
     }
 
     return retArea;
+}
+
+string CompositeGraphics::getDescription() {
+	stringstream ss;
+
+	ss << "Comp R(" << _boundingBox.llx() << "," << _boundingBox.lly() << "," << _boundingBox.l() << "," << _boundingBox.w() << ")";
+
+	return ss.str();
+}
+
+string CompositeGraphics::getDescription(int level) {
+    stringstream ss;
+
+    if(_compositeLevel!=level)
+        return  "";
+
+    for(int i = 0 ; i < level ; i++)
+        ss << "  ";
+
+    ss << "Comp R(" << _boundingBox.llx() << "," << _boundingBox.lly() << "," << _boundingBox.l() << "," << _boundingBox.w() << ")" << "\n";
+
+    level++;
+
+    for(vector<Graphics*>::iterator itr = _graphics.begin() ; itr != _graphics.end() ; itr++)
+        ss << (*itr)->getDescription(level) ;
+
+    return ss.str();
+}
+
+void CompositeGraphics::increaseCompositeLevel() {
+    for(vector<Graphics*>::iterator itr = _graphics.begin() ; itr!=_graphics.end() ; itr++){
+        (*itr)->increaseCompositeLevel();
+    }
+    this->_compositeLevel++;
 }
