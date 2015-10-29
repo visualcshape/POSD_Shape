@@ -6,7 +6,6 @@
 using std::vector;
 
 void CompositeGraphics::add(Graphics* graphic){
-    graphic->isComposited = true;
     graphic->increaseCompositeLevel();
 	_graphics.push_back(graphic);
 	calculateBoundingBox();

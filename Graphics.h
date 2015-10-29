@@ -11,9 +11,7 @@ protected:
 	BoundingBox _boundingBox;
 	int _compositeLevel;
 public:
-	bool isComposited;
-
-	Graphics():_boundingBox(0,0,0,0),isComposited(false),_compositeLevel(0){}
+	Graphics():_boundingBox(0,0,0,0),_compositeLevel(0){}
 
 	virtual BoundingBox getBoundingBox(){ return _boundingBox; }
 	

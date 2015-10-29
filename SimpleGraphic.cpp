@@ -17,7 +17,7 @@ double SimpleGraphics::calculateArea() {
 }
 
 string SimpleGraphics::getDescription() {
-	if(this->isComposited)
+	if(this->_compositeLevel > 0)
 		return "";
 	return _shape->describe() + "\n";
 }

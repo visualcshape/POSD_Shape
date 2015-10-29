@@ -14,6 +14,8 @@
       <sourceFolder url="file://$MODULE_DIR$/DescriptionVisitor.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/DescriptionVisitor.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Graphic.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/GraphicFactory.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/GraphicFactory.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Graphics.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/GraphicsVisitor.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/GraphicsVisitor.h" isTestSource="false" />
