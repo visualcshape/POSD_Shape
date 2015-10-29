@@ -15,6 +15,16 @@ private:
 	void calculateBoundingBox();
 public:
 	void add(Graphics* graphic);
+
+	void accept(GraphicsVisitor & visitor);
+
+	double calculateArea();
+
+	string getDescription();
+
+	string getDescription(int level);
+
+	void increaseCompositeLevel();
 };
 
 #endif

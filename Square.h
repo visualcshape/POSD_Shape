@@ -13,6 +13,7 @@ public:
 	Square(int ulx, int uly, int length);
 	string print();
 	virtual int area() const;
+    string describe();
 };
 
 #endif

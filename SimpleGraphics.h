@@ -11,6 +11,16 @@ public:
 	SimpleGraphics();
 
 	SimpleGraphics(Shape* shape);
+
+	void accept(GraphicsVisitor &graphicVisitor);
+
+    double calculateArea();
+
+	virtual string getDescription();
+
+	string getDescription(int level);
+
+	void increaseCompositeLevel();
 };
 
 #endif
