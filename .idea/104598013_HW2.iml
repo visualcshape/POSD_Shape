@@ -9,6 +9,8 @@
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Circle.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Circle.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CompositeGraphicFactory.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/CompositeGraphicFactory.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CompositeGraphics.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CompositeGraphics.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/DescriptionVisitor.cpp" isTestSource="false" />
@@ -26,6 +28,8 @@
       <sourceFolder url="file://$MODULE_DIR$/Rectangle.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Rectangle.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/SimpleGraphic.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/SimpleGraphicFactory.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/SimpleGraphicFactory.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/SimpleGraphics.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Square.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Square.h" isTestSource="false" />
