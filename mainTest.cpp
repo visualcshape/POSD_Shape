@@ -2,17 +2,14 @@
 #include "shape.h"
 #include "Graphics.h"
 #include "CompositeGraphics.h"
-#include "SimpleGraphics.h"
-#include <iostream>
-#include <vector>
 #include <typeinfo>
 #include "Circle.h"
 #include "Rectangle.h"
 #include "Square.h"
-#include "Point.h"
 #include "Line.h"
 #include "AreaVisitor.h"
 #include "DescriptionVisitor.h"
+#include "utHW3.h"
 
 using std::vector;
 
