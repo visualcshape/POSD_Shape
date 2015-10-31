@@ -5,9 +5,14 @@
 #ifndef HW2_COMPOSITEGRAPHICFACTORY_H
 #define HW2_COMPOSITEGRAPHICFACTORY_H
 
+#include "GraphicFactory.h"
 
-class CompositeGraphicFactory {
+class CompositeGraphicFactory : public GraphicsFactory{
+protected:
 
+public:
+    CompositeGraphicFactory(){}
+    virtual Graphics* createGraphic(string& content);
 };
 
 

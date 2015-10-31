@@ -37,4 +37,13 @@ TEST(GraphicsFactory, countLevel){
     graphicsFactory.buildGraphicsFromFile(FILE_NAME.c_str());
 }
 
+TEST(SelfTest,selfTest){
+    string FILE_NAME = "f1.txt";
+    GraphicsFactory graphicsFactory;
+    Graphics* built = graphicsFactory.buildGraphicsFromFile(FILE_NAME.c_str());
+    DescriptionVisitor descriptionVisitor;
+    built->accept(descriptionVisitor);
+    cout << descriptionVisitor.getDescription();
+}
+
 #endif //HW2_UTHW3_H

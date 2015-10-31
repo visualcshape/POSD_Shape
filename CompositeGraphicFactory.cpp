@@ -3,3 +3,8 @@
 //
 
 #include "CompositeGraphicFactory.h"
+#include "CompositeGraphics.h"
+
+Graphics *CompositeGraphicFactory::createGraphic(string& cotent) {
+    return new CompositeGraphics();
+}
