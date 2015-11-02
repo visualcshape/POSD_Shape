@@ -20,11 +20,20 @@ Graphics *GraphicsFactory::buildGraphicsFromFile(const char *fileName) {
         throw string(EXCEPTION);
     fileStream.close();
 
-    this->fileContentAsString(fileName);
-    stringstream contentStreamString(_contentString);
+    string content = this->fileContentAsString(fileName);
+    processContent(content);
+
+    _isFinal = true;
+    compose();
+
+    return _compGraphicsStack.top().second;
+}
+
+void GraphicsFactory::processContent(string& content) {
+    stringstream contentStreamString(content);
     string line;
 
-    while (std::getline(contentStreamString, line)) {
+    while (getline(contentStreamString, line)) {
         const char *aLine = line.c_str();
         _curLevel = 0;
         countLevel(aLine, _curLevel);
@@ -35,11 +44,8 @@ Graphics *GraphicsFactory::buildGraphicsFromFile(const char *fileName) {
             }
         }
         _compGraphicsStack.push(std::make_pair(_curLevel, producedGraphic));
+        takeSnapShot();
     }
-
-    _isFinal = true;
-    compose();
-    return _compGraphicsStack.top().second;
 }
 
 void GraphicsFactory::countLevel(const char *aLine, int &level) const {//Count level
@@ -56,12 +62,13 @@ string GraphicsFactory::fileContentAsString(const char *fileName) {
     fstream fileStream;
     stringstream buffer;
     fileStream.open(fileName, std::ios::in);
+    string content = "";
 
     buffer << fileStream.rdbuf();
 
-    _contentString = buffer.str();
+    content = buffer.str();
 
-    return _contentString;
+    return content;
 }
 
 Graphics *GraphicsFactory::extractGraphicsFromOneLine(string &contents, int &level) {
@@ -87,13 +94,13 @@ Graphics *GraphicsFactory::extractGraphicsFromOneLine(string &contents, int &lev
 void GraphicsFactory::compose() {
     stack<Graphics *> graphicPendToComposedStack;
 
-    if(!_isFinal) {
+    if (!_isFinal) {
         while (!(_curLevel == _compGraphicsStack.top().first)) {
             Graphics *popped = _compGraphicsStack.top().second;
             _compGraphicsStack.pop();
             graphicPendToComposedStack.push(popped);
         }
-    }else{
+    } else {
         while (_compGraphicsStack.top().first != 0) {
             Graphics *popped = _compGraphicsStack.top().second;
             _compGraphicsStack.pop();
@@ -106,4 +113,37 @@ void GraphicsFactory::compose() {
         compositeGraphic->add(graphicPendToComposedStack.top());
         graphicPendToComposedStack.pop();
     }
+}
+
+string GraphicsFactory::getSnapShotByLine(const int line) {
+    return _snapShot[line-1];
+}
+
+void GraphicsFactory::takeSnapShot() {
+    const char COMP_NOT_CONTAIN_SIMPLE_GRAPHICS[] = "Comp R(0,0,0,0)\n";
+    stack<pair<int,Graphics*> > reversedStack;
+    string snapshot;
+    int poppedLevel = 0;
+    Graphics* poppedGraphics = 0;
+    while(!_compGraphicsStack.empty()){
+        reversedStack.push(std::make_pair(_compGraphicsStack.top().first,_compGraphicsStack.top().second));
+        _compGraphicsStack.pop();
+    }
+    while(!reversedStack.empty()){
+        poppedLevel = reversedStack.top().first;
+        poppedGraphics = reversedStack.top().second;
+        snapshot += poppedLevel;
+        if(poppedGraphics->getDescription()==COMP_NOT_CONTAIN_SIMPLE_GRAPHICS){
+            snapshot += ", Comp";
+        }else{
+            string des = poppedGraphics->getDescription();
+            //delete last index '\n'
+            des.erase(des.length()-1,1);
+            snapshot += des;
+        }
+        _compGraphicsStack.push(std::make_pair(poppedLevel,poppedGraphics));
+        reversedStack.pop();
+        snapshot+='\n';
+    }
+    _snapShot.push_back(snapshot);
 }

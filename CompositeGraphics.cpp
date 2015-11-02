@@ -48,7 +48,7 @@ double CompositeGraphics::calculateArea() {
 string CompositeGraphics::getDescription() {
 	stringstream ss;
 
-	ss << "Comp R(" << _boundingBox.llx() << "," << _boundingBox.lly() << "," << _boundingBox.l() << "," << _boundingBox.w() << ")";
+	ss << "Comp R(" << _boundingBox.llx() << "," << _boundingBox.lly() << "," << _boundingBox.l() << "," << _boundingBox.w() << ")\n";
 
 	return ss.str();
 }

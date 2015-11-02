@@ -75,7 +75,7 @@ TEST(extractGraphicsFromOneLineSimpleGraphicsSqure,GraphicsFactory){
 }
 
 TEST(extractGraphicsFromOneLineCompositeGraphics,GraphicsFactory){
-    const char COMP_LINE[] = "Comp R(0,0,0,0)";
+    const char COMP_LINE[] = "Comp R(0,0,0,0)\n";
     int level = 0;
 
     string compString = COMP_LINE;
@@ -85,13 +85,21 @@ TEST(extractGraphicsFromOneLineCompositeGraphics,GraphicsFactory){
 }
 
 TEST(composeLine5Test,GraphicsFactory){
-    stack<pair<int,Graphics*>> expectStack;
-    expectStack.push(make_pair(0,new CompositeGraphics));
-    expectStack.push(make_pair(1,new CompositeGraphics));
-    expectStack.push(make_pair(2,new SimpleGraphics(new Circle(0,0,1))));
-    expectStack.push(make_pair(2,new SimpleGraphics(new Square(-2,-2,2))));
+    const char FILE_NAME[] = "f1.txt";
+    const int TEST_SNAP_SHOT_LINE = 4;
+    const string EXPECT = "0, Comp\n"
+            "1, Comp\n"
+            "2, Circle(0,0,1)\n"
+            "2, Square(-2,-2,2)\n";
+    GraphicsFactory factory;
+    factory.buildGraphicsFromFile(FILE_NAME);
+    string actual = factory.getSnapShotByLine(TEST_SNAP_SHOT_LINE);
+    CHECK(actual == EXPECT);
+}
 
-
+TEST(composeLine9Test, Graphicsfactory){
+    const char FILE_NAME[] = "f1.txt";
+    const int TEST_SNAP_SHOT_LINE = 8;
 }
 
 TEST(SelfTest,selfTest){
