@@ -99,7 +99,12 @@ TEST(composeLine5Test,GraphicsFactory){
 
 TEST(composeLine9Test, Graphicsfactory){
     const char FILE_NAME[] = "f1.txt";
-    const int TEST_SNAP_SHOT_LINE = 8;
+    const int TEST_SNAP_SHOT_LINE = 7;
+    const string EXPECT = "0, Comp R(-2,-2,3,4)[Comp R(-2,-2,3,3)[Circle(0,0,1), Square(-2,-2,2)], Rectangle(-1,-1,1,3)]\n";
+    GraphicsFactory factory;
+    factory.buildGraphicsFromFile(FILE_NAME);
+    string actual = factory.getSnapShotByLine(TEST_SNAP_SHOT_LINE);
+    CHECK(actual == EXPECT);
 }
 
 TEST(SelfTest,selfTest){

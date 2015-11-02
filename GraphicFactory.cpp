@@ -7,6 +7,9 @@
 #include <sstream>
 #include "CompositeGraphicFactory.h"
 #include "SimpleGraphicFactory.h"
+#include <stdlib.h>
+#include "DescriptionVisitor.h"
+#include "Utility.h"
 
 using std::fstream;
 using std::stringstream;
@@ -29,7 +32,7 @@ Graphics *GraphicsFactory::buildGraphicsFromFile(const char *fileName) {
     return _compGraphicsStack.top().second;
 }
 
-void GraphicsFactory::processContent(string& content) {
+void GraphicsFactory::processContent(string &content) {
     stringstream contentStreamString(content);
     string line;
 
@@ -113,37 +116,92 @@ void GraphicsFactory::compose() {
         compositeGraphic->add(graphicPendToComposedStack.top());
         graphicPendToComposedStack.pop();
     }
+    takeSnapShot();
 }
 
 string GraphicsFactory::getSnapShotByLine(const int line) {
-    return _snapShot[line-1];
+    return _snapShot[line - 1];
 }
 
 void GraphicsFactory::takeSnapShot() {
     const char COMP_NOT_CONTAIN_SIMPLE_GRAPHICS[] = "Comp R(0,0,0,0)\n";
-    stack<pair<int,Graphics*> > reversedStack;
-    string snapshot;
+    stack<pair<int, Graphics *> > reversedStack;
+    string snapshot = "";
     int poppedLevel = 0;
-    Graphics* poppedGraphics = 0;
-    while(!_compGraphicsStack.empty()){
-        reversedStack.push(std::make_pair(_compGraphicsStack.top().first,_compGraphicsStack.top().second));
+    Graphics *poppedGraphics = 0;
+    while (!_compGraphicsStack.empty()) {
+        reversedStack.push(std::make_pair(_compGraphicsStack.top().first, _compGraphicsStack.top().second));
         _compGraphicsStack.pop();
     }
-    while(!reversedStack.empty()){
+    while (!reversedStack.empty()) {
         poppedLevel = reversedStack.top().first;
         poppedGraphics = reversedStack.top().second;
-        snapshot += poppedLevel;
-        if(poppedGraphics->getDescription()==COMP_NOT_CONTAIN_SIMPLE_GRAPHICS){
-            snapshot += ", Comp";
-        }else{
+        char levelBuff[100];
+        itoa(poppedLevel, levelBuff, 10);
+        snapshot += levelBuff;
+        snapshot += ", ";
+        if (poppedGraphics->getDescription() == COMP_NOT_CONTAIN_SIMPLE_GRAPHICS) {
+            snapshot += "Comp";
+        } else {
             string des = poppedGraphics->getDescription();
+            if (des.find("Comp") != string::npos) {
+                //Expand tree
+                DescriptionVisitor descriptionVisitor;
+                string processed = "";
+                poppedGraphics->accept(descriptionVisitor);
+                string compDescription = descriptionVisitor.getDescription();
+                stringstream compDescriptionStringStream(compDescription);
+                string line;
+                int previousLevel = 0;
+                while (std::getline(compDescriptionStringStream, line)) {
+                    if (line.find("Comp R") != std::string::npos) {
+                        //delete space
+                        Utility::deleteSpace(line);
+                        processed += line;
+                        processed += '[';
+                        continue;
+                    }
+                    int nowLevel = 0;
+                    countLevel(line.c_str(),nowLevel);
+                    if(nowLevel < previousLevel) {
+                        processed.erase(processed.length() - 2, 2);
+                        processed += "], ";
+                    }
+                    previousLevel = nowLevel;
+                    replaceSimpleNameToFullName(line);
+                    processed += line;
+                    processed += ", ";
+                }
+                //delete last comma
+                processed.erase(processed.length() - 2, 2);
+                processed += ']';
+                des = processed;
+            }
             //delete last index '\n'
-            des.erase(des.length()-1,1);
+            if (des[des.length() - 1] == '\n')
+                des.erase(des.length() - 1, 1);
+            replaceSimpleNameToFullName(des);
             snapshot += des;
         }
-        _compGraphicsStack.push(std::make_pair(poppedLevel,poppedGraphics));
+        _compGraphicsStack.push(std::make_pair(poppedLevel, poppedGraphics));
         reversedStack.pop();
-        snapshot+='\n';
+        snapshot += '\n';
     }
     _snapShot.push_back(snapshot);
+}
+
+void GraphicsFactory::replaceSimpleNameToFullName(string &des) const {
+    Utility::deleteSpace(des);
+    switch (des[0]) {
+        case 'S':
+            des.replace(0, 1, "Square");
+            break;
+        case 'C':
+            if (des[1] != 'o')
+                des.replace(0, 1, "Circle");
+            break;
+        case 'R':
+            des.replace(0, 1, "Rectangle");
+            break;
+    }
 }

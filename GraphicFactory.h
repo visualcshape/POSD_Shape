@@ -44,6 +44,8 @@ public:
     void processContent(string& content);
 
     string getSnapShotByLine(const int line);
+
+    void replaceSimpleNameToFullName(string &des) const;
 };
 
 #endif //HW2_GRAPHICFACTORY_H

@@ -6,6 +6,7 @@
 #include "SimpleGraphics.h"
 #include <sstream>
 #include <stdlib.h>
+#include "Utility.h"
 
 using std::stringstream;
 
@@ -18,7 +19,7 @@ Graphics *SimpleGraphicFactory::createGraphic(string &content) {
     stringstream tokenStringStream(content);
     std::getline(tokenStringStream, token, DELIM);
     graphicType = token;
-    deleteSpace(graphicType);
+    Utility::deleteSpace(graphicType);
     std::getline(tokenStringStream,token, DELIM);
 
     //remove right brace
