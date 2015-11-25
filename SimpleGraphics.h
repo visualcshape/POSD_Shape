@@ -21,6 +21,8 @@ public:
 	string getDescription(int level);
 
 	void increaseCompositeLevel();
+
+	virtual void draw(QGraphicsScene* scene);
 };
 
 #endif

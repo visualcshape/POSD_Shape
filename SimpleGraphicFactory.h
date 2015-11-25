@@ -11,11 +11,10 @@
 #include "Circle.h"
 
 class SimpleGraphicFactory : public GraphicsFactory {
-private:
-    Rectangle *createRectangle(string &graphicAttribute);
-    Square* createSquare(string& graphicAttribute);
-    Circle* createCircle(string& graphicAttribute);
-    void deleteSpace(string& stringToDeleteSpace);
+public:
+    static Rectangle *createRectangle(string &graphicAttribute);
+    static Square* createSquare(string& graphicAttribute);
+    static Circle* createCircle(string& graphicAttribute);
 protected:
 public:
     SimpleGraphicFactory(){};

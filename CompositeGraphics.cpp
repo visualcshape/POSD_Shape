@@ -78,3 +78,12 @@ void CompositeGraphics::increaseCompositeLevel() {
     }
     this->_compositeLevel++;
 }
+
+void CompositeGraphics::draw(QGraphicsScene *scene) {
+    QPen pen(Qt::green,3,Qt::SolidLine,Qt::RoundCap,Qt::RoundJoin);
+    QBrush brush(QColor(0,0,0,0),Qt::SolidPattern);
+    QRect boundingRect(((int)_boundingBox.llx()),((int)_boundingBox.lly()),((int)_boundingBox.w()),((int)_boundingBox.l()));
+    scene->addRect(boundingRect,pen,brush);
+    for(vector<Graphics*>::iterator itr = _graphics.begin() ; itr != _graphics.end() ; itr++)
+        (*itr)->draw(scene);
+}

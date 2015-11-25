@@ -4,28 +4,28 @@
 using std::stringstream;
 
 Circle::Circle(int cx, int cy, int radius)
-	:Shape("circle"), _cx(cx), _cy(cy), _radius(radius){
+	: Shape("circle"), centerX(cx), centerY(cy), radius(radius){
 	generateBoundingBox();
 }
 
 string Circle::print() {
 	std::ostringstream oss;
-	oss << name() << "(" << _cx << "," << _cy << "," << _radius << ")";
+	oss << name() << "(" << centerX << "," << centerY << "," << radius << ")";
 	return oss.str();
 }
 
 void Circle::generateBoundingBox(){
-	_boundingBox = BoundingBox(_cx - _radius, _cy - _radius, 2 * _radius, 2 * _radius);
+	_boundingBox = BoundingBox(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
 }
 
 int Circle::area() const {
-	return 3 * _radius*_radius;
+	return 3 * radius * radius;
 }
 
 string Circle::describe() {
 	stringstream ss;
 
-	ss<< "C(" << _cx << "," << _cy << "," << _radius << ")" ;
+	ss << "C(" << centerX << "," << centerY << "," << radius << ")" ;
 
 	return ss.str();
 }

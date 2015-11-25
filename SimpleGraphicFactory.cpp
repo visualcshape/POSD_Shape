@@ -99,8 +99,3 @@ Circle *SimpleGraphicFactory::createCircle(string &graphicAttribute) {
     radius = atoi(token.c_str());
     return  new Circle(circleCenterX,circleCenterY,radius);
 }
-
-void SimpleGraphicFactory::deleteSpace(string &stringToDeleteSpace) {
-    while(stringToDeleteSpace[0]==' ')
-        stringToDeleteSpace.erase(0,1);
-}

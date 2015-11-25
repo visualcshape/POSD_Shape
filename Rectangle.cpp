@@ -4,30 +4,30 @@
 using std::stringstream;
 
 Rectangle::Rectangle(Point p, int l, int w)
-	:Shape("rectangle"), _ulc(p), _l(l), _w(w){}
+	: Shape("rectangle"), positionPoint(p), height(l), width(w){}
 
-Rectangle::Rectangle(int x, int y, int l, int w) : Shape("R"), _ulc(Point(x, y)), _l(l), _w(w){
+Rectangle::Rectangle(int x, int y, int l, int w) : Shape("R"), positionPoint(Point(x, y)), height(l), width(w){
 	generateBoundingBox();
 }
 
 int Rectangle::area() const {
-	return _l*_w;
+	return height * width;
 }
 
 string Rectangle::print() {
 	std::ostringstream oss;
-	oss << name() << "(point(" <<  _ulc.getX() << "," << _ulc.getY() << ")" << "," << _l << "," << _w << ")";
+	oss << name() << "(point(" << positionPoint.getX() << "," << positionPoint.getY() << ")" << "," << height << "," << width << ")";
 	return oss.str();
 }
 
 void Rectangle::generateBoundingBox(){
-	_boundingBox = BoundingBox(_ulc.getX(), _ulc.getY(), _l, _w);
+	_boundingBox = BoundingBox(positionPoint.getX(), positionPoint.getY(), height, width);
 }
 
 string Rectangle::describe() {
 	stringstream ss;
 
-	ss << "R(" << _ulc.getX() << "," << _ulc.getY() << "," << _l << "," << _w << ")";
+	ss << "R(" << positionPoint.getX() << "," << positionPoint.getY() << "," << height << "," << width << ")";
 
 	return ss.str();
 }

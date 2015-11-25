@@ -5,11 +5,10 @@
 
 class Circle : public Shape {
 private:
-	int _cx, _cy;
-	int _radius;
-
 	void generateBoundingBox();
 public:
+	int centerX, centerY;
+	int radius;
 	Circle(int cx, int cy, int radius);
 	string print();
 	virtual int area() const;

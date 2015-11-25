@@ -7,11 +7,11 @@
 class Rectangle : public Shape {
 private:
 protected:
-	Point _ulc;
-	int _l, _w;
-
 	void generateBoundingBox();
 public:
+	int height, width;
+	Point positionPoint;
+
 	Rectangle(Point p, int l, int w);
 	Rectangle(int x, int y, int l, int w);
 	string print();

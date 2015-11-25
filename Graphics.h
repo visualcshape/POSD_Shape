@@ -3,6 +3,7 @@
 #include <string>
 #include "BoundingBox.h"
 #include "GraphicsVisitor.h"
+#include <QGraphicsScene>
 
 using std::string;
 
@@ -28,6 +29,8 @@ public:
 	virtual  int getCompositeLevel(){return _compositeLevel;}
 
 	virtual void increaseCompositeLevel() {_compositeLevel++;}
+
+	virtual void draw(QGraphicsScene* scene){}
 };
 
 #endif

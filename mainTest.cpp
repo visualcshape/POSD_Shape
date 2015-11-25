@@ -10,6 +10,7 @@
 #include "AreaVisitor.h"
 #include "DescriptionVisitor.h"
 #include "utHW3.h"
+#include "utGUI.h"
 
 using std::vector;
 

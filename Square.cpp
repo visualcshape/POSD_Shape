@@ -4,29 +4,29 @@
 using std::stringstream;
 
 Square::Square(int ulx, int uly, int length)
-	:Shape("square"), _ulx(ulx), _uly(uly), _length(length){
+	: Shape("square"), x(ulx), y(uly), length(length){
 	generateBoundingBox();
 }
 
 string Square::print() {
 	std::ostringstream oss;
-	oss << name() << "(" << _ulx << "," << _uly << "," << _length << ")";
+	oss << name() << "(" << x << "," << y << "," << length << ")";
 
 	return oss.str();
 }
 
 void Square::generateBoundingBox(){
-	_boundingBox = BoundingBox(_ulx, _uly, _length, _length);
+	_boundingBox = BoundingBox(x, y, length, length);
 }
 
 int Square::area() const {
-	return _length*_length;
+	return length * length;
 }
 
 string Square::describe() {
 	stringstream ss;
 
-	ss << "S(" << _ulx << "," << _uly << "," << _length << ")";
+	ss << "S(" << x << "," << y << "," << length << ")";
 
 	return ss.str();
 }

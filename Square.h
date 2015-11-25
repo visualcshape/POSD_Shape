@@ -5,11 +5,11 @@
 
 class Square : public Shape{
 private:
-	int _ulx, _uly;
-	int _length;
 
 	void generateBoundingBox();
 public:
+	int x, y;
+	int length;
 	Square(int ulx, int uly, int length);
 	string print();
 	virtual int area() const;
