@@ -9,22 +9,24 @@
 #include <string>
 #include <stack>
 #include <utility>
+#include <vector>
 
 using std::string;
 using std::stack;
 using std::pair;
+using std::vector;
 
 class GraphicsFactory {
 private:
-    string _contentString;
     int _curLevel;
     stack<pair<int,Graphics*> > _compGraphicsStack;
+    vector<string> _snapShot;
     bool _isFinal;
 
     void countLevel(const char *aLine, int &level) const;
+    void takeSnapShot();
 public:
     GraphicsFactory() {
-        _contentString = "";
         _curLevel = 0;
         _isFinal = false;
     }
@@ -37,7 +39,13 @@ public:
 
     virtual Graphics* createGraphic(string &content) {return new Graphics();}
 
-    void compose();;
+    void compose();
+
+    void processContent(string& content);
+
+    string getSnapShotByLine(const int line);
+
+    void replaceSimpleNameToFullName(string &des) const;
 };
 
 #endif //HW2_GRAPHICFACTORY_H
