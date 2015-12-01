@@ -25,54 +25,54 @@ GUI::GUI()
 
 GUI::~GUI()
 {
-    delete widget;
-    delete scene;
+    delete _widget;
+    delete _scene;
     delete _loadedGraphics;
 }
 
 void GUI::CreateView(){
-    widget = new QWidget();
-    setCentralWidget(widget);
-    graphicsView = new QGraphicsView(widget);
+    _widget = new QWidget();
+    setCentralWidget(_widget);
+    _graphicsView = new QGraphicsView(_widget);
     QString gView = "graphicView";
-    graphicsView->setObjectName(gView);
+    _graphicsView->setObjectName(gView);
 
-    scene = new QGraphicsScene();
+    _scene = new QGraphicsScene();
 
-    graphicsView->setScene(scene);
+    _graphicsView->setScene(_scene);
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setMargin(0);
-    layout->addWidget(graphicsView);
-    widget->setLayout(layout);
+    layout->addWidget(_graphicsView);
+    _widget->setLayout(layout);
 }
 
 void GUI::SetActionConnection() {
-    connect(aboutDeveloper, SIGNAL(triggered()), this, SLOT(MessageDialog()));
-    connect(openFile,SIGNAL(triggered()),this,SLOT(OpenFileDialog()));
-    connect(saveFile,SIGNAL(triggered()),this,SLOT(SaveFileDialog()));
+    connect(_aboutDeveloper, SIGNAL(triggered()), this, SLOT(MessageDialog()));
+    connect(_openFile, SIGNAL(triggered()), this, SLOT(OpenFileDialog()));
+    connect(_saveFile, SIGNAL(triggered()), this, SLOT(SaveFileDialog()));
 }
 
 void GUI::CreateActions() {
     QIcon* aboutIcon = new QIcon("About.png");
-    aboutDeveloper = new QAction(*aboutIcon,"About Developer", widget);
+    _aboutDeveloper = new QAction(*aboutIcon, "About Developer", _widget);
     QIcon* openFileIcon = new QIcon("Open.png");
-    openFile = new QAction(*openFileIcon,"Open File",widget);
+    _openFile = new QAction(*openFileIcon, "Open File", _widget);
     QIcon* saveFileIcon = new QIcon("Save.png");
-    saveFile = new QAction(*saveFileIcon,"Save File",widget);
+    _saveFile = new QAction(*saveFileIcon, "Save File", _widget);
 }
 
 void GUI::CreateToolButtons() {
-    QToolBar* qtToolBar = new QToolBar(widget);
-    qtToolBar->addAction(openFile);
-    qtToolBar->addAction(saveFile);
+    QToolBar* qtToolBar = new QToolBar(_widget);
+    qtToolBar->addAction(_openFile);
+    qtToolBar->addAction(_saveFile);
 }
 
 void GUI::CreateMenus() {
-    file = this->menuBar()->addMenu("File");
-    file->addAction(openFile);
-    file->addAction(saveFile);
-    about = menuBar()->addMenu("About");
-    about->addAction(aboutDeveloper);
+    _file = this->menuBar()->addMenu("File");
+    _file->addAction(_openFile);
+    _file->addAction(_saveFile);
+    _about = menuBar()->addMenu("About");
+    _about->addAction(_aboutDeveloper);
 }
 void GUI::Display() {
 
@@ -90,10 +90,10 @@ void GUI::MessageDialog() {
 void GUI::OpenFileDialog() {
     QString path = QFileDialog::getOpenFileName(this,"Text Files",".","Text Files(*.txt)");
     if(path.length() != 0){
-        scene->clear();
+        _scene->clear();
         GraphicsFactory factory;
         Graphics* graphics = factory.buildGraphicsFromFile(path.toStdString().c_str());
-        DrawVisitor drawVisitor(scene);
+        DrawVisitor drawVisitor(_scene);
         graphics->accept(drawVisitor);
         _loadedGraphics = graphics;
     }

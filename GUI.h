@@ -41,9 +41,6 @@ Q_OBJECT
 public:
     GUI();
     virtual ~GUI();
-    QGraphicsView *graphicsView;
-    QGraphicsScene *scene;
-    QWidget *widget;
 
     void Display();
     void CreateView();
@@ -54,11 +51,14 @@ public:
 
 protected:
 private:
-    QAction *aboutDeveloper;
-    QAction *openFile;
-    QAction *saveFile;
-    QMenu *about;
-    QMenu *file;
+    QGraphicsView *_graphicsView;
+    QGraphicsScene *_scene;
+    QWidget *_widget;
+    QAction *_aboutDeveloper;
+    QAction *_openFile;
+    QAction *_saveFile;
+    QMenu *_about;
+    QMenu *_file;
     Graphics *_loadedGraphics;
 private slots:
     void MessageDialog();
