@@ -41,14 +41,13 @@ Q_OBJECT
 public:
     GUI();
     virtual ~GUI();
-
     void Display();
     void CreateView();
     void CreateActions();
     void CreateMenus();
     void CreateToolButtons();
     void SetActionConnection();
-
+    void setupInitialState();
 protected:
 private:
     QGraphicsView *_graphicsView;
@@ -57,6 +56,14 @@ private:
     QAction *_aboutDeveloper;
     QAction *_openFile;
     QAction *_saveFile;
+    QAction *_drawSquare;
+    QAction *_drawRectangle;
+    QAction *_drawCircle;
+    QAction *_undo;
+    QAction *_redo;
+    QAction *_group;
+    QAction *_ungroup;
+    QAction *_deleteSimpleGraphic;
     QMenu *_about;
     QMenu *_file;
     Graphics *_loadedGraphics;
@@ -64,6 +71,14 @@ private slots:
     void MessageDialog();
     void OpenFileDialog();
     void SaveFileDialog();
+    void Undo();
+    void Redo();
+    void DrawSquare();
+    void DrawRectangle();
+    void DrawCircle();
+    void Group();
+    void Ungroup();
+    void DeleteSimpleGraphic();
 };
 
 #endif // GUI_H
