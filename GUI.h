@@ -66,7 +66,7 @@ private:
     QAction *_deleteSimpleGraphic;
     QMenu *_about;
     QMenu *_file;
-    Graphics *_loadedGraphics;
+    vector<Graphics*> _rootGraphics;
 private slots:
     void MessageDialog();
     void OpenFileDialog();

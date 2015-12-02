@@ -7,6 +7,7 @@ set(CMAKE_AUTOMOC ON)
 project(${PROJECT_NAME})
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY  "${CMAKE_CURRENT_SOURCE_DIR}/")
+#set(CMAKE_PREFIX_PATH "C:\\Qt\\Qt5.5.0\\5.5\\mingw492_32")
 set(QT_INCLUDE_DIR "C:\\Qt\\Qt5.5.0\\5.5\\mingw492_32\\include")
 link_directories("cppunitlite")
 include_directories(${QT_INCLUDE_DIR})

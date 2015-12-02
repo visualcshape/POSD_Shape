@@ -21,14 +21,12 @@ GUI::GUI()
     setMinimumSize(800, 600);
     //setupInitialState();
     Display();
-    _loadedGraphics = 0;
 }
 
 GUI::~GUI()
 {
     delete _widget;
     delete _scene;
-    delete _loadedGraphics;
 }
 
 void GUI::CreateView(){
@@ -126,26 +124,14 @@ void GUI::MessageDialog() {
 void GUI::OpenFileDialog() {
     QString path = QFileDialog::getOpenFileName(this,"Text Files",".","Text Files(*.txt)");
     if(path.length() != 0){
-        _scene->clear();
-        GraphicsFactory factory;
-        Graphics* graphics = factory.buildGraphicsFromFile(path.toStdString().c_str());
-        DrawVisitor drawVisitor(_scene);
-        graphics->accept(drawVisitor);
-        _loadedGraphics = graphics;
+
     }
 }
 
 void GUI::SaveFileDialog() {
     QString path = QFileDialog::getSaveFileName(this,"Text Files",".","Text Files(*.txt)");
     if(path.length() != 0){
-        if(_loadedGraphics!=0){
-            DescriptionVisitor descriptionVisitor;
-            _loadedGraphics->accept(descriptionVisitor);
-            fstream fs;
-            fs.open(path.toStdString().c_str(),std::fstream::out);
-            fs << descriptionVisitor.getDescription();
-            fs.close();
-        }
+        
     }
 }
 

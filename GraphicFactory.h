@@ -33,6 +33,8 @@ public:
 
     Graphics* buildGraphicsFromFile(const char* fileName);
 
+    vector<Graphics*>* buildMultiRootGraphicsFromFile(const char* fileName);
+
     string fileContentAsString(const char* fileName);
 
     Graphics *extractGraphicsFromOneLine(string &contents, int &level);
