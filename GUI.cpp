@@ -69,7 +69,7 @@ void GUI::CreateActions() {
     QIcon* saveFileIcon = new QIcon("Save.png");
     _saveFile = new QAction(*saveFileIcon, "Save File", _widget);
     QIcon squareIcon("Square.png");
-    _drawSquare = new QAction(squareIcon,"Draw a Square", _widget);
+    _drawSquare = new QAction(squareIcon,"Draw Square", _widget);
     QIcon* drawRectangleIcon = new QIcon("Rectangle.png");
     _drawRectangle = new QAction(*drawRectangleIcon,"Draw Rectangle",_widget);
     QIcon* drawCircleIcon = new QIcon("Circle.png");
@@ -80,7 +80,7 @@ void GUI::CreateActions() {
     _redo = new QAction(redoIcon,"Redo",_widget);
     _group = new QAction(QIcon("Group.png"),"Group",_widget);
     _ungroup = new QAction(QIcon("Ungroup.png"),"Ungroup",_widget);
-    _deleteSimpleGraphic = new QAction(QIcon("DeleteSimpleGraphic.png"),"Delete a Simple Graphic",_widget);
+    _deleteSimpleGraphic = new QAction(QIcon("DeleteSimpleGraphic.png"),"Delete a Graphic",_widget);
 }
 
 void GUI::CreateToolButtons() {
