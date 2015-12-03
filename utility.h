@@ -11,6 +11,7 @@ using std::string;
 class Utility {
 public:
     static void deleteSpace(string &stringToDeleteSpace);
+    static void checkFileExist(const char* fileName);
 };
 
 

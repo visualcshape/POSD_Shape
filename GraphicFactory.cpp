@@ -15,13 +15,7 @@ using std::fstream;
 using std::stringstream;
 
 Graphics *GraphicsFactory::buildGraphicsFromFile(const char *fileName) {
-    fstream fileStream;
-    string EXCEPTION = "File does not exist.";
-
-    fileStream.open(fileName);
-    if (!fileStream.is_open())
-        throw string(EXCEPTION);
-    fileStream.close();
+    Utility::checkFileExist(fileName);
 
     string content = this->fileContentAsString(fileName);
     processContent(content);
@@ -46,6 +40,7 @@ void GraphicsFactory::processContent(string &content) {
                 compose();
             }
         }
+
         _compGraphicsStack.push(std::make_pair(_curLevel, producedGraphic));
         takeSnapShot();
     }
@@ -204,4 +199,22 @@ void GraphicsFactory::replaceSimpleNameToFullName(string &des) const {
             des.replace(0, 1, "Rectangle");
             break;
     }
+}
+
+vector<Graphics *>* GraphicsFactory::buildMultiRootGraphicsFromFile(const char *fileName) {
+    vector<Graphics*>* _returnVector = new vector<Graphics*>();
+
+    Utility::checkFileExist(fileName);
+    this->buildGraphicsFromFile(fileName);
+
+    while(!_compGraphicsStack.empty()){
+        _returnVector->push_back(_compGraphicsStack.top().second);
+        _compGraphicsStack.pop();
+    }
+
+    return  _returnVector;
+}
+
+string GraphicsFactory::getLastSnapShot() {
+    return _snapShot[_snapShot.size()-1];
 }

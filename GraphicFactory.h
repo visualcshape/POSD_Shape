@@ -33,6 +33,8 @@ public:
 
     Graphics* buildGraphicsFromFile(const char* fileName);
 
+    vector<Graphics*>* buildMultiRootGraphicsFromFile(const char* fileName);
+
     string fileContentAsString(const char* fileName);
 
     Graphics *extractGraphicsFromOneLine(string &contents, int &level);
@@ -44,6 +46,8 @@ public:
     void processContent(string& content);
 
     string getSnapShotByLine(const int line);
+
+    string getLastSnapShot();
 
     void replaceSimpleNameToFullName(string &des) const;
 };

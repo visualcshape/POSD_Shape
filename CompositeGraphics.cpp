@@ -13,14 +13,14 @@ void CompositeGraphics::add(Graphics* graphic){
 
 void CompositeGraphics::calculateBoundingBox(){
 	//_boundingBox = BoundingBox(0, 0, 0, 0);
-	for (vector<Graphics*>::iterator iterator = _graphics.begin(); iterator != _graphics.end(); iterator++){
+	for (vector<Graphics*>::iterator iterator = _graphics.begin() ; iterator != _graphics.end(); iterator++){
 		if (_boundingBox.area() == 0){
 			_boundingBox = (*iterator)->getBoundingBox();
 		}
 		double newllx = min(_boundingBox.llx(), (*iterator)->getBoundingBox().llx());
 		double newlly = min(_boundingBox.lly(), (*iterator)->getBoundingBox().lly());
 		double newurx = max(_boundingBox.urx(), (*iterator)->getBoundingBox().urx());
-		double newury = max(_boundingBox.urx(), (*iterator)->getBoundingBox().ury());
+		double newury = max(_boundingBox.ury(), (*iterator)->getBoundingBox().ury());
 		double newW = fabs(newury - newlly);
 		double newL = fabs(newurx - newllx);
 
