@@ -63,7 +63,8 @@ void SimpleGraphics::draw(QGraphicsScene *scene) {
     switch(graphicType[0]){
         case 'R':{
             Rectangle* pRectangle = SimpleGraphicFactory::createRectangle(graphicAttribute);
-            QRect* rect = new QRect(pRectangle->positionPoint.getX(), pRectangle->positionPoint.getY(), pRectangle->width, pRectangle->height);
+
+            QRect* rect = new QRect(pRectangle->positionPoint.getX(), pRectangle->positionPoint.getY(), pRectangle->width, pRectangle->length);
             scene->addRect(*rect,pen,brush);
         }
             break;
