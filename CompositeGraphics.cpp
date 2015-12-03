@@ -20,7 +20,7 @@ void CompositeGraphics::calculateBoundingBox(){
 		double newllx = min(_boundingBox.llx(), (*iterator)->getBoundingBox().llx());
 		double newlly = min(_boundingBox.lly(), (*iterator)->getBoundingBox().lly());
 		double newurx = max(_boundingBox.urx(), (*iterator)->getBoundingBox().urx());
-		double newury = max(_boundingBox.urx(), (*iterator)->getBoundingBox().ury());
+		double newury = max(_boundingBox.ury(), (*iterator)->getBoundingBox().ury());
 		double newW = fabs(newury - newlly);
 		double newL = fabs(newurx - newllx);
 
