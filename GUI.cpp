@@ -130,7 +130,7 @@ void GUI::OpenFileDialog() {
         DrawVisitor drawVisitor(_scene);
         graphics->accept(drawVisitor);
         */
-        _scene->clear();
+
         vector<Graphics*>* multiRootsGraphicVector = 0;
         GraphicsFactory graphicsFactory;
         multiRootsGraphicVector = graphicsFactory.buildMultiRootGraphicsFromFile(path.toStdString().c_str());
