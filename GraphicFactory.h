@@ -47,6 +47,8 @@ public:
 
     string getSnapShotByLine(const int line);
 
+    string getLastSnapShot();
+
     void replaceSimpleNameToFullName(string &des) const;
 };
 

@@ -124,7 +124,23 @@ void GUI::MessageDialog() {
 void GUI::OpenFileDialog() {
     QString path = QFileDialog::getOpenFileName(this,"Text Files",".","Text Files(*.txt)");
     if(path.length() != 0){
+        /*
+        GraphicsFactory factory;
+        Graphics* graphics = factory.buildGraphicsFromFile(path.toStdString().c_str());
+        DrawVisitor drawVisitor(_scene);
+        graphics->accept(drawVisitor);
+        */
 
+        vector<Graphics*>* multiRootsGraphicVector = 0;
+        GraphicsFactory graphicsFactory;
+        multiRootsGraphicVector = graphicsFactory.buildMultiRootGraphicsFromFile(path.toStdString().c_str());
+
+        for(vector<Graphics*>::iterator itr = multiRootsGraphicVector->begin() ; itr != multiRootsGraphicVector->end() ; itr++){
+            DrawVisitor drawVisitor(_scene);
+            (*itr)->accept(drawVisitor);
+        }
+
+        cout << graphicsFactory.getLastSnapShot() << endl;
     }
 }
 

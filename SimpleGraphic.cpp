@@ -58,7 +58,7 @@ void SimpleGraphics::draw(QGraphicsScene *scene) {
     token.erase(token.length()-1,1);
     graphicAttribute = token;
 
-    QPen pen(Qt::blue,3,Qt::SolidLine,Qt::RoundCap,Qt::RoundJoin);
+    QPen pen(Qt::blue,1,Qt::SolidLine,Qt::RoundCap,Qt::RoundJoin);
     QBrush brush(QColor(0,0,0,0),Qt::SolidPattern);
     switch(graphicType[0]){
         case 'R':{
@@ -69,7 +69,7 @@ void SimpleGraphics::draw(QGraphicsScene *scene) {
             break;
         case 'C':{
             Circle* circle = SimpleGraphicFactory::createCircle(graphicAttribute);
-            QRect* rect = new QRect(circle->centerX - circle->radius, circle->centerX - circle->radius, circle->radius * 2, circle->radius * 2);
+            QRect* rect = new QRect(circle->centerX - circle->radius, circle->centerY - circle->radius, circle->radius * 2, circle->radius * 2);
             scene->addEllipse(*rect,pen,brush);
         }
             break;

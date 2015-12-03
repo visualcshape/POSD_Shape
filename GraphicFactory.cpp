@@ -40,6 +40,7 @@ void GraphicsFactory::processContent(string &content) {
                 compose();
             }
         }
+
         _compGraphicsStack.push(std::make_pair(_curLevel, producedGraphic));
         takeSnapShot();
     }
@@ -204,16 +205,16 @@ vector<Graphics *>* GraphicsFactory::buildMultiRootGraphicsFromFile(const char *
     vector<Graphics*>* _returnVector = new vector<Graphics*>();
 
     Utility::checkFileExist(fileName);
-
-    string content = this->fileContentAsString(fileName);
-    processContent(content);
-
-    _isFinal = true;
-    compose();
+    this->buildGraphicsFromFile(fileName);
 
     while(!_compGraphicsStack.empty()){
         _returnVector->push_back(_compGraphicsStack.top().second);
+        _compGraphicsStack.pop();
     }
 
     return  _returnVector;
+}
+
+string GraphicsFactory::getLastSnapShot() {
+    return _snapShot[_snapShot.size()-1];
 }
