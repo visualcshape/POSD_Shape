@@ -11,15 +11,6 @@
 
 GUI::GUI()
 {
-    //bind to model
-    GraphicsModel* graphicsModel = new GraphicsModel();
-    graphicsModel->Attach(this);
-    _graphicsModel = graphicsModel;
-    //bind to presentation model...
-    PresentationModel* presentationModel = new PresentationModel();
-    presentationModel->Attach(this);
-    _presentationModel = presentationModel;
-
     CreateView();
     CreateActions();
     CreateMenus();
@@ -28,8 +19,16 @@ GUI::GUI()
     QString title = "Graphics";
     setWindowTitle(title);
     setMinimumSize(800, 600);
-    //setupInitialState();
     Display();
+    //bind to model
+    GraphicsModel* graphicsModel = new GraphicsModel();
+    graphicsModel->Attach(this);
+    _graphicsModel = graphicsModel;
+    //bind to presentation model...
+    PresentationModel* presentationModel = new PresentationModel();
+    presentationModel->Attach(this);
+    _presentationModel = presentationModel;
+    _presentationModel->Refresh();
 }
 
 GUI::~GUI()
@@ -70,7 +69,7 @@ void GUI::SetActionConnection() {
     connect(_drawCircle,SIGNAL(triggered()),this,SLOT(DrawCircle()));
     connect(_group,SIGNAL(triggered()),this,SLOT(Group()));
     connect(_ungroup,SIGNAL(triggered()),this,SLOT(Ungroup()));
-    connect(_deleteSimpleGraphic,SIGNAL(triggered()),this,SLOT(DeleteSimpleGraphic()));
+    connect(_deleteGraphic, SIGNAL(triggered()), this, SLOT(DeleteSimpleGraphic()));
 }
 
 void GUI::CreateActions() {
@@ -92,7 +91,7 @@ void GUI::CreateActions() {
     _redo = new QAction(redoIcon,"Redo",_widget);
     _group = new QAction(QIcon("Group.png"),"Group",_widget);
     _ungroup = new QAction(QIcon("Ungroup.png"),"Ungroup",_widget);
-    _deleteSimpleGraphic = new QAction(QIcon("DeleteSimpleGraphic.png"),"Delete a Graphic",_widget);
+    _deleteGraphic = new QAction(QIcon("DeleteSimpleGraphic.png"), "Delete a Graphic", _widget);
 }
 
 void GUI::CreateToolButtons() {
@@ -110,7 +109,7 @@ void GUI::CreateToolButtons() {
     qtToolBar->addAction(_group);
     qtToolBar->addAction(_ungroup);
     qtToolBar->addSeparator();
-    qtToolBar->addAction(_deleteSimpleGraphic);
+    qtToolBar->addAction(_deleteGraphic);
     //Adjust the toolbar size
     qtToolBar->setFixedWidth(1000);
 }
@@ -138,22 +137,8 @@ void GUI::MessageDialog() {
 void GUI::OpenFileDialog() {
     QString path = QFileDialog::getOpenFileName(this,"Text Files",".","Text Files(*.txt)");
     if(path.length() != 0){
-        /*
-        GraphicsFactory factory;
-        Graphics* graphics = factory.buildGraphicsFromFile(path.toStdString().c_str());
-        DrawVisitor drawVisitor(_scene);
-        graphics->accept(drawVisitor);
-        */
-        _scene->clear();
-        vector<Graphics*>* multiRootsGraphicVector = 0;
         GraphicsFactory graphicsFactory;
-        multiRootsGraphicVector = graphicsFactory.buildMultiRootGraphicsFromFile(path.toStdString().c_str());
-        for(vector<Graphics*>::iterator itr = multiRootsGraphicVector->begin() ; itr != multiRootsGraphicVector->end() ; itr++){
-            DrawVisitor drawVisitor(_scene);
-            (*itr)->accept(drawVisitor);
-        }
-
-        cout << graphicsFactory.getLastSnapShot() << endl;
+        _graphicsModel->setGraphicsVector(graphicsFactory.buildMultiRootGraphicsFromFile(path.toStdString().c_str()));
     }
 }
 
@@ -162,14 +147,6 @@ void GUI::SaveFileDialog() {
     if(path.length() != 0){
         
     }
-}
-
-void GUI::setupInitialState() {
-    _undo->setEnabled(false);
-    _redo->setEnabled(false);
-    _deleteSimpleGraphic->setEnabled(false);
-    _group->setEnabled(false);
-    _ungroup->setEnabled(false);
 }
 
 void GUI::Undo() {
@@ -206,7 +183,24 @@ void GUI::DeleteSimpleGraphic() {
 
 void GUI::Update(Subject *subject) {
     if(subject == _graphicsModel){
+        vector<Graphics*>* graphicsVector = _graphicsModel->getGraphicsVector();
+        //Draw
+        DrawScene(graphicsVector);
         return;
     }
+    if(subject == _presentationModel){
+        _undo->setEnabled(_presentationModel->IsUndoEnabled());
+        _redo->setEnabled(_presentationModel->IsRedoEnabled());
+        _ungroup->setEnabled(_presentationModel->IsUngroupEnabled());
+        _group->setEnabled(_presentationModel->IsGroupEnabled());
+        _deleteGraphic->setEnabled(_presentationModel->IsDeleteGraphicEnabled());
+    }
+}
 
+void GUI::DrawScene(vector<Graphics *> *graphicsVector) const {
+    _scene->clear();
+    for(vector<Graphics*>::iterator iterator = graphicsVector->begin() ; iterator != graphicsVector->end() ; iterator++){
+        DrawVisitor drawVisitor(_scene);
+        (*iterator)->accept(drawVisitor);
+    }
 }
