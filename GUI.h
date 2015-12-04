@@ -31,11 +31,14 @@
 #include <string>
 #include <sstream>
 #include "Graphics.h"
+#include "Observer.h"
+#include "GraphicsModel.h"
+#include "PresentationModel.h"
 
 using namespace std;
 
 
-class GUI: public QMainWindow
+class GUI: public QMainWindow, public Observer
 {
 Q_OBJECT
 public:
@@ -66,7 +69,10 @@ private:
     QAction *_deleteSimpleGraphic;
     QMenu *_about;
     QMenu *_file;
-    vector<Graphics*> _rootGraphics;
+
+    GraphicsModel* _graphicsModel;
+    PresentationModel* _presentationModel;
+    virtual void Update(Subject* subject);
 private slots:
     void MessageDialog();
     void OpenFileDialog();

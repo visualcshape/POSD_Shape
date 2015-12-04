@@ -11,6 +11,15 @@
 
 GUI::GUI()
 {
+    //bind to model
+    GraphicsModel* graphicsModel = new GraphicsModel();
+    graphicsModel->Attach(this);
+    _graphicsModel = graphicsModel;
+    //bind to presentation model...
+    PresentationModel* presentationModel = new PresentationModel();
+    presentationModel->Attach(this);
+    _presentationModel = presentationModel;
+
     CreateView();
     CreateActions();
     CreateMenus();
@@ -25,8 +34,13 @@ GUI::GUI()
 
 GUI::~GUI()
 {
+    //Detach the from the subject
+    _graphicsModel->Detach(this);
+    _presentationModel->Detach(this);
     delete _widget;
     delete _scene;
+    delete _graphicsModel;
+    delete _presentationModel;
 }
 
 void GUI::CreateView(){
@@ -187,5 +201,12 @@ void GUI::Ungroup() {
 }
 
 void GUI::DeleteSimpleGraphic() {
+
+}
+
+void GUI::Update(Subject *subject) {
+    if(subject == _graphicsModel){
+        return;
+    }
 
 }
