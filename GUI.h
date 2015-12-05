@@ -21,7 +21,7 @@
 #include <QGraphicsView>
 #include <QtWidgets/QToolBar>
 #include <QVBoxLayout>
-#include <QGraphicsScene>
+#include "CustomCanvasGraphicsScene.h"
 #include <QMenu>
 #include <QMenuBar>
 #include <QMessageBox>
@@ -50,11 +50,10 @@ public:
     void CreateMenus();
     void CreateToolButtons();
     void SetActionConnection();
-    void setupInitialState();
 protected:
 private:
     QGraphicsView *_graphicsView;
-    QGraphicsScene *_scene;
+    CustomCanvasGraphicsScene *_scene;
     QWidget *_widget;
     QAction *_aboutDeveloper;
     QAction *_openFile;
@@ -66,7 +65,7 @@ private:
     QAction *_redo;
     QAction *_group;
     QAction *_ungroup;
-    QAction *_deleteSimpleGraphic;
+    QAction *_deleteGraphic;
     QMenu *_about;
     QMenu *_file;
 
@@ -85,6 +84,8 @@ private slots:
     void Group();
     void Ungroup();
     void DeleteSimpleGraphic();
+
+    void DrawScene(vector<Graphics *> *graphicsVector) const;
 };
 
 #endif // GUI_H

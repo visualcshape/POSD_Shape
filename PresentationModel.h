@@ -33,9 +33,19 @@ public:
         _deleteGraphicEnabled = isEnabled;
         Notify();
     }
+
+    inline bool IsGroupEnabled() const {return _groupEnabled;}
+    inline void SetGroupEnabled(bool isEnabled){
+        _groupEnabled = isEnabled;
+        Notify();
+    }
+
+    //Force UI update button's Enable state
+    inline void Refresh(){Notify();}
 private:
     bool _undoEnabled;
     bool _redoEnabled;
+    bool _groupEnabled;
     bool _ungroupEnabled;
     bool _deleteGraphicEnabled;
 };

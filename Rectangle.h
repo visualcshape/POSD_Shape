@@ -9,7 +9,7 @@ private:
 protected:
 	void generateBoundingBox();
 public:
-	int height, width;
+	int length, width;
 	Point positionPoint;
 
 	Rectangle(Point p, int l, int w);

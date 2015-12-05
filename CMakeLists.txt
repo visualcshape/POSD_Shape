@@ -53,7 +53,7 @@ set(VISITOR_SOURCE_FILES GraphicsVisitor.cpp GraphicsVisitor.h AreaVisitor.cpp A
 set(FACTORY_SOURCE_FILES GraphicFactory.cpp GraphicFactory.h SimpleGraphicFactory.cpp SimpleGraphicFactory.h CompositeGraphicFactory.cpp CompositeGraphicFactory.h)
 set(UNIT_TEST_SOURCE_FILES utHW3.h)
 set(UTILITY_SOURCE_FILES Utility.cpp Utility.h)
-set(GUI_SOURCE_FILES utGUI.h GUI.cpp GUI.h)
+set(GUI_SOURCE_FILES utGUI.h GUI.cpp GUI.h CustomCanvasGraphicsScene.cpp CustomCanvasGraphicsScene.h)
 set(COMMANDS_SOURCE_FILES Command.h)
 set(MODELS_SOURCE_FILES GraphicsModel.cpp GraphicsModel.h Observer.cpp Observer.h Subject.cpp Subject.h PresentationModel.cpp PresentationModel.h)
 

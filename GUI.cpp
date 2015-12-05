@@ -9,8 +9,15 @@
 #include "DescriptionVisitor.h"
 #include <fstream>
 
+#define WINDOW_SIZE_WIDTH 800
+#define WINDOW_SIZE_HEIGHT 600
+
+#define SCENE_RECT_X -400
+#define SCENE_RECT_Y -300
+
 GUI::GUI()
 {
+    const char* TITLE = "Graphic";
     //bind to model
     GraphicsModel* graphicsModel = new GraphicsModel();
     graphicsModel->Attach(this);
@@ -19,17 +26,15 @@ GUI::GUI()
     PresentationModel* presentationModel = new PresentationModel();
     presentationModel->Attach(this);
     _presentationModel = presentationModel;
-
     CreateView();
     CreateActions();
     CreateMenus();
     CreateToolButtons();
     SetActionConnection();
-    QString title = "Graphics";
-    setWindowTitle(title);
-    setMinimumSize(800, 600);
-    //setupInitialState();
+    setWindowTitle(TITLE);
+    setMinimumSize(WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT);
     Display();
+    _presentationModel->Refresh();
 }
 
 GUI::~GUI()
@@ -44,19 +49,23 @@ GUI::~GUI()
 }
 
 void GUI::CreateView(){
+    const char* GRAPHIC_VIEW_NAME = "graphicView";
     _widget = new QWidget();
     setCentralWidget(_widget);
     _graphicsView = new QGraphicsView(_widget);
-    QString gView = "graphicView";
-    _graphicsView->setObjectName(gView);
+    _graphicsView->setObjectName(GRAPHIC_VIEW_NAME);
 
-    _scene = new QGraphicsScene();
+    _scene = new CustomCanvasGraphicsScene(this->_graphicsModel);
+    const QRectF SCENE_RECT(SCENE_RECT_X,SCENE_RECT_Y,WINDOW_SIZE_WIDTH,WINDOW_SIZE_HEIGHT);
+    _scene->setSceneRect(SCENE_RECT);
 
     _graphicsView->setScene(_scene);
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setMargin(0);
     layout->addWidget(_graphicsView);
     _widget->setLayout(layout);
+    //Not resizable
+    this->layout()->setSizeConstraint(QLayout::SetFixedSize);
 }
 
 void GUI::SetActionConnection() {
@@ -70,7 +79,7 @@ void GUI::SetActionConnection() {
     connect(_drawCircle,SIGNAL(triggered()),this,SLOT(DrawCircle()));
     connect(_group,SIGNAL(triggered()),this,SLOT(Group()));
     connect(_ungroup,SIGNAL(triggered()),this,SLOT(Ungroup()));
-    connect(_deleteSimpleGraphic,SIGNAL(triggered()),this,SLOT(DeleteSimpleGraphic()));
+    connect(_deleteGraphic, SIGNAL(triggered()), this, SLOT(DeleteSimpleGraphic()));
 }
 
 void GUI::CreateActions() {
@@ -92,7 +101,7 @@ void GUI::CreateActions() {
     _redo = new QAction(redoIcon,"Redo",_widget);
     _group = new QAction(QIcon("Group.png"),"Group",_widget);
     _ungroup = new QAction(QIcon("Ungroup.png"),"Ungroup",_widget);
-    _deleteSimpleGraphic = new QAction(QIcon("DeleteSimpleGraphic.png"),"Delete a Graphic",_widget);
+    _deleteGraphic = new QAction(QIcon("DeleteSimpleGraphic.png"), "Delete a Graphic", _widget);
 }
 
 void GUI::CreateToolButtons() {
@@ -110,7 +119,7 @@ void GUI::CreateToolButtons() {
     qtToolBar->addAction(_group);
     qtToolBar->addAction(_ungroup);
     qtToolBar->addSeparator();
-    qtToolBar->addAction(_deleteSimpleGraphic);
+    qtToolBar->addAction(_deleteGraphic);
     //Adjust the toolbar size
     qtToolBar->setFixedWidth(1000);
 }
@@ -138,22 +147,8 @@ void GUI::MessageDialog() {
 void GUI::OpenFileDialog() {
     QString path = QFileDialog::getOpenFileName(this,"Text Files",".","Text Files(*.txt)");
     if(path.length() != 0){
-        /*
-        GraphicsFactory factory;
-        Graphics* graphics = factory.buildGraphicsFromFile(path.toStdString().c_str());
-        DrawVisitor drawVisitor(_scene);
-        graphics->accept(drawVisitor);
-        */
-        _scene->clear();
-        vector<Graphics*>* multiRootsGraphicVector = 0;
         GraphicsFactory graphicsFactory;
-        multiRootsGraphicVector = graphicsFactory.buildMultiRootGraphicsFromFile(path.toStdString().c_str());
-        for(vector<Graphics*>::iterator itr = multiRootsGraphicVector->begin() ; itr != multiRootsGraphicVector->end() ; itr++){
-            DrawVisitor drawVisitor(_scene);
-            (*itr)->accept(drawVisitor);
-        }
-
-        cout << graphicsFactory.getLastSnapShot() << endl;
+        _graphicsModel->setGraphicsVector(graphicsFactory.buildMultiRootGraphicsFromFile(path.toStdString().c_str()));
     }
 }
 
@@ -162,14 +157,6 @@ void GUI::SaveFileDialog() {
     if(path.length() != 0){
         
     }
-}
-
-void GUI::setupInitialState() {
-    _undo->setEnabled(false);
-    _redo->setEnabled(false);
-    _deleteSimpleGraphic->setEnabled(false);
-    _group->setEnabled(false);
-    _ungroup->setEnabled(false);
 }
 
 void GUI::Undo() {
@@ -181,15 +168,15 @@ void GUI::Redo() {
 }
 
 void GUI::DrawSquare() {
-
+    _graphicsModel->addSquareOnOriginalPoint();
 }
 
 void GUI::DrawRectangle() {
-
+    _graphicsModel->addRectangleOnOriginalPoint();
 }
 
 void GUI::DrawCircle() {
-
+    _graphicsModel->addCircleOnOriginalPoint();
 }
 
 void GUI::Group() {
@@ -206,7 +193,23 @@ void GUI::DeleteSimpleGraphic() {
 
 void GUI::Update(Subject *subject) {
     if(subject == _graphicsModel){
+        //Draw
+        DrawScene(_graphicsModel->getGraphicsVector());
         return;
     }
+    if(subject == _presentationModel){
+        _undo->setEnabled(_presentationModel->IsUndoEnabled());
+        _redo->setEnabled(_presentationModel->IsRedoEnabled());
+        _ungroup->setEnabled(_presentationModel->IsUngroupEnabled());
+        _group->setEnabled(_presentationModel->IsGroupEnabled());
+        _deleteGraphic->setEnabled(_presentationModel->IsDeleteGraphicEnabled());
+    }
+}
 
+void GUI::DrawScene(vector<Graphics *> *graphicsVector) const {
+    _scene->clear();
+    for(vector<Graphics*>::iterator iterator = graphicsVector->begin() ; iterator != graphicsVector->end() ; iterator++){
+        DrawVisitor drawVisitor(_scene);
+        (*iterator)->accept(drawVisitor);
+    }
 }

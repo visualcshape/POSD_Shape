@@ -16,10 +16,9 @@ public:
     virtual void Attach(Observer*);
 
     virtual void Detach(Observer*);
-
+protected:
     virtual void Notify();
 
-protected:
     Subject();
 private:
     list<Observer*> *_observers;
