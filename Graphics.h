@@ -33,7 +33,7 @@ public:
 
 	virtual void draw(QGraphicsScene* scene){}
 
-    inline void setSelected(bool selected){_selected = selected;}
+    virtual void setSelected(bool selected){_selected = selected;}
 
     inline bool isSelected(){return _selected;}
 };

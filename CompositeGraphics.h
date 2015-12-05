@@ -27,6 +27,8 @@ public:
 	void increaseCompositeLevel();
 
 	virtual void draw(QGraphicsScene* scene);
+
+	virtual void setSelected(bool selected);
 };
 
 #endif

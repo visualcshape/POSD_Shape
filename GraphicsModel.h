@@ -25,6 +25,10 @@ public:
 
     void addSquareOnOriginalPoint();
 
+    void pushBackGraphic(Graphics* graphicToPush);
+
+    void insertGraphicFromFront(Graphics* graphicToInsert);
+
     bool saveFile(const char* fileName);
 
     bool loadFile(const char* fileName);

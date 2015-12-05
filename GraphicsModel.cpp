@@ -19,23 +19,20 @@
 
 void GraphicsModel::addRectangleOnOriginalPoint() {
     Rectangle* rectangleToAdd = new Rectangle(ORIGINAL_X,ORIGINAL_Y,LENGTH,WIDTH);
-    SimpleGraphics* graphicToAdd = new SimpleGraphics(rectangleToAdd);
-    _graphicsVector->push_back(graphicToAdd);
-    Notify();
+    SimpleGraphics* graphicsToAdd = new SimpleGraphics(rectangleToAdd);
+    this->pushBackGraphic(graphicsToAdd);
 }
 
 void GraphicsModel::addCircleOnOriginalPoint() {
     Circle* circleToAdd = new Circle(ORIGINAL_X,ORIGINAL_Y,RADIUS);
     SimpleGraphics* graphicsToAdd = new SimpleGraphics(circleToAdd);
-    _graphicsVector->push_back(graphicsToAdd);
-    Notify();
+    this->pushBackGraphic(graphicsToAdd);
 }
 
 void GraphicsModel::addSquareOnOriginalPoint() {
     Square* squareToAdd = new Square(ORIGINAL_X,ORIGINAL_Y,LENGTH);
     SimpleGraphics* graphicsToAdd = new SimpleGraphics(squareToAdd);
-    _graphicsVector->push_back(graphicsToAdd);
-    Notify();
+    this->pushBackGraphic(graphicsToAdd);
 }
 
 void GraphicsModel::setGraphicsVector(vector<Graphics *> *graphicVector) {
@@ -70,7 +67,7 @@ bool GraphicsModel::saveFile(const char *fileName) {
 Graphics* GraphicsModel::hitGraphic(QPointF pressPoint) {
     Graphics* hitGraphic = NULL;
 
-    for(vector<Graphics*>::iterator iterator = _graphicsVector->begin() ; iterator != _graphicsVector->end() ; iterator++){
+    for(vector<Graphics*>::reverse_iterator iterator = _graphicsVector->rbegin() ; iterator != _graphicsVector->rend() ; iterator++){
         if(this->IsPointInGraphicBoundingBox((*iterator),pressPoint)){
             hitGraphic = (*iterator);
             break;
@@ -105,4 +102,16 @@ void GraphicsModel::changeSelectedGraphic(Graphics *graphic) {
     }else{
         _selectedGraphic = NULL;
     }
+}
+
+void GraphicsModel::pushBackGraphic(Graphics* graphicToPush) {
+    if(_graphicsVector)
+        _graphicsVector->push_back(graphicToPush);
+    Notify();
+}
+
+void GraphicsModel::insertGraphicFromFront(Graphics *graphicToInsert) {
+    if(_graphicsVector)
+        _graphicsVector->insert(_graphicsVector->begin(),graphicToInsert);
+    Notify();
 }

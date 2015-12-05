@@ -90,3 +90,10 @@ void CompositeGraphics::draw(QGraphicsScene *scene) {
     for(vector<Graphics*>::iterator itr = _graphics.begin() ; itr != _graphics.end() ; itr++)
         (*itr)->draw(scene);
 }
+
+void CompositeGraphics::setSelected(bool selected) {
+    this->_selected = selected;
+    for(vector<Graphics*>::iterator iterator = _graphics.begin() ; iterator!=_graphics.end() ; iterator++){
+        (*iterator)->setSelected(selected);
+    }
+}
