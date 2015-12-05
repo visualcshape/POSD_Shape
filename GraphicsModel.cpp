@@ -8,6 +8,8 @@
 #include "Circle.h"
 #include "Square.h"
 #include "GraphicFactory.h"
+#include "DescriptionVisitor.h"
+#include <fstream>
 
 #define ORIGINAL_X 0
 #define ORIGINAL_Y 0
@@ -36,12 +38,31 @@ void GraphicsModel::addSquareOnOriginalPoint() {
     Notify();
 }
 
+void GraphicsModel::setGraphicsVector(vector<Graphics *> *graphicVector) {
+    vector<Graphics*>* deleteGraphicVector = _graphicsVector;
+    _graphicsVector = graphicVector;
+    delete deleteGraphicVector;
+    Notify();
+}
+
 bool GraphicsModel::loadFile(const char *fileName) {
     GraphicsFactory factory;
     try{
         vector<Graphics*>* builtGraphicsVector = factory.buildMultiRootGraphicsFromFile(fileName);
         this->setGraphicsVector(builtGraphicsVector);
     }catch (std::string exceptionMessage){
-
+        throw exceptionMessage;
     }
+}
+
+bool GraphicsModel::saveFile(const char *fileName) {
+    std::fstream fileStream;
+    fileStream.open(fileName,std::ios::out);
+    for(vector<Graphics*>::iterator iterator = _graphicsVector->begin() ; iterator != _graphicsVector->end() ; iterator++){
+        DescriptionVisitor descriptionVisitor;
+        (*iterator)->accept(descriptionVisitor);
+        fileStream << descriptionVisitor.getDescription();
+    }
+
+    fileStream.close();
 }

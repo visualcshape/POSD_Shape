@@ -16,10 +16,7 @@ public:
         _graphicsVector = new vector<Graphics*>();
     }
 
-    void setGraphicsVector(vector<Graphics*>* graphicVector) {
-        _graphicsVector = graphicVector;
-        Notify();
-    }
+    void setGraphicsVector(vector<Graphics*>* graphicVector);
 
     void addRectangleOnOriginalPoint();
 
