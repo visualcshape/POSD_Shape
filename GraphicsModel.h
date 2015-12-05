@@ -14,6 +14,7 @@ class GraphicsModel : public Subject {
 public:
     GraphicsModel(){
         _graphicsVector = new vector<Graphics*>();
+        _selectedGraphic = NULL;
     }
 
     void setGraphicsVector(vector<Graphics*>* graphicVector);
@@ -28,9 +29,18 @@ public:
 
     bool loadFile(const char* fileName);
 
+    //if no graphic hit return null ptr.
+    Graphics* hitGraphic(QPointF pressPoint);
+
     vector<Graphics*>* getGraphicsVector(){ return _graphicsVector;}
 private:
     vector<Graphics*>*_graphicsVector;
+
+    Graphics* _selectedGraphic;
+
+    bool IsPointInGraphicBoundingBox(Graphics* graphics, QPointF point);
+
+    void changeSelectedGraphic(Graphics* graphic);
 };
 
 

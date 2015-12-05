@@ -54,7 +54,7 @@ void SimpleGraphics::draw(QGraphicsScene *scene) {
     const Qt::BrushStyle BRUSH_STYLE = Qt::NoBrush;
     //Draw on scene
     if(_selected)
-        penColor.red();
+        penColor = Qt::red;
     QPen pen(penColor, PEN_WIDTH, PEN_STYLE, PEN_CAP_STYLE, PEN_JOIN_STYLE);
     QBrush brush(BRUSH_COLOR, BRUSH_STYLE);
     BoundingBox shapeBoundingBox = _shape->getBoundingBox();

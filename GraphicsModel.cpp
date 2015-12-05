@@ -66,3 +66,43 @@ bool GraphicsModel::saveFile(const char *fileName) {
 
     fileStream.close();
 }
+
+Graphics* GraphicsModel::hitGraphic(QPointF pressPoint) {
+    Graphics* hitGraphic = NULL;
+
+    for(vector<Graphics*>::iterator iterator = _graphicsVector->begin() ; iterator != _graphicsVector->end() ; iterator++){
+        if(this->IsPointInGraphicBoundingBox((*iterator),pressPoint)){
+            hitGraphic = (*iterator);
+            break;
+        }
+    }
+
+    changeSelectedGraphic(hitGraphic);
+    Notify();
+    return hitGraphic;
+}
+bool GraphicsModel::IsPointInGraphicBoundingBox(Graphics *graphics, QPointF point) {
+    int pointX = (int)point.x();
+    int pointY = (int)point.y();
+    BoundingBox graphicBoundingBox = graphics->getBoundingBox();
+    int boundingBoxLeftTopPointX = (int)graphicBoundingBox.llx();
+    int boundingBoxLeftTopPointY = (int)graphicBoundingBox.lly();
+    int boundingBoxRightBottomX = (int)graphicBoundingBox.urx();
+    int boundingBoxRightBottomY = (int)graphicBoundingBox.ury();
+    if(pointX >= boundingBoxLeftTopPointX && pointX <= boundingBoxRightBottomX && pointY >= boundingBoxLeftTopPointY && pointY <= boundingBoxRightBottomY)
+        return true;
+    else
+        return false;
+}
+
+void GraphicsModel::changeSelectedGraphic(Graphics *graphic) {
+    if(_selectedGraphic) {
+        _selectedGraphic->setSelected(false);
+    }
+    if(graphic) {
+        graphic->setSelected(true);
+        _selectedGraphic = graphic;
+    }else{
+        _selectedGraphic = NULL;
+    }
+}

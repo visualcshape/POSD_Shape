@@ -82,7 +82,7 @@ void CompositeGraphics::increaseCompositeLevel() {
 void CompositeGraphics::draw(QGraphicsScene *scene) {
     QColor penColor(Qt::green);
     if(_selected)
-        penColor.red();
+        penColor = Qt::red;
     QPen pen(penColor,3,Qt::SolidLine,Qt::RoundCap,Qt::RoundJoin);
     QBrush brush(QColor(0,0,0,0),Qt::SolidPattern);
     QRect boundingRect(((int)_boundingBox.llx()),((int)_boundingBox.lly()),((int)_boundingBox.l()),((int)_boundingBox.w()));
