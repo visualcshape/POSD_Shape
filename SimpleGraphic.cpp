@@ -44,7 +44,7 @@ void SimpleGraphics::increaseCompositeLevel() {
 
 void SimpleGraphics::draw(QGraphicsScene *scene) {
     //Pen Configuration
-    const QColor PEN_COLOR = Qt::blue;
+    QColor penColor = Qt::blue;
     const int PEN_WIDTH = 3;
     const Qt::PenStyle PEN_STYLE = Qt::SolidLine;
     const Qt::PenCapStyle PEN_CAP_STYLE = Qt::SquareCap;
@@ -53,7 +53,9 @@ void SimpleGraphics::draw(QGraphicsScene *scene) {
     const QColor BRUSH_COLOR = QColor(0, 0, 0, 0);
     const Qt::BrushStyle BRUSH_STYLE = Qt::NoBrush;
     //Draw on scene
-    QPen pen(PEN_COLOR, PEN_WIDTH, PEN_STYLE, PEN_CAP_STYLE, PEN_JOIN_STYLE);
+    if(_selected)
+        penColor.red();
+    QPen pen(penColor, PEN_WIDTH, PEN_STYLE, PEN_CAP_STYLE, PEN_JOIN_STYLE);
     QBrush brush(BRUSH_COLOR, BRUSH_STYLE);
     BoundingBox shapeBoundingBox = _shape->getBoundingBox();
     QPoint rectPosition(shapeBoundingBox.llx(), shapeBoundingBox.lly());
