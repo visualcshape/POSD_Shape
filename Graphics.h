@@ -11,8 +11,9 @@ class Graphics{
 protected:
 	BoundingBox _boundingBox;
 	int _compositeLevel;
+	bool _selected;
 public:
-	Graphics():_boundingBox(0,0,0,0),_compositeLevel(0){}
+	Graphics():_boundingBox(0,0,0,0),_compositeLevel(0),_selected(false){}
 
 	virtual BoundingBox getBoundingBox(){ return _boundingBox; }
 	

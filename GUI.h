@@ -21,7 +21,7 @@
 #include <QGraphicsView>
 #include <QtWidgets/QToolBar>
 #include <QVBoxLayout>
-#include <QGraphicsScene>
+#include "CustomCanvasGraphicsScene.h"
 #include <QMenu>
 #include <QMenuBar>
 #include <QMessageBox>
@@ -53,7 +53,7 @@ public:
 protected:
 private:
     QGraphicsView *_graphicsView;
-    QGraphicsScene *_scene;
+    CustomCanvasGraphicsScene *_scene;
     QWidget *_widget;
     QAction *_aboutDeveloper;
     QAction *_openFile;

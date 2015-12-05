@@ -9,17 +9,15 @@
 #include "DescriptionVisitor.h"
 #include <fstream>
 
+#define WINDOW_SIZE_WIDTH 800
+#define WINDOW_SIZE_HEIGHT 600
+
+#define SCENE_RECT_X -400
+#define SCENE_RECT_Y -300
+
 GUI::GUI()
 {
-    CreateView();
-    CreateActions();
-    CreateMenus();
-    CreateToolButtons();
-    SetActionConnection();
-    QString title = "Graphics";
-    setWindowTitle(title);
-    setMinimumSize(800, 600);
-    Display();
+    const char* TITLE = "Graphic";
     //bind to model
     GraphicsModel* graphicsModel = new GraphicsModel();
     graphicsModel->Attach(this);
@@ -28,6 +26,14 @@ GUI::GUI()
     PresentationModel* presentationModel = new PresentationModel();
     presentationModel->Attach(this);
     _presentationModel = presentationModel;
+    CreateView();
+    CreateActions();
+    CreateMenus();
+    CreateToolButtons();
+    SetActionConnection();
+    setWindowTitle(TITLE);
+    setMinimumSize(WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT);
+    Display();
     _presentationModel->Refresh();
 }
 
@@ -43,19 +49,23 @@ GUI::~GUI()
 }
 
 void GUI::CreateView(){
+    const char* GRAPHIC_VIEW_NAME = "graphicView";
     _widget = new QWidget();
     setCentralWidget(_widget);
     _graphicsView = new QGraphicsView(_widget);
-    QString gView = "graphicView";
-    _graphicsView->setObjectName(gView);
+    _graphicsView->setObjectName(GRAPHIC_VIEW_NAME);
 
-    _scene = new QGraphicsScene();
+    _scene = new CustomCanvasGraphicsScene(this->_graphicsModel);
+    const QRectF SCENE_RECT(SCENE_RECT_X,SCENE_RECT_Y,WINDOW_SIZE_WIDTH,WINDOW_SIZE_HEIGHT);
+    _scene->setSceneRect(SCENE_RECT);
 
     _graphicsView->setScene(_scene);
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setMargin(0);
     layout->addWidget(_graphicsView);
     _widget->setLayout(layout);
+    //Not resizable
+    this->layout()->setSizeConstraint(QLayout::SetFixedSize);
 }
 
 void GUI::SetActionConnection() {
@@ -158,15 +168,15 @@ void GUI::Redo() {
 }
 
 void GUI::DrawSquare() {
-
+    _graphicsModel->addSquareOnOriginalPoint();
 }
 
 void GUI::DrawRectangle() {
-
+    _graphicsModel->addRectangleOnOriginalPoint();
 }
 
 void GUI::DrawCircle() {
-
+    _graphicsModel->addCircleOnOriginalPoint();
 }
 
 void GUI::Group() {
@@ -183,9 +193,8 @@ void GUI::DeleteSimpleGraphic() {
 
 void GUI::Update(Subject *subject) {
     if(subject == _graphicsModel){
-        vector<Graphics*>* graphicsVector = _graphicsModel->getGraphicsVector();
         //Draw
-        DrawScene(graphicsVector);
+        DrawScene(_graphicsModel->getGraphicsVector());
         return;
     }
     if(subject == _presentationModel){
