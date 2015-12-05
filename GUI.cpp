@@ -147,15 +147,23 @@ void GUI::MessageDialog() {
 void GUI::OpenFileDialog() {
     QString path = QFileDialog::getOpenFileName(this,"Text Files",".","Text Files(*.txt)");
     if(path.length() != 0){
-        GraphicsFactory graphicsFactory;
-        _graphicsModel->setGraphicsVector(graphicsFactory.buildMultiRootGraphicsFromFile(path.toStdString().c_str()));
+        try{
+            _graphicsModel->loadFile(path.toStdString().c_str());
+        }catch (string exceptionMessage){
+            const QString MESSAGE_BOX_TITLE = "Load File Error";
+            const QString MESSAGE_BOX_MESSAGE = exceptionMessage.c_str();
+            QMessageBox messageBox(this);
+            messageBox.setWindowTitle(MESSAGE_BOX_TITLE);
+            messageBox.setText(MESSAGE_BOX_MESSAGE);
+            messageBox.exec();
+        }
     }
 }
 
 void GUI::SaveFileDialog() {
     QString path = QFileDialog::getSaveFileName(this,"Text Files",".","Text Files(*.txt)");
     if(path.length() != 0){
-        
+        _graphicsModel->saveFile(path.toStdString().c_str());
     }
 }
 

@@ -7,7 +7,7 @@
 
 void CustomCanvasGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     std::cout << "Mouse click on scene : (" << event->scenePos().x() << "," << event->scenePos().y() << ")" << std::endl;
-
+    _graphicsModel->hitGraphic(event->scenePos());
 }
 
 void CustomCanvasGraphicsScene::dragEnterEvent(QGraphicsSceneDragDropEvent *event) {

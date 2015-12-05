@@ -32,6 +32,10 @@ public:
 	virtual void increaseCompositeLevel() {_compositeLevel++;}
 
 	virtual void draw(QGraphicsScene* scene){}
+
+    inline void setSelected(bool selected){_selected = selected;}
+
+    inline bool isSelected(){return _selected;}
 };
 
 #endif
