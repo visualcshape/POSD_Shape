@@ -12,7 +12,11 @@ public:
 	Circle(int cx, int cy, int radius);
 	string print();
 	virtual int area() const;
-	string describe();
+
+    virtual void translation(QPoint translationLength);
+
+    string describe();
+	virtual void recalculateBoundingBox();
 };
 
 #endif

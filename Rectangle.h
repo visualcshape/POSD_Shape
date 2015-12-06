@@ -15,8 +15,12 @@ public:
 	Rectangle(Point p, int l, int w);
 	Rectangle(int x, int y, int l, int w);
 	string print();
-	int area() const;
+
+    virtual void translation(QPoint translationLength);
+
+    int area() const;
 	string describe();
+	virtual void recalculateBoundingBox();
 };
 
 #endif

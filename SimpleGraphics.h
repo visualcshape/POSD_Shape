@@ -23,6 +23,8 @@ public:
 	void increaseCompositeLevel();
 
 	virtual void draw(QGraphicsScene* scene);
+
+	virtual void translation(QPoint translationLength);
 };
 
 #endif

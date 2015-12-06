@@ -66,6 +66,8 @@ void GUI::CreateView(){
     _widget->setLayout(layout);
     //Not resizable
     this->layout()->setSizeConstraint(QLayout::SetFixedSize);
+    //Drop acceptable
+    this->setAcceptDrops(true);
 }
 
 void GUI::SetActionConnection() {

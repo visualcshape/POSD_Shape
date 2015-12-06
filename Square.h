@@ -14,6 +14,9 @@ public:
 	string print();
 	virtual int area() const;
     string describe();
+	virtual void recalculateBoundingBox();
+
+    virtual void translation(QPoint translationLength);
 };
 
 #endif

@@ -54,7 +54,7 @@ void SimpleGraphics::draw(QGraphicsScene *scene) {
     const Qt::BrushStyle BRUSH_STYLE = Qt::NoBrush;
     //Draw on scene
     if(_selected)
-        penColor = Qt::red;
+        penColor = Qt::darkRed;
     QPen pen(penColor, PEN_WIDTH, PEN_STYLE, PEN_CAP_STYLE, PEN_JOIN_STYLE);
     QBrush brush(BRUSH_COLOR, BRUSH_STYLE);
     BoundingBox shapeBoundingBox = _shape->getBoundingBox();
@@ -68,4 +68,9 @@ void SimpleGraphics::draw(QGraphicsScene *scene) {
         return;
     }
     scene->addRect(drawRectangle,pen,brush);
+}
+
+void SimpleGraphics::translation(QPoint translationLength) {
+    _shape->translation(translationLength);
+    _boundingBox = _shape->getBoundingBox();
 }

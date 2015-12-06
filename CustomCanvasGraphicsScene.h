@@ -13,13 +13,16 @@
 class CustomCanvasGraphicsScene : public QGraphicsScene {
 private:
     GraphicsModel* _graphicsModel;
+    //Drag
+    QPointF _dragStartPosition;
+    bool _dragging;
+    bool _hasGraphicDragging;
 public:
-    CustomCanvasGraphicsScene(GraphicsModel* graphicsModel):_graphicsModel(graphicsModel){}
+    CustomCanvasGraphicsScene(GraphicsModel* graphicsModel);
 protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    virtual void dragEnterEvent(QGraphicsSceneDragDropEvent *event);
-    virtual void dragMoveEvent(QGraphicsSceneDragDropEvent *event);
-    virtual void dragLeaveEvent(QGraphicsSceneDragDropEvent *event);
+    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
 };
 
 

@@ -25,6 +25,12 @@ public:
 
     void addSquareOnOriginalPoint();
 
+    void pushBackGraphic(Graphics* graphicToPush);
+
+    void insertGraphicFromFront(Graphics* graphicToInsert);
+
+    void translationGraphic(Graphics* graphicToTranslate, QPoint translationLength);
+
     bool saveFile(const char* fileName);
 
     bool loadFile(const char* fileName);
@@ -33,6 +39,8 @@ public:
     Graphics* hitGraphic(QPointF pressPoint);
 
     vector<Graphics*>* getGraphicsVector(){ return _graphicsVector;}
+
+    Graphics* getSelectedGraphic();
 private:
     vector<Graphics*>*_graphicsVector;
 

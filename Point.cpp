@@ -17,3 +17,11 @@ string Point::print() {
 	oss << name() << "(" << _x << "," << _y << ")";
 	return oss.str();
 }
+
+void Point::setX(int x) {
+	this->_x = x;
+}
+
+void Point::setY(int y) {
+	this->_y = y;
+}

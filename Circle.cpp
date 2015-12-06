@@ -29,3 +29,13 @@ string Circle::describe() {
 
 	return ss.str();
 }
+
+void Circle::recalculateBoundingBox() {
+    this->generateBoundingBox();
+}
+
+void Circle::translation(QPoint translationLength) {
+    this->centerX += translationLength.x();
+    this->centerY += translationLength.y();
+    this->generateBoundingBox();
+}
