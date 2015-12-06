@@ -69,3 +69,8 @@ void SimpleGraphics::draw(QGraphicsScene *scene) {
     }
     scene->addRect(drawRectangle,pen,brush);
 }
+
+void SimpleGraphics::translation(QPoint translationLength) {
+    _shape->translation(translationLength);
+    _boundingBox = _shape->getBoundingBox();
+}

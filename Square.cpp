@@ -30,3 +30,15 @@ string Square::describe() {
 
 	return ss.str();
 }
+
+void Square::recalculateBoundingBox() {
+	this->generateBoundingBox();
+}
+
+void Square::translation(QPoint translationLength) {
+	int moveX = translationLength.x();
+	int moveY = translationLength.y();
+    this->x += moveX;
+    this->y += moveY;
+    this->generateBoundingBox();
+}

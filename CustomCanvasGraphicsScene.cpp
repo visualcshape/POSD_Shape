@@ -8,59 +8,46 @@
 #include <QDebug>
 #include <QApplication>
 
-CustomCanvasGraphicsScene::CustomCanvasGraphicsScene(GraphicsModel *graphicsModel) : _graphicsModel(graphicsModel) {
+CustomCanvasGraphicsScene::CustomCanvasGraphicsScene(GraphicsModel *graphicsModel) : _graphicsModel(graphicsModel),_dragging(false),_hasGraphicDragging(false) {
 
 }
 
 void CustomCanvasGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-    QGraphicsScene::mousePressEvent(event);
     qDebug() << "Mouse click on scene : (" << event->scenePos().x() << "," << event->scenePos().y() << ")";
-    if(event->button() == Qt::LeftButton)
+    if(event->button() == Qt::LeftButton) {
+        event->accept();
         _dragStartPosition = event->scenePos();
-    _graphicsModel->hitGraphic(event->scenePos());
-}
-
-void CustomCanvasGraphicsScene::dragEnterEvent(QGraphicsSceneDragDropEvent *event) {
-    QGraphicsScene::dragEnterEvent(event);
-    qDebug() << "Drag Start...";
-    event->accept();
-    event->acceptProposedAction();
-
-}
-
-void CustomCanvasGraphicsScene::dragMoveEvent(QGraphicsSceneDragDropEvent *event) {
-    QGraphicsScene::dragMoveEvent(event);
-    qDebug() << "Dragging...";
-    event->accept();
-    event->acceptProposedAction();
-}
-
-void CustomCanvasGraphicsScene::dragLeaveEvent(QGraphicsSceneDragDropEvent *event) {
-    QGraphicsScene::dragLeaveEvent(event);
-    qDebug() << "Drag end";
-    event->accept();
-    event->proposedAction();
+        _graphicsModel->hitGraphic(event->scenePos());
+    }
+    QGraphicsScene::mousePressEvent(event);
 }
 
 void CustomCanvasGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
     const int START_DRAG_THRESHOLD = 10;
+    Graphics* hitGraphic = NULL;
     if(!(event->buttons() & Qt::LeftButton))
         return;
     if((event->scenePos() - _dragStartPosition).manhattanLength() < START_DRAG_THRESHOLD)
         return;
+    if(!_dragging && !_hasGraphicDragging) {
+        hitGraphic = _graphicsModel->hitGraphic(event->scenePos());
+        _dragging = true;
+    }
+    if(!hitGraphic && !_hasGraphicDragging){
+        _dragging = false;
+        return;
+    }
     event->accept();
+    _dragging = true;
+    _hasGraphicDragging = true;
+    _graphicsModel->translationGraphic(_graphicsModel->getSelectedGraphic(),QPoint((event->scenePos()-_dragStartPosition).toPoint()));
+    _dragStartPosition = event->scenePos();
 
-    QDrag *drag = new QDrag(this);
-    CustomCanvasGraphicsScene *thisItem = this;
-    QByteArray byteArray(reinterpret_cast<char *>(&thisItem), sizeof(CustomCanvasGraphicsScene *));
-    QMimeData *mimeData = new QMimeData;
-    mimeData->setData("CustomCanvasGraphicsScene", byteArray);
-    drag->setMimeData(mimeData);
-    drag->start();
     QGraphicsScene::mouseMoveEvent(event);
 }
 
 void CustomCanvasGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
+    _dragging = false;
+    _hasGraphicDragging = false;
     QGraphicsScene::mouseReleaseEvent(event);
-
 }

@@ -36,6 +36,8 @@ public:
     virtual void setSelected(bool selected){_selected = selected;}
 
     inline bool isSelected(){return _selected;}
+
+    virtual void translation(QPoint translationLength){}
 };
 
 #endif

@@ -12,7 +12,7 @@ void CompositeGraphics::add(Graphics* graphic){
 }
 
 void CompositeGraphics::calculateBoundingBox(){
-	//_boundingBox = BoundingBox(0, 0, 0, 0);
+	_boundingBox = BoundingBox(0, 0, 0, 0);
 	for (vector<Graphics*>::iterator iterator = _graphics.begin() ; iterator != _graphics.end(); iterator++){
 		if (_boundingBox.area() == 0){
 			_boundingBox = (*iterator)->getBoundingBox();
@@ -96,4 +96,11 @@ void CompositeGraphics::setSelected(bool selected) {
     for(vector<Graphics*>::iterator iterator = _graphics.begin() ; iterator!=_graphics.end() ; iterator++){
         (*iterator)->setSelected(selected);
     }
+}
+
+void CompositeGraphics::translation(QPoint translationLength) {
+    for(vector<Graphics*>::iterator iterator = _graphics.begin() ; iterator!=_graphics.end() ; iterator++){
+        (*iterator)->translation(translationLength);
+    }
+    this->calculateBoundingBox();
 }

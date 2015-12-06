@@ -10,6 +10,7 @@
 #include "GraphicFactory.h"
 #include "DescriptionVisitor.h"
 #include <fstream>
+#include <algorithm>
 
 #define ORIGINAL_X 0
 #define ORIGINAL_Y 0
@@ -114,4 +115,18 @@ void GraphicsModel::insertGraphicFromFront(Graphics *graphicToInsert) {
     if(_graphicsVector)
         _graphicsVector->insert(_graphicsVector->begin(),graphicToInsert);
     Notify();
+}
+
+void GraphicsModel::translationGraphic(Graphics *graphicToTranslate, QPoint translationLength) {
+    if(_graphicsVector){
+        //ensure the graphic is exist in vector
+        if(std::find(_graphicsVector->begin(),_graphicsVector->end(),graphicToTranslate)!=_graphicsVector->end()){
+            graphicToTranslate->translation(translationLength);
+        }
+    }
+    Notify();
+}
+
+Graphics *GraphicsModel::getSelectedGraphic() {
+    return _selectedGraphic;
 }

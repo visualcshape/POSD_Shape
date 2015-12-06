@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "BoundingBox.h"
+#include <QPoint>
 
 using std::string;
 using std::vector;
@@ -26,6 +27,8 @@ public:
 	virtual int area() const;
 	inline virtual BoundingBox getBoundingBox(){ return _boundingBox; }
     virtual string describe(){};
+	virtual void recalculateBoundingBox(){}
+	virtual void translation(QPoint translationLength){}
 };
 
 //Global Function
