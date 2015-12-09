@@ -31,6 +31,8 @@ public:
 	virtual void setSelected(bool selected);
 
     virtual void translation(QPoint translationLength);
+
+	const vector<Graphics*>* getContent();
 };
 
 #endif

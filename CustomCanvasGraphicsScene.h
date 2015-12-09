@@ -15,8 +15,8 @@ private:
     GraphicsModel* _graphicsModel;
     //Drag
     QPointF _dragStartPosition;
-    bool _dragging;
-    bool _hasGraphicDragging;
+    bool _draggingGraphics;
+    bool _multiSelected;
 public:
     CustomCanvasGraphicsScene(GraphicsModel* graphicsModel);
 protected:

@@ -104,3 +104,7 @@ void CompositeGraphics::translation(QPoint translationLength) {
     }
     this->calculateBoundingBox();
 }
+
+const vector<Graphics *> *CompositeGraphics::getContent() {
+    return &this->_graphics;
+}

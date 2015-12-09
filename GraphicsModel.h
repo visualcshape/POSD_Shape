@@ -14,6 +14,7 @@ class GraphicsModel : public Subject {
 public:
     GraphicsModel(){
         _graphicsVector = new vector<Graphics*>();
+        _selectedGraphics = new vector<Graphics*>();
         _selectedGraphic = NULL;
     }
 
@@ -31,9 +32,25 @@ public:
 
     void translationGraphic(Graphics* graphicToTranslate, QPoint translationLength);
 
+    void translationSelectedGraphics(QPoint translationLength);
+
+    void groupGraphics(vector<Graphics*> &graphicsToGroup);
+
+    void ungroupGraphic(Graphics* compositeGraphicToUngroup);
+
+    void deleteGraphic(Graphics* graphicToDelete);
+
     bool saveFile(const char* fileName);
 
     bool loadFile(const char* fileName);
+
+    void addToSelectedGraphicsIfHit(QPointF pressPoint);
+
+    void cleanUpHitGraphics();
+
+    bool isHitSelectedGraphicBoundingBox(QPointF pressPoint);
+
+    vector<Graphics*>* getSelectedGraphics();
 
     //if no graphic hit return null ptr.
     Graphics* hitGraphic(QPointF pressPoint);
@@ -42,7 +59,9 @@ public:
 
     Graphics* getSelectedGraphic();
 private:
-    vector<Graphics*>*_graphicsVector;
+    vector<Graphics*>* _graphicsVector;
+
+    vector<Graphics*>* _selectedGraphics;
 
     Graphics* _selectedGraphic;
 
