@@ -21,6 +21,8 @@ private:
     bool _multiSelected;
 
     void checkUngroupCanEnable();
+
+    void checkDeleteButtonCanEnable();
 public:
     CustomCanvasGraphicsScene(GraphicsModel* graphicsModel, PresentationModel* presentationModel);
 protected:

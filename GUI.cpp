@@ -192,15 +192,25 @@ void GUI::DrawCircle() {
 void GUI::Group() {
     _graphicsModel->groupGraphics(_graphicsModel->getSelectedGraphics());
     _graphicsModel->cleanUpHitGraphics();
+    _presentationModel->SetGroupEnabled(false);
+    _presentationModel->SetUngroupEnabled(false);
+    _presentationModel->SetDeleteGraphicEnabled(false);
 }
 
 void GUI::Ungroup() {
     _graphicsModel->ungroupGraphic((*_graphicsModel->getSelectedGraphics())[0]);
     _graphicsModel->cleanUpHitGraphics();
+    _presentationModel->SetGroupEnabled(false);
+    _presentationModel->SetUngroupEnabled(false);
+    _presentationModel->SetDeleteGraphicEnabled(false);
 }
 
 void GUI::DeleteSimpleGraphic() {
-
+    _graphicsModel->deleteGraphic((*_graphicsModel->getSelectedGraphics())[0],false);
+    _graphicsModel->cleanUpHitGraphics();
+    _presentationModel->SetGroupEnabled(false);
+    _presentationModel->SetUngroupEnabled(false);
+    _presentationModel->SetDeleteGraphicEnabled(false);
 }
 
 void GUI::Update(Subject *subject) {

@@ -39,6 +39,8 @@ void CustomCanvasGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
     checkUngroupCanEnable();
 
+    checkDeleteButtonCanEnable();
+
     QGraphicsScene::mousePressEvent(event);
 }
 
@@ -80,4 +82,11 @@ void CustomCanvasGraphicsScene::checkUngroupCanEnable() {
     }else{
         _presentationModel->SetUngroupEnabled(false);
     }
+}
+
+void CustomCanvasGraphicsScene::checkDeleteButtonCanEnable() {
+    if(_graphicsModel->getSelectedGraphics()->size() == 1)
+        _presentationModel->SetDeleteGraphicEnabled(true);
+    else
+        _presentationModel->SetDeleteGraphicEnabled(false);
 }
