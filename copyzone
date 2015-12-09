@@ -1,0 +1,19 @@
+	const int START_DRAG_THRESHOLD = 10;
+    Graphics* hitGraphic = NULL;
+    if(!(event->buttons() & Qt::LeftButton))
+        return;
+    if((event->scenePos() - _dragStartPosition).manhattanLength() < START_DRAG_THRESHOLD)
+        return;
+    if(!_dragging && !_hasGraphicDragging) {
+        hitGraphic = _graphicsModel->hitGraphic(event->scenePos());
+        _dragging = true;
+    }
+    if(!hitGraphic && !_hasGraphicDragging){
+        _dragging = false;
+        return;
+    }
+    event->accept();
+    _dragging = true;
+    _hasGraphicDragging = true;
+    _graphicsModel->translationGraphic(_graphicsModel->getSelectedGraphic(),QPoint((event->scenePos()-_dragStartPosition).toPoint()));
+    _dragStartPosition = event->scenePos();

@@ -9,16 +9,20 @@
 #include <QGraphicsScene>
 #include <QGraphicsSceneDragDropEvent>
 #include "GraphicsModel.h"
+#include "PresentationModel.h"
 
 class CustomCanvasGraphicsScene : public QGraphicsScene {
 private:
     GraphicsModel* _graphicsModel;
+    PresentationModel* _presentationModel;
     //Drag
     QPointF _dragStartPosition;
-    bool _dragging;
-    bool _hasGraphicDragging;
+    bool _draggingGraphics;
+    bool _multiSelected;
+
+    void checkUngroupCanEnable();
 public:
-    CustomCanvasGraphicsScene(GraphicsModel* graphicsModel);
+    CustomCanvasGraphicsScene(GraphicsModel* graphicsModel, PresentationModel* presentationModel);
 protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event);

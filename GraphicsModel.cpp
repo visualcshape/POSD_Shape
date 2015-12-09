@@ -10,7 +10,8 @@
 #include "GraphicFactory.h"
 #include "DescriptionVisitor.h"
 #include <fstream>
-#include <algorithm>
+#include <iostream>
+#include "CompositeGraphics.h"
 
 #define ORIGINAL_X 0
 #define ORIGINAL_Y 0
@@ -79,6 +80,7 @@ Graphics* GraphicsModel::hitGraphic(QPointF pressPoint) {
     Notify();
     return hitGraphic;
 }
+
 bool GraphicsModel::IsPointInGraphicBoundingBox(Graphics *graphics, QPointF point) {
     int pointX = (int)point.x();
     int pointY = (int)point.y();
@@ -129,4 +131,96 @@ void GraphicsModel::translationGraphic(Graphics *graphicToTranslate, QPoint tran
 
 Graphics *GraphicsModel::getSelectedGraphic() {
     return _selectedGraphic;
+}
+
+void GraphicsModel::groupGraphics(vector<Graphics *>* graphicsToGroup) {
+    Graphics* groupedGraphics = new CompositeGraphics();
+    if(!graphicsToGroup)
+        return;
+    for(vector<Graphics*>::iterator iterator = graphicsToGroup->begin() ; iterator != graphicsToGroup->end() ; iterator++){
+        groupedGraphics->add((*iterator));
+        //Remove the graphics form model
+        this->deleteGraphic((*iterator), false);
+    }
+    this->pushBackGraphic(groupedGraphics);
+    Notify();
+}
+
+void GraphicsModel::ungroupGraphic(Graphics *graphicToUngroup) {
+    CompositeGraphics *compositeGraphicsToUngroup = dynamic_cast<CompositeGraphics*>(graphicToUngroup);
+    //Only composite graphic can be ungroup... No change made...
+    if(compositeGraphicsToUngroup==NULL)
+        return;
+    const vector<Graphics*>* compositeGraphics = compositeGraphicsToUngroup->getContent();
+
+    for(vector<Graphics*>::const_iterator iterator = compositeGraphics->begin() ; iterator != compositeGraphics->end() ; iterator++){
+        this->pushBackGraphic((*iterator));
+    }
+    //Delete the composite graphic
+    this->deleteGraphic(compositeGraphicsToUngroup, false);
+    Notify();
+}
+
+void GraphicsModel::deleteGraphic(Graphics *graphicToDelete, bool deletePointer) {
+    for(vector<Graphics*>::iterator iterator = this->_graphicsVector->begin() ; iterator != _graphicsVector->end() ; iterator++){
+        if(*iterator == graphicToDelete){
+            this->_graphicsVector->erase(iterator);
+            if(deletePointer)
+                delete (*iterator);
+            break;
+        }
+    }
+    Notify();
+}
+
+void GraphicsModel::addToSelectedGraphicsIfHit(QPointF pressPoint) {
+    for(vector<Graphics*>::reverse_iterator iterator = _graphicsVector->rbegin() ; iterator != _graphicsVector->rend() ; iterator++){
+        if(this->IsPointInGraphicBoundingBox((*iterator),pressPoint)){
+            //if added don't add again...
+            if(std::find(_selectedGraphics->begin(),_selectedGraphics->end(),*iterator)!=_selectedGraphics->end()){
+                break;
+            }
+            _selectedGraphics->push_back((*iterator));
+            (*iterator)->setSelected(true);
+            break;
+        }
+    }
+
+    Notify();
+}
+
+void GraphicsModel::cleanUpHitGraphics() {
+    for(vector<Graphics*>::iterator iterator = _selectedGraphics->begin() ; iterator != _selectedGraphics->end() ; iterator++){
+        (*iterator)->setSelected(false);
+    }
+    this->_selectedGraphics->clear();
+    Notify();
+}
+
+vector<Graphics *> *GraphicsModel::getSelectedGraphics() {
+    return _selectedGraphics;
+}
+
+void GraphicsModel::translationSelectedGraphics(QPoint translationLength) {
+    if(_selectedGraphics && _graphicsVector){
+        //ensure the graphic is exist in vector
+        for(vector<Graphics*>::iterator iterator = _selectedGraphics->begin() ; iterator != _selectedGraphics->end() ; iterator++){
+            (*iterator)->translation(translationLength);
+        }
+    }
+    Notify();
+}
+
+bool GraphicsModel::isHitSelectedGraphicBoundingBox(QPointF pressPoint) {
+    for(vector<Graphics*>::reverse_iterator iterator = _selectedGraphics->rbegin() ; iterator != _selectedGraphics->rend() ; iterator++){
+        if(this->IsPointInGraphicBoundingBox((*iterator),pressPoint)){
+            return  true;
+        }
+    }
+}
+
+void GraphicsModel::deleteSelectedGraphics(vector<Graphics *> *graphicsToDelete) {
+    for(vector<Graphics*>::iterator iterator = graphicsToDelete->begin() ; iterator != graphicsToDelete->end() ; iterator++){
+        
+    }
 }
