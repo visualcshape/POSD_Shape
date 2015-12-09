@@ -7,10 +7,12 @@
 #include <QMimeData>
 #include <QDebug>
 #include <QApplication>
+#include "CompositeGraphics.h"
 
-CustomCanvasGraphicsScene::CustomCanvasGraphicsScene(GraphicsModel *graphicsModel) : _graphicsModel(graphicsModel),
+CustomCanvasGraphicsScene::CustomCanvasGraphicsScene(GraphicsModel *graphicsModel,PresentationModel *presentationModel) : _graphicsModel(graphicsModel),
                                                                                      _draggingGraphics(false),
-                                                                                     _multiSelected(false)
+                                                                                     _multiSelected(false),
+                                                                                     _presentationModel(presentationModel)
 {
 
 }
@@ -32,8 +34,10 @@ void CustomCanvasGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
             _graphicsModel->addToSelectedGraphicsIfHit(event->scenePos());
             _multiSelected = false;
         }
-
     }
+    _presentationModel->SetGroupEnabled(_multiSelected);
+
+    checkUngroupCanEnable();
 
     QGraphicsScene::mousePressEvent(event);
 }
@@ -63,4 +67,17 @@ void CustomCanvasGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event) 
 void CustomCanvasGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
     _draggingGraphics = false;
     QGraphicsScene::mouseReleaseEvent(event);
+}
+
+void CustomCanvasGraphicsScene::checkUngroupCanEnable() {
+    if(!_multiSelected && _graphicsModel->getSelectedGraphics()->size() > 0){
+        Graphics* graphics = (*_graphicsModel->getSelectedGraphics())[0];
+
+        if(dynamic_cast<CompositeGraphics*>(graphics))
+            _presentationModel->SetUngroupEnabled(true);
+        else
+            _presentationModel->SetUngroupEnabled(false);
+    }else{
+        _presentationModel->SetUngroupEnabled(false);
+    }
 }

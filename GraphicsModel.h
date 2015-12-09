@@ -34,11 +34,13 @@ public:
 
     void translationSelectedGraphics(QPoint translationLength);
 
-    void groupGraphics(vector<Graphics*> &graphicsToGroup);
+    void groupGraphics(vector<Graphics*>* graphicsToGroup);
 
     void ungroupGraphic(Graphics* compositeGraphicToUngroup);
 
-    void deleteGraphic(Graphics* graphicToDelete);
+    void deleteGraphic(Graphics *graphicToDelete, bool deletePointer);
+
+    void deleteSelectedGraphics(vector<Graphics*>* graphicsToDelete);
 
     bool saveFile(const char* fileName);
 

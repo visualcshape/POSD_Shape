@@ -55,7 +55,7 @@ void GUI::CreateView(){
     _graphicsView = new QGraphicsView(_widget);
     _graphicsView->setObjectName(GRAPHIC_VIEW_NAME);
 
-    _scene = new CustomCanvasGraphicsScene(this->_graphicsModel);
+    _scene = new CustomCanvasGraphicsScene(this->_graphicsModel,this->_presentationModel);
     const QRectF SCENE_RECT(SCENE_RECT_X,SCENE_RECT_Y,WINDOW_SIZE_WIDTH,WINDOW_SIZE_HEIGHT);
     _scene->setSceneRect(SCENE_RECT);
 
@@ -190,11 +190,13 @@ void GUI::DrawCircle() {
 }
 
 void GUI::Group() {
-
+    _graphicsModel->groupGraphics(_graphicsModel->getSelectedGraphics());
+    _graphicsModel->cleanUpHitGraphics();
 }
 
 void GUI::Ungroup() {
-
+    _graphicsModel->ungroupGraphic((*_graphicsModel->getSelectedGraphics())[0]);
+    _graphicsModel->cleanUpHitGraphics();
 }
 
 void GUI::DeleteSimpleGraphic() {

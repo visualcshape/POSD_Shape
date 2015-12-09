@@ -133,12 +133,14 @@ Graphics *GraphicsModel::getSelectedGraphic() {
     return _selectedGraphic;
 }
 
-void GraphicsModel::groupGraphics(vector<Graphics *> &graphicsToGroup) {
+void GraphicsModel::groupGraphics(vector<Graphics *>* graphicsToGroup) {
     Graphics* groupedGraphics = new CompositeGraphics();
-    for(vector<Graphics*>::iterator iterator = graphicsToGroup.begin() ; iterator != graphicsToGroup.end() ; iterator++){
+    if(!graphicsToGroup)
+        return;
+    for(vector<Graphics*>::iterator iterator = graphicsToGroup->begin() ; iterator != graphicsToGroup->end() ; iterator++){
         groupedGraphics->add((*iterator));
         //Remove the graphics form model
-        this->deleteGraphic((*iterator));
+        this->deleteGraphic((*iterator), false);
     }
     this->pushBackGraphic(groupedGraphics);
     Notify();
@@ -155,15 +157,16 @@ void GraphicsModel::ungroupGraphic(Graphics *graphicToUngroup) {
         this->pushBackGraphic((*iterator));
     }
     //Delete the composite graphic
-    this->deleteGraphic(compositeGraphicsToUngroup);
+    this->deleteGraphic(compositeGraphicsToUngroup, false);
     Notify();
 }
 
-void GraphicsModel::deleteGraphic(Graphics *graphicToDelete) {
+void GraphicsModel::deleteGraphic(Graphics *graphicToDelete, bool deletePointer) {
     for(vector<Graphics*>::iterator iterator = this->_graphicsVector->begin() ; iterator != _graphicsVector->end() ; iterator++){
         if(*iterator == graphicToDelete){
             this->_graphicsVector->erase(iterator);
-            delete (*iterator);
+            if(deletePointer)
+                delete (*iterator);
             break;
         }
     }
@@ -213,5 +216,11 @@ bool GraphicsModel::isHitSelectedGraphicBoundingBox(QPointF pressPoint) {
         if(this->IsPointInGraphicBoundingBox((*iterator),pressPoint)){
             return  true;
         }
+    }
+}
+
+void GraphicsModel::deleteSelectedGraphics(vector<Graphics *> *graphicsToDelete) {
+    for(vector<Graphics*>::iterator iterator = graphicsToDelete->begin() ; iterator != graphicsToDelete->end() ; iterator++){
+        
     }
 }
