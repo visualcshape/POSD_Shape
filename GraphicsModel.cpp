@@ -19,22 +19,25 @@
 #define WIDTH 100
 #define RADIUS 75
 
-void GraphicsModel::addRectangleOnOriginalPoint() {
+Graphics * GraphicsModel::addRectangleOnOriginalPoint() {
     Rectangle* rectangleToAdd = new Rectangle(ORIGINAL_X,ORIGINAL_Y,LENGTH,WIDTH);
     SimpleGraphics* graphicsToAdd = new SimpleGraphics(rectangleToAdd);
     this->pushBackGraphic(graphicsToAdd);
+    return  graphicsToAdd;
 }
 
-void GraphicsModel::addCircleOnOriginalPoint() {
+Graphics * GraphicsModel::addCircleOnOriginalPoint() {
     Circle* circleToAdd = new Circle(ORIGINAL_X,ORIGINAL_Y,RADIUS);
     SimpleGraphics* graphicsToAdd = new SimpleGraphics(circleToAdd);
     this->pushBackGraphic(graphicsToAdd);
+    return graphicsToAdd;
 }
 
-void GraphicsModel::addSquareOnOriginalPoint() {
+Graphics * GraphicsModel::addSquareOnOriginalPoint() {
     Square* squareToAdd = new Square(ORIGINAL_X,ORIGINAL_Y,LENGTH);
     SimpleGraphics* graphicsToAdd = new SimpleGraphics(squareToAdd);
     this->pushBackGraphic(graphicsToAdd);
+    return  graphicsToAdd;
 }
 
 void GraphicsModel::setGraphicsVector(vector<Graphics *> *graphicVector) {
@@ -133,10 +136,10 @@ Graphics *GraphicsModel::getSelectedGraphic() {
     return _selectedGraphic;
 }
 
-void GraphicsModel::groupGraphics(vector<Graphics *>* graphicsToGroup) {
+Graphics * GraphicsModel::groupGraphics(vector<Graphics *> *graphicsToGroup) {
     Graphics* groupedGraphics = new CompositeGraphics();
     if(!graphicsToGroup)
-        return;
+        return NULL;
     for(vector<Graphics*>::iterator iterator = graphicsToGroup->begin() ; iterator != graphicsToGroup->end() ; iterator++){
         groupedGraphics->add((*iterator));
         //Remove the graphics form model
@@ -144,21 +147,23 @@ void GraphicsModel::groupGraphics(vector<Graphics *>* graphicsToGroup) {
     }
     this->pushBackGraphic(groupedGraphics);
     Notify();
+    return  groupedGraphics;
 }
 
-void GraphicsModel::ungroupGraphic(Graphics *graphicToUngroup) {
+vector<Graphics*>* GraphicsModel::ungroupGraphic(Graphics *graphicToUngroup) {
     CompositeGraphics *compositeGraphicsToUngroup = dynamic_cast<CompositeGraphics*>(graphicToUngroup);
     //Only composite graphic can be ungroup... No change made...
     if(compositeGraphicsToUngroup==NULL)
-        return;
-    const vector<Graphics*>* compositeGraphics = compositeGraphicsToUngroup->getContent();
+        return NULL;
+    vector<Graphics*>* compositeGraphics = compositeGraphicsToUngroup->getContent();
 
-    for(vector<Graphics*>::const_iterator iterator = compositeGraphics->begin() ; iterator != compositeGraphics->end() ; iterator++){
+    for(vector<Graphics*>::iterator iterator = compositeGraphics->begin() ; iterator != compositeGraphics->end() ; iterator++){
         this->pushBackGraphic((*iterator));
     }
     //Delete the composite graphic
     this->deleteGraphic(compositeGraphicsToUngroup, false);
     Notify();
+    return  compositeGraphics;
 }
 
 void GraphicsModel::deleteGraphic(Graphics *graphicToDelete, bool deletePointer) {

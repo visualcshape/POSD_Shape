@@ -25,6 +25,11 @@ public:
 	virtual void draw(QGraphicsScene* scene);
 
 	virtual void translation(QPoint translationLength);
+
+
+	virtual void setPosition(QPoint position);
+
+	virtual QPoint getPosition();
 };
 
 #endif

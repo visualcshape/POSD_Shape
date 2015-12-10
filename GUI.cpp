@@ -8,6 +8,7 @@
 #include "DrawVisitor.h"
 #include "DescriptionVisitor.h"
 #include <fstream>
+#include "Commands.h"
 
 #define WINDOW_SIZE_WIDTH 800
 #define WINDOW_SIZE_HEIGHT 600
@@ -35,6 +36,9 @@ GUI::GUI()
     setMinimumSize(WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT);
     Display();
     _presentationModel->Refresh();
+    _commandManager = CommandManager::instance();
+    _commandManager->setGraphicsModel(_graphicsModel);
+    _commandManager->setPresentationModel(_presentationModel);
 }
 
 GUI::~GUI()
@@ -46,6 +50,7 @@ GUI::~GUI()
     delete _scene;
     delete _graphicsModel;
     delete _presentationModel;
+    delete _commandManager;
 }
 
 void GUI::CreateView(){
@@ -170,44 +175,53 @@ void GUI::SaveFileDialog() {
 }
 
 void GUI::Undo() {
-
+    _commandManager->Undo();
 }
 
 void GUI::Redo() {
-
+    _commandManager->Redo();
 }
 
 void GUI::DrawSquare() {
-    _graphicsModel->addSquareOnOriginalPoint();
+    Command *addSquareCommand = new AddSquareCommand();
+    _commandManager->Execute(addSquareCommand);
+    //
+
 }
 
 void GUI::DrawRectangle() {
-    _graphicsModel->addRectangleOnOriginalPoint();
+    Command* addRectangleCommand = new AddRectangleCommand();
+    _commandManager->Execute(addRectangleCommand);
+    //
 }
 
 void GUI::DrawCircle() {
-    _graphicsModel->addCircleOnOriginalPoint();
+    Command* addCircleCommand = new AddCircleCommand();
+    _commandManager->Execute(addCircleCommand);
+    //
 }
 
 void GUI::Group() {
-    _graphicsModel->groupGraphics(_graphicsModel->getSelectedGraphics());
-    _graphicsModel->cleanUpHitGraphics();
+    Command* groupCommand = new GroupCommand();
+    _commandManager->Execute(groupCommand);
+    //
     _presentationModel->SetGroupEnabled(false);
     _presentationModel->SetUngroupEnabled(false);
     _presentationModel->SetDeleteGraphicEnabled(false);
 }
 
 void GUI::Ungroup() {
-    _graphicsModel->ungroupGraphic((*_graphicsModel->getSelectedGraphics())[0]);
-    _graphicsModel->cleanUpHitGraphics();
+    Command* ungroupCommand = new UngroupCommand();
+    _commandManager->Execute(ungroupCommand);
+    //
     _presentationModel->SetGroupEnabled(false);
     _presentationModel->SetUngroupEnabled(false);
     _presentationModel->SetDeleteGraphicEnabled(false);
 }
 
 void GUI::DeleteSimpleGraphic() {
-    _graphicsModel->deleteGraphic((*_graphicsModel->getSelectedGraphics())[0],false);
-    _graphicsModel->cleanUpHitGraphics();
+    Command* deleteCommand = new DeleteCommand();
+    _commandManager->Execute(deleteCommand);
     _presentationModel->SetGroupEnabled(false);
     _presentationModel->SetUngroupEnabled(false);
     _presentationModel->SetDeleteGraphicEnabled(false);

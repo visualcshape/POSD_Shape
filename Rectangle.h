@@ -18,7 +18,11 @@ public:
 
     virtual void translation(QPoint translationLength);
 
-    int area() const;
+	virtual QPoint getPosition();
+
+	virtual void setPosition(QPoint position);
+
+	int area() const;
 	string describe();
 	virtual void recalculateBoundingBox();
 };

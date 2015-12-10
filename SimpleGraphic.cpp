@@ -74,3 +74,12 @@ void SimpleGraphics::translation(QPoint translationLength) {
     _shape->translation(translationLength);
     _boundingBox = _shape->getBoundingBox();
 }
+
+void SimpleGraphics::setPosition(QPoint position) {
+    _shape->setPosition(position);
+    _boundingBox = _shape->getBoundingBox();
+}
+
+QPoint SimpleGraphics::getPosition() {
+    return _shape->getPosition();
+}

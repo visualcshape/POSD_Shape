@@ -42,3 +42,12 @@ void Square::translation(QPoint translationLength) {
     this->y += moveY;
     this->generateBoundingBox();
 }
+
+QPoint Square::getPosition() {
+	return QPoint(this->x,this->y);
+}
+
+void Square::setPosition(QPoint position) {
+	this->x = position.x();
+	this->y = position.y();
+}

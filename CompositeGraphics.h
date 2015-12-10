@@ -32,7 +32,12 @@ public:
 
     virtual void translation(QPoint translationLength);
 
-	const vector<Graphics*>* getContent();
+	vector<Graphics*>* getContent();
+
+
+	virtual void setPosition(QPoint position);
+
+	virtual QPoint getPosition();
 };
 
 #endif

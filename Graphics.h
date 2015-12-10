@@ -38,6 +38,10 @@ public:
     inline bool isSelected(){return _selected;}
 
     virtual void translation(QPoint translationLength){}
+
+	virtual void setPosition(QPoint position){}
+
+	virtual QPoint getPosition(){}
 };
 
 #endif

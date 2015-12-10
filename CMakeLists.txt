@@ -54,7 +54,7 @@ set(FACTORY_SOURCE_FILES GraphicFactory.cpp GraphicFactory.h SimpleGraphicFactor
 set(UNIT_TEST_SOURCE_FILES utHW3.h)
 set(UTILITY_SOURCE_FILES Utility.cpp Utility.h)
 set(GUI_SOURCE_FILES utGUI.h GUI.cpp GUI.h CustomCanvasGraphicsScene.cpp CustomCanvasGraphicsScene.h)
-set(COMMANDS_SOURCE_FILES Command.h)
+set(COMMANDS_SOURCE_FILES Command.h CommandManager.cpp CommandManager.h AddCircleCommand.cpp AddCircleCommand.h DeleteCommand.cpp DeleteCommand.h GroupCommand.cpp GroupCommand.h UngroupCommand.cpp UngroupCommand.h Commands.h MoveCommand.cpp MoveCommand.h AddSquareCommand.cpp AddSquareCommand.h AddRectangleCommand.cpp AddRectangleCommand.h)
 set(MODELS_SOURCE_FILES GraphicsModel.cpp GraphicsModel.h Observer.cpp Observer.h Subject.cpp Subject.h PresentationModel.cpp PresentationModel.h)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${SHAPE_SOURCE_FILES} ${VISITOR_SOURCE_FILES} ${FACTORY_SOURCE_FILES} ${UNIT_TEST_SOURCE_FILES} ${UTILITY_SOURCE_FILES} ${GUI_SOURCE_FILES} ${COMMANDS_SOURCE_FILES} ${MODELS_SOURCE_FILES})

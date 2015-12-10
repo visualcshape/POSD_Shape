@@ -20,11 +20,11 @@ public:
 
     void setGraphicsVector(vector<Graphics*>* graphicVector);
 
-    void addRectangleOnOriginalPoint();
+    Graphics * addRectangleOnOriginalPoint();
 
-    void addCircleOnOriginalPoint();
+    Graphics * addCircleOnOriginalPoint();
 
-    void addSquareOnOriginalPoint();
+    Graphics * addSquareOnOriginalPoint();
 
     void pushBackGraphic(Graphics* graphicToPush);
 
@@ -34,9 +34,10 @@ public:
 
     void translationSelectedGraphics(QPoint translationLength);
 
-    void groupGraphics(vector<Graphics*>* graphicsToGroup);
+    //Return Grouped Graphics...
+    Graphics * groupGraphics(vector<Graphics *> *graphicsToGroup);
 
-    void ungroupGraphic(Graphics* compositeGraphicToUngroup);
+    vector<Graphics*>* ungroupGraphic(Graphics* compositeGraphicToUngroup);
 
     void deleteGraphic(Graphics *graphicToDelete, bool deletePointer);
 

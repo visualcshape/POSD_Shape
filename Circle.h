@@ -15,7 +15,11 @@ public:
 
     virtual void translation(QPoint translationLength);
 
-    string describe();
+	virtual QPoint getPosition();
+
+	virtual void setPosition(QPoint position);
+
+	string describe();
 	virtual void recalculateBoundingBox();
 };
 

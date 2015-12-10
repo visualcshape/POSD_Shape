@@ -105,6 +105,17 @@ void CompositeGraphics::translation(QPoint translationLength) {
     this->calculateBoundingBox();
 }
 
-const vector<Graphics *> *CompositeGraphics::getContent() {
+vector<Graphics *> *CompositeGraphics::getContent() {
     return &this->_graphics;
+}
+
+void CompositeGraphics::setPosition(QPoint position) {
+    for(vector<Graphics*>::iterator iterator = _graphics.begin() ; iterator!=_graphics.end() ; iterator++){
+        (*iterator)->setPosition(position);
+    }
+    this->calculateBoundingBox();
+}
+
+QPoint CompositeGraphics::getPosition() {
+    return QPoint(this->_boundingBox.llx(),this->_boundingBox.lly());
 }
