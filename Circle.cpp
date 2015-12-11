@@ -39,3 +39,12 @@ void Circle::translation(QPoint translationLength) {
     this->centerY += translationLength.y();
     this->generateBoundingBox();
 }
+
+QPoint Circle::getPosition() {
+	return QPoint(this->centerX,this->centerY);
+}
+
+void Circle::setPosition(QPoint position) {
+	this->centerX = position.x();
+	this->centerY = position.y();
+}

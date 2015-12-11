@@ -31,6 +31,8 @@ public:
 
 	virtual void increaseCompositeLevel() {_compositeLevel++;}
 
+	virtual void decreaseCompositeLevel() {_compositeLevel--;}
+
 	virtual void draw(QGraphicsScene* scene){}
 
     virtual void setSelected(bool selected){_selected = selected;}
@@ -38,6 +40,14 @@ public:
     inline bool isSelected(){return _selected;}
 
     virtual void translation(QPoint translationLength){}
+
+	virtual void setPosition(QPoint position){
+		//convert position to bounding box position
+		QPoint diff = position - QPoint(_boundingBox.llx(),_boundingBox.lly());
+		this->translation(diff);
+	}
+
+	virtual QPoint getPosition(){}
 };
 
 #endif

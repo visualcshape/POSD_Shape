@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QApplication>
 #include "CompositeGraphics.h"
+#include "CommandManager.h"
 
 CustomCanvasGraphicsScene::CustomCanvasGraphicsScene(GraphicsModel *graphicsModel,PresentationModel *presentationModel) : _graphicsModel(graphicsModel),
                                                                                      _draggingGraphics(false),
@@ -52,13 +53,16 @@ void CustomCanvasGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event) 
     if((event->scenePos() - _dragStartPosition).manhattanLength() < START_DRAG_THRESHOLD)
         return;
     //Not in multi-selected mode
-    //if(!_draggingGraphics && !_multiSelected)
-    //    _graphicsModel->addToSelectedGraphicsIfHit(event->scenePos());
     if(_graphicsModel->getSelectedGraphics()->size() == 0) {
         _draggingGraphics = false;
         return;
     }
     event->accept();
+    if(!_draggingGraphics){
+        //Execute Command
+        _moveCommand = new MoveCommand();
+        _moveCommand->SetStartPoint(event->scenePos());
+    }
     _draggingGraphics = true;
     _graphicsModel->translationSelectedGraphics(QPoint((event->scenePos()-_dragStartPosition).toPoint()));
     _dragStartPosition = event->scenePos();
@@ -67,8 +71,14 @@ void CustomCanvasGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event) 
 }
 
 void CustomCanvasGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
+    if(_draggingGraphics){
+        CommandManager* instance = CommandManager::instance();
+        _moveCommand->SetEndPoint(event->scenePos());
+        instance->Execute(_moveCommand);
+    }
     _draggingGraphics = false;
     QGraphicsScene::mouseReleaseEvent(event);
+    
 }
 
 void CustomCanvasGraphicsScene::checkUngroupCanEnable() {

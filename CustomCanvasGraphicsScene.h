@@ -10,6 +10,7 @@
 #include <QGraphicsSceneDragDropEvent>
 #include "GraphicsModel.h"
 #include "PresentationModel.h"
+#include "MoveCommand.h"
 
 class CustomCanvasGraphicsScene : public QGraphicsScene {
 private:
@@ -17,6 +18,10 @@ private:
     PresentationModel* _presentationModel;
     //Drag
     QPointF _dragStartPosition;
+    QPointF _originalStartPosition;
+    
+    MoveCommand* _moveCommand;
+    
     bool _draggingGraphics;
     bool _multiSelected;
 

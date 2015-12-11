@@ -41,3 +41,11 @@ void Rectangle::translation(QPoint translationLength) {
     this->positionPoint.setY(this->positionPoint.getY()+translationLength.y());
     this->generateBoundingBox();
 }
+
+QPoint Rectangle::getPosition() {
+	return  QPoint(this->positionPoint.getX(),this->positionPoint.getY());
+}
+
+void Rectangle::setPosition(QPoint position) {
+	this->positionPoint = Point(position.x(),position.y());
+}

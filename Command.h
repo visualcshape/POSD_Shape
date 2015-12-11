@@ -5,11 +5,15 @@
 #ifndef HW2_COMMAND_H
 #define HW2_COMMAND_H
 
+#include "GraphicsModel.h"
+
 class Command{
 public:
     virtual ~Command() {}
 
-    virtual void Execute() = 0;
+    virtual void Execute(GraphicsModel *model) = 0;
+
+    virtual void Unexecute(GraphicsModel* model) = 0;
 
 protected:
     Command() {}

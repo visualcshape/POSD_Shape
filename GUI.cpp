@@ -8,6 +8,7 @@
 #include "DrawVisitor.h"
 #include "DescriptionVisitor.h"
 #include <fstream>
+#include "Commands.h"
 
 #define WINDOW_SIZE_WIDTH 800
 #define WINDOW_SIZE_HEIGHT 600
@@ -35,6 +36,9 @@ GUI::GUI()
     setMinimumSize(WINDOW_SIZE_WIDTH, WINDOW_SIZE_HEIGHT);
     Display();
     _presentationModel->Refresh();
+    _commandManager = CommandManager::instance();
+    _commandManager->setGraphicsModel(_graphicsModel);
+    _commandManager->setPresentationModel(_presentationModel);
 }
 
 GUI::~GUI()
@@ -46,6 +50,7 @@ GUI::~GUI()
     delete _scene;
     delete _graphicsModel;
     delete _presentationModel;
+    delete _commandManager;
 }
 
 void GUI::CreateView(){
@@ -160,6 +165,7 @@ void GUI::OpenFileDialog() {
             messageBox.exec();
         }
     }
+    _commandManager->CleanUpAllCommand();
 }
 
 void GUI::SaveFileDialog() {
@@ -167,56 +173,62 @@ void GUI::SaveFileDialog() {
     if(path.length() != 0){
         _graphicsModel->saveFile(path.toStdString().c_str());
     }
+    _commandManager->CleanUpAllCommand();
 }
 
 void GUI::Undo() {
-
+    _commandManager->Undo();
+    setGroupUngroupAndDeleteButtons(false);
 }
 
 void GUI::Redo() {
-
+    _commandManager->Redo();
+    setGroupUngroupAndDeleteButtons(false);
 }
 
 void GUI::DrawSquare() {
-    _graphicsModel->addSquareOnOriginalPoint();
+    Command *addSquareCommand = new AddSquareCommand();
+    _commandManager->Execute(addSquareCommand);
+    //
 }
 
 void GUI::DrawRectangle() {
-    _graphicsModel->addRectangleOnOriginalPoint();
+    Command* addRectangleCommand = new AddRectangleCommand();
+    _commandManager->Execute(addRectangleCommand);
+    //
 }
 
 void GUI::DrawCircle() {
-    _graphicsModel->addCircleOnOriginalPoint();
+    Command* addCircleCommand = new AddCircleCommand();
+    _commandManager->Execute(addCircleCommand);
+    //
 }
 
 void GUI::Group() {
-    _graphicsModel->groupGraphics(_graphicsModel->getSelectedGraphics());
-    _graphicsModel->cleanUpHitGraphics();
-    _presentationModel->SetGroupEnabled(false);
-    _presentationModel->SetUngroupEnabled(false);
-    _presentationModel->SetDeleteGraphicEnabled(false);
+    Command* groupCommand = new GroupCommand();
+    _commandManager->Execute(groupCommand);
+    //
+    setGroupUngroupAndDeleteButtons(false);
 }
 
 void GUI::Ungroup() {
-    _graphicsModel->ungroupGraphic((*_graphicsModel->getSelectedGraphics())[0]);
-    _graphicsModel->cleanUpHitGraphics();
-    _presentationModel->SetGroupEnabled(false);
-    _presentationModel->SetUngroupEnabled(false);
-    _presentationModel->SetDeleteGraphicEnabled(false);
+    Command* ungroupCommand = new UngroupCommand();
+    _commandManager->Execute(ungroupCommand);
+    //
+    setGroupUngroupAndDeleteButtons(false);
 }
 
 void GUI::DeleteSimpleGraphic() {
-    _graphicsModel->deleteGraphic((*_graphicsModel->getSelectedGraphics())[0],false);
-    _graphicsModel->cleanUpHitGraphics();
-    _presentationModel->SetGroupEnabled(false);
-    _presentationModel->SetUngroupEnabled(false);
-    _presentationModel->SetDeleteGraphicEnabled(false);
+    Command* deleteCommand = new DeleteCommand();
+    _commandManager->Execute(deleteCommand);
+    setGroupUngroupAndDeleteButtons(false);
 }
 
 void GUI::Update(Subject *subject) {
     if(subject == _graphicsModel){
         //Draw
         DrawScene(_graphicsModel->getGraphicsVector());
+        _graphicsModel->describeModel();
         return;
     }
     if(subject == _presentationModel){
@@ -234,4 +246,10 @@ void GUI::DrawScene(vector<Graphics *> *graphicsVector) const {
         DrawVisitor drawVisitor(_scene);
         (*iterator)->accept(drawVisitor);
     }
+}
+
+void GUI::setGroupUngroupAndDeleteButtons(bool enabled) {
+    _presentationModel->SetGroupEnabled(enabled);
+    _presentationModel->SetUngroupEnabled(enabled);
+    _presentationModel->SetDeleteGraphicEnabled(enabled);
 }

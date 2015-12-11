@@ -34,6 +34,7 @@
 #include "Observer.h"
 #include "GraphicsModel.h"
 #include "PresentationModel.h"
+#include "CommandManager.h"
 
 using namespace std;
 
@@ -71,7 +72,10 @@ private:
 
     GraphicsModel* _graphicsModel;
     PresentationModel* _presentationModel;
+    CommandManager* _commandManager;
+
     virtual void Update(Subject* subject);
+    void setGroupUngroupAndDeleteButtons(bool enabled);
 private slots:
     void MessageDialog();
     void OpenFileDialog();
