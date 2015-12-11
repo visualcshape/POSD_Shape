@@ -35,8 +35,11 @@ void CommandManager::Execute(Command *command) {
     command->Execute(_graphicsModel);
     _executedCommands.push(command);
     //if execute the redo will invalid. Clean up redo stack...
-    while(_unexecutedCommands.size() != 0)
+    while(_unexecutedCommands.size() != 0) {
+        Command* commandToDelete = _unexecutedCommands.top();
         _unexecutedCommands.pop();
+        delete commandToDelete;
+    }
     CheckUndoRedoButtonCanEnabled();
 }
 
@@ -73,11 +76,17 @@ void CommandManager::CheckUndoRedoButtonCanEnabled() {
 }
 
 void CommandManager::CleanUpAllCommand() {
-    while(!this->_executedCommands.empty())
+    Command* commandToDelete = NULL;
+    while(!this->_executedCommands.empty()) {
+         commandToDelete = _executedCommands.top();
         _executedCommands.pop();
-
-    while(!this->_unexecutedCommands.empty())
+        delete commandToDelete;
+    }
+    while(!this->_unexecutedCommands.empty()) {
+        commandToDelete = _unexecutedCommands.top();
         _unexecutedCommands.pop();
+        delete commandToDelete;
+    }
 
     CheckUndoRedoButtonCanEnabled();
 }
