@@ -13,8 +13,10 @@ using namespace std;
 
 class MoveCommand : public Command {
 private:
-    vector<QPointF> _beforeMove;
-    vector<QPointF> _afterMoved;
+    QPointF _startPoint;
+    QPointF _endPoint;
+    bool _firstMove;
+
     vector<Graphics*> _movedGraphics;
 public:
     MoveCommand();
@@ -23,9 +25,13 @@ public:
 
     virtual void Unexecute(GraphicsModel *model);
 
-    void ExecuteStart(GraphicsModel* model);
+    inline void SetStartPoint(QPointF startPoint){
+        _startPoint = startPoint;
+    }
 
-    void ExecuteEnd(GraphicsModel* model);
+    inline void SetEndPoint(QPointF endPoint){
+        _endPoint = endPoint;
+    }
 };
 
 

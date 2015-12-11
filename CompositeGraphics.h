@@ -34,9 +34,6 @@ public:
 
 	vector<Graphics*>* getContent();
 
-
-	virtual void setPosition(QPoint position);
-
 	virtual QPoint getPosition();
 };
 

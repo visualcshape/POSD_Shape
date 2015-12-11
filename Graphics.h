@@ -41,7 +41,11 @@ public:
 
     virtual void translation(QPoint translationLength){}
 
-	virtual void setPosition(QPoint position){}
+	virtual void setPosition(QPoint position){
+		//convert position to bounding box position
+		QPoint diff = position - QPoint(_boundingBox.llx(),_boundingBox.lly());
+		this->translation(diff);
+	}
 
 	virtual QPoint getPosition(){}
 };

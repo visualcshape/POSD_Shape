@@ -61,7 +61,7 @@ void CustomCanvasGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event) 
     if(!_draggingGraphics){
         //Execute Command
         _moveCommand = new MoveCommand();
-        _moveCommand->ExecuteStart(_graphicsModel);
+        _moveCommand->SetStartPoint(event->scenePos());
     }
     _draggingGraphics = true;
     _graphicsModel->translationSelectedGraphics(QPoint((event->scenePos()-_dragStartPosition).toPoint()));
@@ -72,9 +72,9 @@ void CustomCanvasGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event) 
 
 void CustomCanvasGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
     if(_draggingGraphics){
-        _moveCommand->ExecuteEnd(_graphicsModel);
         CommandManager* instance = CommandManager::instance();
-        //instance->Execute(_moveCommand);
+        _moveCommand->SetEndPoint(event->scenePos());
+        instance->Execute(_moveCommand);
     }
     _draggingGraphics = false;
     QGraphicsScene::mouseReleaseEvent(event);
