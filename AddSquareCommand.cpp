@@ -5,12 +5,16 @@
 #include "AddSquareCommand.h"
 
 AddSquareCommand::AddSquareCommand() {
-
+    _addedGraphics = NULL;
 }
 
 void AddSquareCommand::Execute(GraphicsModel *model) {
-    Graphics* addedSquare = model->addSquareOnOriginalPoint();
-    _addedGraphics = addedSquare;
+    if(!_addedGraphics){
+        Graphics* addedSquare = model->addSquareOnOriginalPoint();
+        _addedGraphics = addedSquare;
+    }else{
+        model->pushBackGraphic(_addedGraphics);
+    }
 }
 
 void AddSquareCommand::Unexecute(GraphicsModel *model) {

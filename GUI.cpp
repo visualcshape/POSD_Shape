@@ -165,6 +165,7 @@ void GUI::OpenFileDialog() {
             messageBox.exec();
         }
     }
+    _commandManager->CleanUpAllCommand();
 }
 
 void GUI::SaveFileDialog() {
@@ -172,21 +173,23 @@ void GUI::SaveFileDialog() {
     if(path.length() != 0){
         _graphicsModel->saveFile(path.toStdString().c_str());
     }
+    _commandManager->CleanUpAllCommand();
 }
 
 void GUI::Undo() {
     _commandManager->Undo();
+    setGroupUngroupAndDeleteButtons(false);
 }
 
 void GUI::Redo() {
     _commandManager->Redo();
+    setGroupUngroupAndDeleteButtons(false);
 }
 
 void GUI::DrawSquare() {
     Command *addSquareCommand = new AddSquareCommand();
     _commandManager->Execute(addSquareCommand);
     //
-
 }
 
 void GUI::DrawRectangle() {
@@ -205,32 +208,27 @@ void GUI::Group() {
     Command* groupCommand = new GroupCommand();
     _commandManager->Execute(groupCommand);
     //
-    _presentationModel->SetGroupEnabled(false);
-    _presentationModel->SetUngroupEnabled(false);
-    _presentationModel->SetDeleteGraphicEnabled(false);
+    setGroupUngroupAndDeleteButtons(false);
 }
 
 void GUI::Ungroup() {
     Command* ungroupCommand = new UngroupCommand();
     _commandManager->Execute(ungroupCommand);
     //
-    _presentationModel->SetGroupEnabled(false);
-    _presentationModel->SetUngroupEnabled(false);
-    _presentationModel->SetDeleteGraphicEnabled(false);
+    setGroupUngroupAndDeleteButtons(false);
 }
 
 void GUI::DeleteSimpleGraphic() {
     Command* deleteCommand = new DeleteCommand();
     _commandManager->Execute(deleteCommand);
-    _presentationModel->SetGroupEnabled(false);
-    _presentationModel->SetUngroupEnabled(false);
-    _presentationModel->SetDeleteGraphicEnabled(false);
+    setGroupUngroupAndDeleteButtons(false);
 }
 
 void GUI::Update(Subject *subject) {
     if(subject == _graphicsModel){
         //Draw
         DrawScene(_graphicsModel->getGraphicsVector());
+        _graphicsModel->describeModel();
         return;
     }
     if(subject == _presentationModel){
@@ -248,4 +246,10 @@ void GUI::DrawScene(vector<Graphics *> *graphicsVector) const {
         DrawVisitor drawVisitor(_scene);
         (*iterator)->accept(drawVisitor);
     }
+}
+
+void GUI::setGroupUngroupAndDeleteButtons(bool enabled) {
+    _presentationModel->SetGroupEnabled(enabled);
+    _presentationModel->SetUngroupEnabled(enabled);
+    _presentationModel->SetDeleteGraphicEnabled(enabled);
 }

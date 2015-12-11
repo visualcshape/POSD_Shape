@@ -5,12 +5,16 @@
 #include "AddRectangleCommand.h"
 
 AddRectangleCommand::AddRectangleCommand() {
-
+    _addedGraphic = NULL;
 }
 
 void AddRectangleCommand::Execute(GraphicsModel *model) {
-    Graphics* addedRectangle = model->addRectangleOnOriginalPoint();
-    _addedGraphic = addedRectangle;
+    if(!_addedGraphic) {
+        Graphics *addedRectangle = model->addRectangleOnOriginalPoint();
+        _addedGraphic = addedRectangle;
+    }else{
+        model->pushBackGraphic(_addedGraphic);
+    }
 }
 
 void AddRectangleCommand::Unexecute(GraphicsModel *model) {

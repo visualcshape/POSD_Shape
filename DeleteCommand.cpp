@@ -5,7 +5,7 @@
 #include "DeleteCommand.h"
 
 DeleteCommand::DeleteCommand() {
-
+    _deleteGraphic = NULL;
 }
 
 void DeleteCommand::Execute(GraphicsModel *model) {

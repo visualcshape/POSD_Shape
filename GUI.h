@@ -75,6 +75,7 @@ private:
     CommandManager* _commandManager;
 
     virtual void Update(Subject* subject);
+    void setGroupUngroupAndDeleteButtons(bool enabled);
 private slots:
     void MessageDialog();
     void OpenFileDialog();

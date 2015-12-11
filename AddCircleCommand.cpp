@@ -5,12 +5,16 @@
 #include "AddCircleCommand.h"
 
 AddCircleCommand::AddCircleCommand() {
-
+    _addedGraphics = NULL;
 }
 
 void AddCircleCommand::Execute(GraphicsModel *model) {
-    Graphics* addedCircle = model->addCircleOnOriginalPoint();
-    _addedGraphics = addedCircle;
+    if(!_addedGraphics) {
+        Graphics *addedCircle = model->addCircleOnOriginalPoint();
+        _addedGraphics = addedCircle;
+    }else{
+        model->pushBackGraphic(_addedGraphics);
+    }
 }
 
 void AddCircleCommand::Unexecute(GraphicsModel *model) {

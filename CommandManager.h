@@ -32,6 +32,7 @@ public:
     void Undo();
     void Execute(Command* command);
     void Redo();
+    void CleanUpAllCommand();
 };
 
 

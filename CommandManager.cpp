@@ -24,6 +24,7 @@ void CommandManager::Undo() {
         _executedCommands.pop();
     }
     CheckUndoRedoButtonCanEnabled();
+    _graphicsModel->cleanUpHitGraphics();
 }
 
 CommandManager::CommandManager() {
@@ -33,6 +34,9 @@ CommandManager::CommandManager() {
 void CommandManager::Execute(Command *command) {
     command->Execute(_graphicsModel);
     _executedCommands.push(command);
+    //if execute the redo will invalid. Clean up redo stack...
+    while(_unexecutedCommands.size() != 0)
+        _unexecutedCommands.pop();
     CheckUndoRedoButtonCanEnabled();
 }
 
@@ -44,6 +48,7 @@ void CommandManager::Redo() {
         _executedCommands.push(redoCommand);
     }
     CheckUndoRedoButtonCanEnabled();
+    _graphicsModel->cleanUpHitGraphics();
 }
 
 void CommandManager::setGraphicsModel(GraphicsModel *model) {
@@ -65,4 +70,14 @@ void CommandManager::CheckUndoRedoButtonCanEnabled() {
     else
         _presentationModel->SetRedoEnabled(true);
 
+}
+
+void CommandManager::CleanUpAllCommand() {
+    while(!this->_executedCommands.empty())
+        _executedCommands.pop();
+
+    while(!this->_unexecutedCommands.empty())
+        _unexecutedCommands.pop();
+
+    CheckUndoRedoButtonCanEnabled();
 }

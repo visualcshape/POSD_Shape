@@ -10,7 +10,7 @@
 #include "GraphicFactory.h"
 #include "DescriptionVisitor.h"
 #include <fstream>
-#include <iostream>
+#include <qdebug.h>
 #include "CompositeGraphics.h"
 
 #define ORIGINAL_X 0
@@ -43,7 +43,7 @@ Graphics * GraphicsModel::addSquareOnOriginalPoint() {
 void GraphicsModel::setGraphicsVector(vector<Graphics *> *graphicVector) {
     vector<Graphics*>* deleteGraphicVector = _graphicsVector;
     _graphicsVector = graphicVector;
-    delete deleteGraphicVector;
+    //delete deleteGraphicVector;
     Notify();
 }
 
@@ -158,6 +158,7 @@ vector<Graphics*>* GraphicsModel::ungroupGraphic(Graphics *graphicToUngroup) {
     vector<Graphics*>* compositeGraphics = compositeGraphicsToUngroup->getContent();
 
     for(vector<Graphics*>::iterator iterator = compositeGraphics->begin() ; iterator != compositeGraphics->end() ; iterator++){
+        (*iterator)->decreaseCompositeLevel();
         this->pushBackGraphic((*iterator));
     }
     //Delete the composite graphic
@@ -228,4 +229,12 @@ void GraphicsModel::deleteSelectedGraphics(vector<Graphics *> *graphicsToDelete)
     for(vector<Graphics*>::iterator iterator = graphicsToDelete->begin() ; iterator != graphicsToDelete->end() ; iterator++){
         
     }
+}
+
+void GraphicsModel::describeModel() {
+    DescriptionVisitor descriptionVisitor;
+    for(vector<Graphics*>::iterator iterator = _graphicsVector->begin() ; iterator!=_graphicsVector->end() ; iterator++){
+        (*iterator)->accept(descriptionVisitor);
+    }
+    qDebug() << descriptionVisitor.getDescription().c_str();
 }

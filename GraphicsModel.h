@@ -61,6 +61,8 @@ public:
     vector<Graphics*>* getGraphicsVector(){ return _graphicsVector;}
 
     Graphics* getSelectedGraphic();
+
+    void describeModel();
 private:
     vector<Graphics*>* _graphicsVector;
 
