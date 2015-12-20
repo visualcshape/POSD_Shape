@@ -14,21 +14,25 @@ void GroupCommand::Execute(GraphicsModel *model) {
     //TODO :Fix Bug : Find the composite
     if(_graphicsToGroup.size() == 0)
         _graphicsToGroup = *model->getSelectedGraphics();
-    //Find and update...
-    for(vector<Graphics*>::iterator iterator = _graphicsToGroup.begin() ; iterator != _graphicsToGroup.end() ; iterator++){
-        CompositeGraphics* converted = dynamic_cast<CompositeGraphics*>(*iterator);
-        if(!converted)
-            continue;
-        vector<Graphics*>* modelContent = model->getGraphicsVector();
-        for(vector<Graphics*>::iterator modelIterator = modelContent->begin() ; modelIterator != modelContent->end() ; modelIterator++){
-            CompositeGraphics* modelCompositeGraphics = dynamic_cast<CompositeGraphics*>(*modelIterator);
-            if(!modelCompositeGraphics)
+    else {
+        //Find and update...
+        for (vector<Graphics *>::iterator iterator = _graphicsToGroup.begin();
+             iterator != _graphicsToGroup.end(); iterator++) {
+            CompositeGraphics *converted = dynamic_cast<CompositeGraphics *>(*iterator);
+            if (!converted)
                 continue;
-            //if same, replace it.
-            if(modelCompositeGraphics->isSameGraphic(converted)) {
-                int index = iterator - _graphicsToGroup.begin();
-                _graphicsToGroup[index] = modelCompositeGraphics;
-                break;
+            vector<Graphics *> *modelContent = model->getGraphicsVector();
+            for (vector<Graphics *>::iterator modelIterator = modelContent->begin();
+                 modelIterator != modelContent->end(); modelIterator++) {
+                CompositeGraphics *modelCompositeGraphics = dynamic_cast<CompositeGraphics *>(*modelIterator);
+                if (!modelCompositeGraphics)
+                    continue;
+                //if same, replace it.
+                if (modelCompositeGraphics->isSameGraphic(converted)) {
+                    int index = iterator - _graphicsToGroup.begin();
+                    _graphicsToGroup[index] = modelCompositeGraphics;
+                    break;
+                }
             }
         }
     }
