@@ -78,3 +78,7 @@ void SimpleGraphics::translation(QPoint translationLength) {
 QPoint SimpleGraphics::getPosition() {
     return _shape->getPosition();
 }
+
+bool SimpleGraphics::isSameGraphic(Graphics *graphicsToCompare) {
+    return graphicsToCompare==this;
+}
