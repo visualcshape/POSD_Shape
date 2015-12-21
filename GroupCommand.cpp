@@ -28,7 +28,7 @@ void GroupCommand::Execute(GraphicsModel *model) {
                 if (!modelCompositeGraphics)
                     continue;
                 //if same, replace it.
-                if (modelCompositeGraphics->isSameGraphic(converted)) {
+                if (modelCompositeGraphics->isSameGraphic((*converted->getContent())[0])) {
                     int index = iterator - _graphicsToGroup.begin();
                     _graphicsToGroup[index] = modelCompositeGraphics;
                     break;
