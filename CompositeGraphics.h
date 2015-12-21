@@ -38,8 +38,11 @@ public:
 
     virtual QPoint getPosition();
 
-
     virtual bool isSameGraphic(Graphics *graphicsToCompare);
+
+    virtual void setFocused(bool isFocused);
+
+    virtual bool isFocused();
 };
 
 #endif

@@ -251,7 +251,7 @@ void GUI::Update(Subject *subject) {
 
 void GUI::DrawScene(vector<Graphics *> *graphicsVector) const {
     _scene->clear();
-    for(vector<Graphics*>::iterator iterator = graphicsVector->begin() ; iterator != graphicsVector->end() ; iterator++){
+    for(vector<Graphics*>::reverse_iterator iterator = graphicsVector->rbegin() ; iterator != graphicsVector->rend() ; iterator++){
         DrawVisitor drawVisitor(_scene);
         (*iterator)->accept(drawVisitor);
     }

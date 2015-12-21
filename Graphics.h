@@ -12,8 +12,9 @@ protected:
 	BoundingBox _boundingBox;
 	int _compositeLevel;
 	bool _selected;
+    bool _focused;
 public:
-	Graphics():_boundingBox(0,0,0,0),_compositeLevel(0),_selected(false){}
+	Graphics():_boundingBox(0,0,0,0),_compositeLevel(0),_selected(false),_focused(false){}
 
 	virtual BoundingBox getBoundingBox(){ return _boundingBox; }
 	
@@ -50,6 +51,10 @@ public:
 	virtual QPoint getPosition(){return QPoint(0,0);}
 
 	virtual bool isSameGraphic(Graphics* graphicsToCompare){return false;}
+
+    virtual void setFocused(bool isFocused){_focused = isFocused;}
+
+    virtual bool isFocused(){return _focused;}
 };
 
 #endif

@@ -22,21 +22,21 @@
 Graphics * GraphicsModel::addRectangleOnOriginalPoint() {
     Rectangle* rectangleToAdd = new Rectangle(ORIGINAL_X,ORIGINAL_Y,LENGTH,WIDTH);
     SimpleGraphics* graphicsToAdd = new SimpleGraphics(rectangleToAdd);
-    this->pushBackGraphic(graphicsToAdd);
+    this->insertGraphicFromFront(graphicsToAdd);
     return  graphicsToAdd;
 }
 
 Graphics * GraphicsModel::addCircleOnOriginalPoint() {
     Circle* circleToAdd = new Circle(ORIGINAL_X,ORIGINAL_Y,RADIUS);
     SimpleGraphics* graphicsToAdd = new SimpleGraphics(circleToAdd);
-    this->pushBackGraphic(graphicsToAdd);
+    this->insertGraphicFromFront(graphicsToAdd);
     return graphicsToAdd;
 }
 
 Graphics * GraphicsModel::addSquareOnOriginalPoint() {
     Square* squareToAdd = new Square(ORIGINAL_X,ORIGINAL_Y,LENGTH);
     SimpleGraphics* graphicsToAdd = new SimpleGraphics(squareToAdd);
-    this->pushBackGraphic(graphicsToAdd);
+    this->insertGraphicFromFront(graphicsToAdd);
     return  graphicsToAdd;
 }
 
@@ -69,17 +69,17 @@ bool GraphicsModel::saveFile(const char *fileName) {
     fileStream.close();
 }
 
-Graphics* GraphicsModel::hitGraphic(QPointF pressPoint) {
+Graphics* GraphicsModel::focusGraphic(QPointF pressPoint) {
     Graphics* hitGraphic = NULL;
 
-    for(vector<Graphics*>::reverse_iterator iterator = _graphicsVector->rbegin() ; iterator != _graphicsVector->rend() ; iterator++){
+    for(vector<Graphics*>::iterator iterator = _graphicsVector->begin() ; iterator != _graphicsVector->end() ; iterator++){
         if(this->IsPointInGraphicBoundingBox((*iterator),pressPoint)){
             hitGraphic = (*iterator);
             break;
         }
     }
 
-    changeSelectedGraphic(hitGraphic);
+    changeFocusedGraphic(hitGraphic);
     Notify();
     return hitGraphic;
 }
@@ -98,15 +98,15 @@ bool GraphicsModel::IsPointInGraphicBoundingBox(Graphics *graphics, QPointF poin
         return false;
 }
 
-void GraphicsModel::changeSelectedGraphic(Graphics *graphic) {
-    if(_selectedGraphic) {
-        _selectedGraphic->setSelected(false);
+void GraphicsModel::changeFocusedGraphic(Graphics *graphic) {
+    if(_focusedGraphic) {
+        _focusedGraphic->setFocused(false);
     }
     if(graphic) {
-        graphic->setSelected(true);
-        _selectedGraphic = graphic;
+        graphic->setFocused(true);
+        _focusedGraphic = graphic;
     }else{
-        _selectedGraphic = NULL;
+        _focusedGraphic = NULL;
     }
 }
 
@@ -132,8 +132,8 @@ void GraphicsModel::translationGraphic(Graphics *graphicToTranslate, QPoint tran
     Notify();
 }
 
-Graphics *GraphicsModel::getSelectedGraphic() {
-    return _selectedGraphic;
+Graphics *GraphicsModel::getFocusedGraphic() {
+    return _focusedGraphic;
 }
 
 Graphics * GraphicsModel::groupGraphics(vector<Graphics *> *graphicsToGroup) {
@@ -180,7 +180,7 @@ void GraphicsModel::deleteGraphic(Graphics *graphicToDelete, bool deletePointer)
 }
 
 void GraphicsModel::addToSelectedGraphicsIfHit(QPointF pressPoint) {
-    for(vector<Graphics*>::reverse_iterator iterator = _graphicsVector->rbegin() ; iterator != _graphicsVector->rend() ; iterator++){
+    for(vector<Graphics*>::iterator iterator = _graphicsVector->begin() ; iterator != _graphicsVector->end() ; iterator++){
         if(this->IsPointInGraphicBoundingBox((*iterator),pressPoint)){
             //if added don't add again...
             if(std::find(_selectedGraphics->begin(),_selectedGraphics->end(),*iterator)!=_selectedGraphics->end()){
@@ -237,4 +237,18 @@ void GraphicsModel::describeModel() {
         (*iterator)->accept(descriptionVisitor);
     }
     qDebug() << descriptionVisitor.getDescription().c_str();
+}
+
+void GraphicsModel::setFocusedGraphic(Graphics *graphics, bool isFocused) {
+    graphics->setFocused(isFocused);
+    Notify();
+}
+
+void GraphicsModel::setAllGraphicsFocusToFalse() {
+    SetAllGraphicsFocusToFalseVisitor visitor;
+    for(vector<Graphics*>::iterator iterator = _graphicsVector->begin(); iterator!=_graphicsVector->end() ; iterator++){
+        (*iterator)->accept(visitor);
+    }
+
+    Notify();
 }

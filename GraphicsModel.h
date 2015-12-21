@@ -7,6 +7,7 @@
 #include "Graphics.h"
 #include <vector>
 #include "Subject.h"
+#include "SetAllGraphicsFocusToFalseVisitor.h"
 
 using namespace std;
 
@@ -15,7 +16,7 @@ public:
     GraphicsModel(){
         _graphicsVector = new vector<Graphics*>();
         _selectedGraphics = new vector<Graphics*>();
-        _selectedGraphic = NULL;
+        _focusedGraphic = NULL;
     }
 
     void setGraphicsVector(vector<Graphics*>* graphicVector);
@@ -56,23 +57,27 @@ public:
     vector<Graphics*>* getSelectedGraphics();
 
     //if no graphic hit return null ptr.
-    Graphics* hitGraphic(QPointF pressPoint);
+    Graphics* focusGraphic(QPointF pressPoint);
 
     vector<Graphics*>* getGraphicsVector(){ return _graphicsVector;}
 
-    Graphics* getSelectedGraphic();
+    Graphics*getFocusedGraphic();
 
     void describeModel();
+
+    void setFocusedGraphic(Graphics* graphics,bool isFocused);
+
+    void setAllGraphicsFocusToFalse();
 private:
     vector<Graphics*>* _graphicsVector;
 
     vector<Graphics*>* _selectedGraphics;
 
-    Graphics* _selectedGraphic;
+    Graphics*_focusedGraphic;
 
     bool IsPointInGraphicBoundingBox(Graphics* graphics, QPointF point);
 
-    void changeSelectedGraphic(Graphics* graphic);
+    void changeFocusedGraphic(Graphics *graphic);
 };
 
 

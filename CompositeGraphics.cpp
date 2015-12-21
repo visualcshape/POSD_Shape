@@ -80,10 +80,12 @@ void CompositeGraphics::increaseCompositeLevel() {
 }
 
 void CompositeGraphics::draw(QGraphicsScene *scene) {
-    for(vector<Graphics*>::iterator itr = _graphics.begin() ; itr != _graphics.end() ; itr++)
+    for(vector<Graphics*>::reverse_iterator itr = _graphics.rbegin() ; itr != _graphics.rend() ; itr++)
         (*itr)->draw(scene);
     QColor penColor(Qt::green);
     if(_selected)
+        penColor = Qt::darkGreen ;
+    if(_focused)
         penColor = Qt::red;
     QPen pen(penColor,3,Qt::SolidLine,Qt::RoundCap,Qt::RoundJoin);
     QBrush brush(QColor(0,0,0,0),Qt::SolidPattern);
@@ -130,4 +132,12 @@ bool CompositeGraphics::isSameGraphic(Graphics *graphicsToCompare) {
             return true;
 
     return false;
+}
+
+void CompositeGraphics::setFocused(bool isFocused) {
+    _focused = isFocused;
+}
+
+bool CompositeGraphics::isFocused() {
+    return  _focused;
 }

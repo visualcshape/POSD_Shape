@@ -18,12 +18,12 @@ private:
     PresentationModel* _presentationModel;
     //Drag
     QPointF _dragStartPosition;
-    QPointF _originalStartPosition;
     
     MoveCommand* _moveCommand;
     
     bool _draggingGraphics;
     bool _multiSelected;
+    bool _focusMode;
 
     void checkUngroupCanEnable();
 
@@ -36,6 +36,7 @@ protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
+    virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event);
 };
 
 

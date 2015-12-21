@@ -119,3 +119,16 @@ void CustomCanvasGraphicsScene::checkMoveUpDownCanEnable() {
         _presentationModel->SetMoveDownEnabled(false);
     }
 }
+
+void CustomCanvasGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
+    if(event->button() == Qt::LeftButton){
+        qDebug() << "Double Clicked..";
+        Graphics *focusedGraphics = _graphicsModel->focusGraphic(event->scenePos());
+        CompositeGraphics *selectCompositeGraphic = dynamic_cast<CompositeGraphics*>(focusedGraphics);
+        if(!selectCompositeGraphic)
+            return;
+
+    }
+
+    QGraphicsScene::mouseDoubleClickEvent(event);
+}
