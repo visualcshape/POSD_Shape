@@ -67,6 +67,8 @@ private:
     QAction *_group;
     QAction *_ungroup;
     QAction *_deleteGraphic;
+    QAction *_moveUp;
+    QAction *_moveDown;
     QMenu *_about;
     QMenu *_file;
 
@@ -88,6 +90,8 @@ private slots:
     void Group();
     void Ungroup();
     void DeleteSimpleGraphic();
+    void MoveUp();
+    void MoveDown();
 
     void DrawScene(vector<Graphics *> *graphicsVector) const;
 };

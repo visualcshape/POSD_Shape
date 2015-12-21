@@ -10,4 +10,6 @@ PresentationModel::PresentationModel() {
     this->SetDeleteGraphicEnabled(false);
     this->SetUngroupEnabled(false);
     this->SetGroupEnabled(false);
+    this->SetMoveDownEnabled(false);
+    this->SetMoveUpEnabled(false);
 }

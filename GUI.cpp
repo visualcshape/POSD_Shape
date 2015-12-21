@@ -87,6 +87,8 @@ void GUI::SetActionConnection() {
     connect(_group,SIGNAL(triggered()),this,SLOT(Group()));
     connect(_ungroup,SIGNAL(triggered()),this,SLOT(Ungroup()));
     connect(_deleteGraphic, SIGNAL(triggered()), this, SLOT(DeleteSimpleGraphic()));
+    connect(_moveDown,SIGNAL(triggered()),this,SLOT(MoveDown()));
+    connect(_moveUp,SIGNAL(triggered()),this,SLOT(MoveUp()));
 }
 
 void GUI::CreateActions() {
@@ -109,6 +111,8 @@ void GUI::CreateActions() {
     _group = new QAction(QIcon("Group.png"),"Group",_widget);
     _ungroup = new QAction(QIcon("Ungroup.png"),"Ungroup",_widget);
     _deleteGraphic = new QAction(QIcon("DeleteSimpleGraphic.png"), "Delete a Graphic", _widget);
+    _moveDown = new QAction(QIcon("Down.png"),"Move Down",_widget);
+    _moveUp = new QAction(QIcon("Up.png"),"Move Up",_widget);
 }
 
 void GUI::CreateToolButtons() {
@@ -125,6 +129,9 @@ void GUI::CreateToolButtons() {
     qtToolBar->addSeparator();
     qtToolBar->addAction(_group);
     qtToolBar->addAction(_ungroup);
+    qtToolBar->addSeparator();
+    qtToolBar->addAction(_moveUp);
+    qtToolBar->addAction(_moveDown);
     qtToolBar->addSeparator();
     qtToolBar->addAction(_deleteGraphic);
     //Adjust the toolbar size
@@ -237,6 +244,8 @@ void GUI::Update(Subject *subject) {
         _ungroup->setEnabled(_presentationModel->IsUngroupEnabled());
         _group->setEnabled(_presentationModel->IsGroupEnabled());
         _deleteGraphic->setEnabled(_presentationModel->IsDeleteGraphicEnabled());
+        _moveUp->setEnabled(_presentationModel->IsMoveUpEnabled());
+        _moveDown->setEnabled(_presentationModel->IsMoveDownEnabled());
     }
 }
 
@@ -252,4 +261,12 @@ void GUI::setGroupUngroupAndDeleteButtons(bool enabled) {
     _presentationModel->SetGroupEnabled(enabled);
     _presentationModel->SetUngroupEnabled(enabled);
     _presentationModel->SetDeleteGraphicEnabled(enabled);
+}
+
+void GUI::MoveUp() {
+
+}
+
+void GUI::MoveDown() {
+
 }

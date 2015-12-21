@@ -40,6 +40,18 @@ public:
         Notify();
     }
 
+    inline bool IsMoveDownEnabled() const {return _moveDownEnabled;}
+    inline void SetMoveDownEnabled(bool isEnabled){
+        _moveDownEnabled = isEnabled;
+        Notify();
+    }
+
+    inline bool IsMoveUpEnabled() const {return _moveUpEnabled;}
+    inline void SetMoveUpEnabled(bool isEnabled){
+        _moveUpEnabled = isEnabled;
+        Notify();
+    }
+
     //Force UI update button's Enable state
     inline void Refresh(){Notify();}
 private:
@@ -48,6 +60,8 @@ private:
     bool _groupEnabled;
     bool _ungroupEnabled;
     bool _deleteGraphicEnabled;
+    bool _moveDownEnabled;
+    bool _moveUpEnabled;
 };
 
 
