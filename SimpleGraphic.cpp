@@ -50,11 +50,11 @@ void SimpleGraphics::draw(QGraphicsScene *scene) {
     const Qt::PenCapStyle PEN_CAP_STYLE = Qt::SquareCap;
     const Qt::PenJoinStyle PEN_JOIN_STYLE = Qt::RoundJoin;
     //Brush Configuration
-    const QColor BRUSH_COLOR = QColor(0, 0, 0, 0);
-    const Qt::BrushStyle BRUSH_STYLE = Qt::NoBrush;
+    const QColor BRUSH_COLOR = QColor(51, 102, 204, 255);
+    const Qt::BrushStyle BRUSH_STYLE = Qt::SolidPattern ;
     //Draw on scene
     if(_selected)
-        penColor = Qt::darkRed;
+        penColor = Qt::black;
     QPen pen(penColor, PEN_WIDTH, PEN_STYLE, PEN_CAP_STYLE, PEN_JOIN_STYLE);
     QBrush brush(BRUSH_COLOR, BRUSH_STYLE);
     BoundingBox shapeBoundingBox = _shape->getBoundingBox();
@@ -65,6 +65,7 @@ void SimpleGraphics::draw(QGraphicsScene *scene) {
     Circle* castCircle = dynamic_cast<Circle*>(_shape);
     if(castCircle != NULL){
         scene->addEllipse(drawRectangle,pen,brush);
+
         return;
     }
     scene->addRect(drawRectangle,pen,brush);

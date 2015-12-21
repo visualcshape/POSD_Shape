@@ -80,6 +80,8 @@ void CompositeGraphics::increaseCompositeLevel() {
 }
 
 void CompositeGraphics::draw(QGraphicsScene *scene) {
+    for(vector<Graphics*>::iterator itr = _graphics.begin() ; itr != _graphics.end() ; itr++)
+        (*itr)->draw(scene);
     QColor penColor(Qt::green);
     if(_selected)
         penColor = Qt::red;
@@ -87,8 +89,6 @@ void CompositeGraphics::draw(QGraphicsScene *scene) {
     QBrush brush(QColor(0,0,0,0),Qt::SolidPattern);
     QRect boundingRect(((int)_boundingBox.llx()),((int)_boundingBox.lly()),((int)_boundingBox.l()),((int)_boundingBox.w()));
     scene->addRect(boundingRect,pen,brush);
-    for(vector<Graphics*>::iterator itr = _graphics.begin() ; itr != _graphics.end() ; itr++)
-        (*itr)->draw(scene);
 }
 
 void CompositeGraphics::setSelected(bool selected) {
