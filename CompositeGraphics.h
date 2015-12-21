@@ -24,7 +24,7 @@ public:
 
 	string getDescription(int level);
 
-	void increaseCompositeLevel();
+	virtual void increaseCompositeLevel();
 
 	virtual void draw(QGraphicsScene* scene);
 
@@ -32,9 +32,14 @@ public:
 
     virtual void translation(QPoint translationLength);
 
-	vector<Graphics*>* getContent();
+    virtual void decreaseCompositeLevel();
 
-	virtual QPoint getPosition();
+    vector<Graphics*>* getContent();
+
+    virtual QPoint getPosition();
+
+
+    virtual bool isSameGraphic(Graphics *graphicsToCompare);
 };
 
 #endif

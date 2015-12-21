@@ -11,8 +11,32 @@ GroupCommand::GroupCommand() {
 }
 
 void GroupCommand::Execute(GraphicsModel *model) {
+    //TODO :Fix Bug : Find the composite
     if(_graphicsToGroup.size() == 0)
         _graphicsToGroup = *model->getSelectedGraphics();
+    else {
+        //Find and update...
+        for (vector<Graphics *>::iterator iterator = _graphicsToGroup.begin();
+             iterator != _graphicsToGroup.end(); iterator++) {
+            CompositeGraphics *converted = dynamic_cast<CompositeGraphics *>(*iterator);
+            if (!converted)
+                continue;
+            vector<Graphics *> *modelContent = model->getGraphicsVector();
+            for (vector<Graphics *>::iterator modelIterator = modelContent->begin();
+                 modelIterator != modelContent->end(); modelIterator++) {
+                CompositeGraphics *modelCompositeGraphics = dynamic_cast<CompositeGraphics *>(*modelIterator);
+                if (!modelCompositeGraphics)
+                    continue;
+                //if same, replace it.
+                if (modelCompositeGraphics->isSameGraphic((*converted->getContent())[0])) {
+                    int index = iterator - _graphicsToGroup.begin();
+                    _graphicsToGroup[index] = modelCompositeGraphics;
+                    break;
+                }
+            }
+        }
+    }
+
     _groupedGraphic = model->groupGraphics(&_graphicsToGroup);
     model->cleanUpHitGraphics();
     qDebug() << "Group executed";

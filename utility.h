@@ -6,6 +6,9 @@
 #define HW2_UTILITY_H
 
 #include <string>
+#include <vector>
+
+using std::vector;
 using std::string;
 
 class Utility {

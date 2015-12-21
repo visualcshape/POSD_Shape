@@ -47,7 +47,9 @@ public:
 		this->translation(diff);
 	}
 
-	virtual QPoint getPosition(){}
+	virtual QPoint getPosition(){return QPoint(0,0);}
+
+	virtual bool isSameGraphic(Graphics* graphicsToCompare){return false;}
 };
 
 #endif

@@ -27,6 +27,8 @@ public:
 	virtual void translation(QPoint translationLength);
 
 	virtual QPoint getPosition();
+
+	virtual bool isSameGraphic(Graphics *graphicsToCompare);
 };
 
 #endif

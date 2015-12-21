@@ -112,3 +112,22 @@ vector<Graphics *> *CompositeGraphics::getContent() {
 QPoint CompositeGraphics::getPosition() {
     return QPoint(this->_boundingBox.llx(),this->_boundingBox.lly());
 }
+
+void CompositeGraphics::decreaseCompositeLevel() {
+    for(vector<Graphics*>::iterator iterator = _graphics.begin(); iterator != _graphics.end() ; iterator++){
+        (*iterator)->decreaseCompositeLevel();
+    }
+    _compositeLevel--;
+}
+
+bool CompositeGraphics::isSameGraphic(Graphics *graphicsToCompare) {
+    if(graphicsToCompare == this)
+        return  true;
+    for(vector<Graphics*>::iterator iterator = _graphics.begin() ; iterator != _graphics.end() ; iterator++)
+        if(!(*iterator)->isSameGraphic(graphicsToCompare))
+            continue;
+        else
+            return true;
+
+    return false;
+}
