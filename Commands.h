@@ -12,5 +12,7 @@
 #include "GroupCommand.h"
 #include "UngroupCommand.h"
 #include "MoveCommand.h"
+#include "MoveDownCommand.h"
+#include "MoveUpCommand.h"
 
 #endif //HW2_COMMANDS_H
