@@ -39,7 +39,7 @@ void UngroupCommand::Execute(GraphicsModel *model) {
 }
 
 void UngroupCommand::Unexecute(GraphicsModel *model) {
-
+    //TODO:Bug fix Ungroup update composite graphic.
     _graphicToUngroup = model->groupGraphics(&_ungropupedGraphics);
     qDebug() << "Ungroup unexecuted";
 }
