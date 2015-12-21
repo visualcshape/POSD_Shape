@@ -43,6 +43,8 @@ public:
     virtual void setFocused(bool isFocused);
 
     virtual bool isFocused();
+
+    void deleteRedundantRectangle();
 };
 
 #endif

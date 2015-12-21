@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include "DescriptionVisitor.h"
 #include "Utility.h"
+#include "CompositeGraphics.h"
 
 using std::fstream;
 using std::stringstream;
@@ -23,6 +24,8 @@ Graphics *GraphicsFactory::buildGraphicsFromFile(const char *fileName) {
     _isFinal = true;
     compose();
 
+    deleteRedundantRectangles();
+
     return _compGraphicsStack.top().second;
 }
 
@@ -31,6 +34,8 @@ void GraphicsFactory::processContent(string &content) {
     string line;
 
     while (getline(contentStreamString, line)) {
+        if(line=="")
+            continue;
         const char *aLine = line.c_str();
         _curLevel = 0;
         countLevel(aLine, _curLevel);
@@ -65,6 +70,26 @@ string GraphicsFactory::fileContentAsString(const char *fileName) {
     buffer << fileStream.rdbuf();
 
     content = buffer.str();
+
+    istringstream istringstream(content);
+    string line;
+    vector<string> eachLine;
+    while(getline(istringstream,line)){
+        eachLine.push_back(line);
+    }
+    string lastLine = eachLine.back();
+    int level = 0;
+    countLevel(lastLine.c_str(),level);
+    int insertRectangleAmount = level-1;
+
+    content += "\n";
+    for(int i = insertRectangleAmount ; i > 0;i--){
+        for(int j = 0 ; j < i ; j++){
+            content += "  ";
+        }
+        content += "R(0,0,0,0)";
+        content +="\n";
+    }
 
     return content;
 }
@@ -217,4 +242,26 @@ vector<Graphics *>* GraphicsFactory::buildMultiRootGraphicsFromFile(const char *
 
 string GraphicsFactory::getLastSnapShot() {
     return _snapShot[_snapShot.size()-1];
+}
+
+void GraphicsFactory::deleteRedundantRectangles() {
+    vector<pair<int,Graphics*> > tempVector;
+    while(!_compGraphicsStack.empty()){
+        tempVector.push_back(_compGraphicsStack.top());
+        _compGraphicsStack.pop();
+    }
+    for(vector<pair<int,Graphics*> >::iterator iterator = tempVector.begin() ; iterator < tempVector.end() ; iterator++){
+        CompositeGraphics* compositeGraphics = dynamic_cast<CompositeGraphics*>((*iterator).second);
+        if(!compositeGraphics) {
+            if ((*iterator).second->calculateArea() == 0)
+                tempVector.erase(iterator);
+        }
+        else{
+            compositeGraphics->deleteRedundantRectangle();
+        }
+    }
+    while(!tempVector.empty()){
+        _compGraphicsStack.push(tempVector.back());
+        tempVector.pop_back();
+    }
 }

@@ -25,6 +25,7 @@ private:
 
     void countLevel(const char *aLine, int &level) const;
     void takeSnapShot();
+    void deleteRedundantRectangles();
 public:
     GraphicsFactory() {
         _curLevel = 0;

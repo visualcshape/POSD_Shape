@@ -141,3 +141,15 @@ void CompositeGraphics::setFocused(bool isFocused) {
 bool CompositeGraphics::isFocused() {
     return  _focused;
 }
+
+void CompositeGraphics::deleteRedundantRectangle() {
+    for(vector<Graphics*>::iterator iterator = _graphics.begin() ; iterator < _graphics.end() ; iterator++){
+        CompositeGraphics *compositeGraphics = dynamic_cast<CompositeGraphics*>((*iterator));
+        if(!compositeGraphics){
+            if((*iterator)->calculateArea() == 0)
+                _graphics.erase(iterator);
+        }else{
+            compositeGraphics->deleteRedundantRectangle();
+        }
+    }
+}
