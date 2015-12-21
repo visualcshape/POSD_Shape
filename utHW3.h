@@ -47,8 +47,9 @@ TEST (fileContentsAsStringfileTest, GraphicsFactory) {
             "  Comp R(-2,-2,3,3)\n"
             "    C(0,0,1)\n"
             "    S(-2,-2,2)\n"
-            "  R(-1,-1,1,3)\n";
+            "  R(-1,-1,1,3)";
     GraphicsFactory graphicsFactory;
+    string result = graphicsFactory.fileContentAsString(FILE_NAME.c_str());
     CHECK(EXPECT == graphicsFactory.fileContentAsString(FILE_NAME.c_str()));
 }
 

@@ -91,6 +91,8 @@ string GraphicsFactory::fileContentAsString(const char *fileName) {
         content +="\n";
     }
 
+    //remove last "\n"
+    content.erase(content.length()-1,1);
     return content;
 }
 
