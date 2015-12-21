@@ -28,6 +28,8 @@ private:
     void checkUngroupCanEnable();
 
     void checkDeleteButtonCanEnable();
+
+    void checkMoveUpDownCanEnable();
 public:
     CustomCanvasGraphicsScene(GraphicsModel* graphicsModel, PresentationModel* presentationModel);
 protected:

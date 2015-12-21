@@ -42,6 +42,8 @@ void CustomCanvasGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
     checkDeleteButtonCanEnable();
 
+    checkMoveUpDownCanEnable();
+
     QGraphicsScene::mousePressEvent(event);
 }
 
@@ -99,4 +101,21 @@ void CustomCanvasGraphicsScene::checkDeleteButtonCanEnable() {
         _presentationModel->SetDeleteGraphicEnabled(true);
     else
         _presentationModel->SetDeleteGraphicEnabled(false);
+}
+
+void CustomCanvasGraphicsScene::checkMoveUpDownCanEnable() {
+    if(_graphicsModel->getSelectedGraphics()->size()==1) {
+        CompositeGraphics* selectedCompositeGraphic = dynamic_cast<CompositeGraphics*>((*_graphicsModel->getSelectedGraphics())[0]);
+        if(selectedCompositeGraphic == NULL) {
+            _presentationModel->SetMoveDownEnabled(false);
+            _presentationModel->SetMoveUpEnabled(false);
+        }
+        else{
+            _presentationModel->SetMoveDownEnabled(true);
+            _presentationModel->SetMoveUpEnabled(true);
+        }
+    }else{
+        _presentationModel->SetMoveUpEnabled(false);
+        _presentationModel->SetMoveDownEnabled(false);
+    }
 }
