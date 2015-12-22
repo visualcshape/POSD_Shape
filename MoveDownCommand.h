@@ -9,7 +9,8 @@
 
 class MoveDownCommand:public Command {
 private:
-
+    CompositeGraphics* _compositeGraphics;
+    Graphics* _graphicBeMoved;
 public:
     virtual void Execute(GraphicsModel *model);
 

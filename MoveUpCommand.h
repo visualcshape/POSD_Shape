@@ -9,7 +9,8 @@
 
 class MoveUpCommand : public Command{
 private:
-
+    CompositeGraphics* _compositeGraphics;
+    Graphics* _graphicBeMoved;
 public:
     MoveUpCommand();
 

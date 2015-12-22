@@ -5,6 +5,7 @@
 #ifndef HW2_PRESENATAIONMODEL_H
 #define HW2_PRESENATAIONMODEL_H
 #include "Subject.h"
+#include "Graphics.h"
 
 class PresentationModel : public Subject{
 public:
@@ -51,6 +52,8 @@ public:
         _moveUpEnabled = isEnabled;
         Notify();
     }
+
+    void checkMoveUpDownButtonEnable(vector<Graphics*>* content, Graphics* graphicsToLocate);
 
     //Force UI update button's Enable state
     inline void Refresh(){Notify();}

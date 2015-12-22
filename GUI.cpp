@@ -264,9 +264,13 @@ void GUI::setGroupUngroupAndDeleteButtons(bool enabled) {
 }
 
 void GUI::MoveUp() {
-
+    Command* moveUpCommand = new MoveUpCommand();
+    _commandManager->Execute(moveUpCommand);
+    _presentationModel->checkMoveUpDownButtonEnable(_graphicsModel->getFocusedCompositeGraphic()->getContent(),_graphicsModel->getGraphicBeFocus());
 }
 
 void GUI::MoveDown() {
-
+    Command* moveDownCommand = new MoveDownCommand();
+    _commandManager->Execute(moveDownCommand);
+    _presentationModel->checkMoveUpDownButtonEnable(_graphicsModel->getFocusedCompositeGraphic()->getContent(),_graphicsModel->getGraphicBeFocus());
 }

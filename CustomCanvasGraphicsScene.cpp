@@ -13,14 +13,44 @@
 CustomCanvasGraphicsScene::CustomCanvasGraphicsScene(GraphicsModel *graphicsModel,PresentationModel *presentationModel) : _graphicsModel(graphicsModel),
                                                                                      _draggingGraphics(false),
                                                                                      _multiSelected(false),
-                                                                                     _presentationModel(presentationModel)
+                                                                                     _presentationModel(presentationModel),_focusMode(false)
 {
 
 }
 
+//Double click to choice a composite graphic
 void CustomCanvasGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     qDebug() << "Mouse click on scene : (" << event->scenePos().x() << "," << event->scenePos().y() << ")";
     _dragStartPosition = event->scenePos();
+
+    //Focus Mode
+    if(_focusMode){
+        event->accept();
+        if(_graphicsModel->getFocusedCompositeGraphic()) {
+            Graphics *hitGraphic = _graphicsModel->hitGraphicInGraphicVector(
+                    _graphicsModel->getFocusedCompositeGraphic()->getContent(), event->scenePos());
+            //Clean up all focus graphic
+            _graphicsModel->cleanGraphicBeFocus();
+            if (hitGraphic) {
+                _graphicsModel->setGraphicBeFocused(hitGraphic,true);
+                //Check Move Up Move Down Button can enable.
+                _presentationModel->checkMoveUpDownButtonEnable(_graphicsModel->getFocusedCompositeGraphic()->getContent(),hitGraphic);
+            } else {
+
+                if(!_graphicsModel->IsPointInGraphicBoundingBox(_graphicsModel->getFocusedCompositeGraphic(),event->scenePos())){
+                    _focusMode = false;
+                    _graphicsModel->changeFocusGraphic(NULL);
+
+                }
+                _presentationModel->SetMoveUpEnabled(false);
+                _presentationModel->SetMoveDownEnabled(false);
+            }
+        }else{
+            _focusMode = false;
+        }
+        return;
+    }
+
     if(event->button() == Qt::LeftButton && QGuiApplication::keyboardModifiers() == Qt::CTRL){
         event->accept();
         _graphicsModel->addToSelectedGraphicsIfHit(event->scenePos());
@@ -41,8 +71,6 @@ void CustomCanvasGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
     checkUngroupCanEnable();
 
     checkDeleteButtonCanEnable();
-
-    checkMoveUpDownCanEnable();
 
     QGraphicsScene::mousePressEvent(event);
 }
@@ -103,31 +131,21 @@ void CustomCanvasGraphicsScene::checkDeleteButtonCanEnable() {
         _presentationModel->SetDeleteGraphicEnabled(false);
 }
 
-void CustomCanvasGraphicsScene::checkMoveUpDownCanEnable() {
-    if(_graphicsModel->getSelectedGraphics()->size()==1) {
-        CompositeGraphics* selectedCompositeGraphic = dynamic_cast<CompositeGraphics*>((*_graphicsModel->getSelectedGraphics())[0]);
-        if(selectedCompositeGraphic == NULL) {
-            _presentationModel->SetMoveDownEnabled(false);
-            _presentationModel->SetMoveUpEnabled(false);
-        }
-        else{
-            _presentationModel->SetMoveDownEnabled(true);
-            _presentationModel->SetMoveUpEnabled(true);
-        }
-    }else{
-        _presentationModel->SetMoveUpEnabled(false);
-        _presentationModel->SetMoveDownEnabled(false);
-    }
-}
-
 void CustomCanvasGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
     if(event->button() == Qt::LeftButton){
         qDebug() << "Double Clicked..";
-        Graphics *focusedGraphics = _graphicsModel->focusGraphic(event->scenePos());
-        CompositeGraphics *selectCompositeGraphic = dynamic_cast<CompositeGraphics*>(focusedGraphics);
-        if(!selectCompositeGraphic)
-            return;
-
+        if(!_graphicsModel->getFocusedCompositeGraphic()) {
+            CompositeGraphics *hitCompositeGraphic = _graphicsModel->hitCompositeGraphic(
+                    _graphicsModel->getGraphicsVector(), event->scenePos());
+        }else{
+            CompositeGraphics *hitCompositeGraphic = _graphicsModel->hitCompositeGraphic(_graphicsModel->getFocusedCompositeGraphic(),event->scenePos());
+        }
+        if(_graphicsModel->getFocusedCompositeGraphic()){
+            _focusMode = true;
+        }else{
+            _graphicsModel->cleanGraphicBeFocus();
+            _focusMode = false;
+        }
     }
 
     QGraphicsScene::mouseDoubleClickEvent(event);

@@ -13,3 +13,25 @@ PresentationModel::PresentationModel() {
     this->SetMoveDownEnabled(false);
     this->SetMoveUpEnabled(false);
 }
+
+void PresentationModel::checkMoveUpDownButtonEnable(vector<Graphics *> *content, Graphics *graphicsToLocate) {
+    int layerSize = content->size();
+    int position  = find(content->begin(),content->end(),graphicsToLocate) - content->begin();
+    if(layerSize<=1){
+        this->SetMoveDownEnabled(false);
+        this->SetMoveUpEnabled(false);
+        return;
+    }
+    if(position==0) {
+        this->SetMoveDownEnabled(true);
+        this->SetMoveUpEnabled(false);
+        return;
+    }
+    if(position==layerSize-1){
+        this->SetMoveDownEnabled(false);
+        this->SetMoveUpEnabled(true);
+        return;
+    }
+    this->SetMoveDownEnabled(true);
+    this->SetMoveUpEnabled(true);
+}

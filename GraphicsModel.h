@@ -8,6 +8,7 @@
 #include <vector>
 #include "Subject.h"
 #include "SetAllGraphicsFocusToFalseVisitor.h"
+#include "CompositeGraphics.h"
 
 using namespace std;
 
@@ -16,7 +17,8 @@ public:
     GraphicsModel(){
         _graphicsVector = new vector<Graphics*>();
         _selectedGraphics = new vector<Graphics*>();
-        _focusedGraphic = NULL;
+        _focusedCompositeGraphic = NULL;
+        _graphicBeFocus = NULL;
     }
 
     void setGraphicsVector(vector<Graphics*>* graphicVector);
@@ -31,8 +33,6 @@ public:
 
     void insertGraphicFromFront(Graphics* graphicToInsert);
 
-    void translationGraphic(Graphics* graphicToTranslate, QPoint translationLength);
-
     void translationSelectedGraphics(QPoint translationLength);
 
     //Return Grouped Graphics...
@@ -41,8 +41,6 @@ public:
     vector<Graphics*>* ungroupGraphic(Graphics* compositeGraphicToUngroup);
 
     void deleteGraphic(Graphics *graphicToDelete, bool deletePointer);
-
-    void deleteSelectedGraphics(vector<Graphics*>* graphicsToDelete);
 
     bool saveFile(const char* fileName);
 
@@ -56,28 +54,39 @@ public:
 
     vector<Graphics*>* getSelectedGraphics();
 
-    //if no graphic hit return null ptr.
-    Graphics* focusGraphic(QPointF pressPoint);
-
     vector<Graphics*>* getGraphicsVector(){ return _graphicsVector;}
-
-    Graphics*getFocusedGraphic();
 
     void describeModel();
 
-    void setFocusedGraphic(Graphics* graphics,bool isFocused);
+    CompositeGraphics* hitCompositeGraphic(vector<Graphics*>* domain,QPointF point);
 
-    void setAllGraphicsFocusToFalse();
+    CompositeGraphics* hitCompositeGraphic(CompositeGraphics* domain,QPointF point);
+
+    Graphics *hitGraphicInGraphicVector(vector<Graphics *> *graphicVector, QPointF position);
+
+    CompositeGraphics* getFocusedCompositeGraphic();
+
+    void changeFocusGraphic(CompositeGraphics *changeToGraphic);
+
+    bool IsPointInGraphicBoundingBox(Graphics* graphics, QPointF point);
+
+    void setGraphicBeFocused(Graphics* graphicsToSet,bool focused);
+
+    Graphics* getGraphicBeFocus();
+
+    void cleanGraphicBeFocus();
+
+    void moveGraphicUpInVector(vector<Graphics*>* content,Graphics* moveGraphic);
+
+    void moveGraphicDownInVector(vector<Graphics*>* content,Graphics* moveIndex);
 private:
     vector<Graphics*>* _graphicsVector;
 
     vector<Graphics*>* _selectedGraphics;
 
-    Graphics*_focusedGraphic;
+    CompositeGraphics* _focusedCompositeGraphic;
 
-    bool IsPointInGraphicBoundingBox(Graphics* graphics, QPointF point);
-
-    void changeFocusedGraphic(Graphics *graphic);
+    Graphics* _graphicBeFocus;
 };
 
 

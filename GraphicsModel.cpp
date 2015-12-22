@@ -69,21 +69,6 @@ bool GraphicsModel::saveFile(const char *fileName) {
     fileStream.close();
 }
 
-Graphics* GraphicsModel::focusGraphic(QPointF pressPoint) {
-    Graphics* hitGraphic = NULL;
-
-    for(vector<Graphics*>::iterator iterator = _graphicsVector->begin() ; iterator != _graphicsVector->end() ; iterator++){
-        if(this->IsPointInGraphicBoundingBox((*iterator),pressPoint)){
-            hitGraphic = (*iterator);
-            break;
-        }
-    }
-
-    changeFocusedGraphic(hitGraphic);
-    Notify();
-    return hitGraphic;
-}
-
 bool GraphicsModel::IsPointInGraphicBoundingBox(Graphics *graphics, QPointF point) {
     int pointX = (int)point.x();
     int pointY = (int)point.y();
@@ -98,18 +83,6 @@ bool GraphicsModel::IsPointInGraphicBoundingBox(Graphics *graphics, QPointF poin
         return false;
 }
 
-void GraphicsModel::changeFocusedGraphic(Graphics *graphic) {
-    if(_focusedGraphic) {
-        _focusedGraphic->setFocused(false);
-    }
-    if(graphic) {
-        graphic->setFocused(true);
-        _focusedGraphic = graphic;
-    }else{
-        _focusedGraphic = NULL;
-    }
-}
-
 void GraphicsModel::pushBackGraphic(Graphics* graphicToPush) {
     if(_graphicsVector)
         _graphicsVector->push_back(graphicToPush);
@@ -120,20 +93,6 @@ void GraphicsModel::insertGraphicFromFront(Graphics *graphicToInsert) {
     if(_graphicsVector)
         _graphicsVector->insert(_graphicsVector->begin(),graphicToInsert);
     Notify();
-}
-
-void GraphicsModel::translationGraphic(Graphics *graphicToTranslate, QPoint translationLength) {
-    if(_graphicsVector){
-        //ensure the graphic is exist in vector
-        if(std::find(_graphicsVector->begin(),_graphicsVector->end(),graphicToTranslate)!=_graphicsVector->end()){
-            graphicToTranslate->translation(translationLength);
-        }
-    }
-    Notify();
-}
-
-Graphics *GraphicsModel::getFocusedGraphic() {
-    return _focusedGraphic;
 }
 
 Graphics * GraphicsModel::groupGraphics(vector<Graphics *> *graphicsToGroup) {
@@ -225,12 +184,6 @@ bool GraphicsModel::isHitSelectedGraphicBoundingBox(QPointF pressPoint) {
     }
 }
 
-void GraphicsModel::deleteSelectedGraphics(vector<Graphics *> *graphicsToDelete) {
-    for(vector<Graphics*>::iterator iterator = graphicsToDelete->begin() ; iterator != graphicsToDelete->end() ; iterator++){
-        
-    }
-}
-
 void GraphicsModel::describeModel() {
     DescriptionVisitor descriptionVisitor;
     for(vector<Graphics*>::iterator iterator = _graphicsVector->begin() ; iterator!=_graphicsVector->end() ; iterator++){
@@ -239,16 +192,104 @@ void GraphicsModel::describeModel() {
     qDebug() << descriptionVisitor.getDescription().c_str();
 }
 
-void GraphicsModel::setFocusedGraphic(Graphics *graphics, bool isFocused) {
-    graphics->setFocused(isFocused);
+CompositeGraphics *GraphicsModel::hitCompositeGraphic(vector<Graphics*>* domain,QPointF point) {
+    CompositeGraphics* ret = NULL;
+
+    for(vector<Graphics*>::iterator iterator = domain->begin() ; iterator < domain->end() ; iterator++){
+        if(IsPointInGraphicBoundingBox((*iterator),point)){
+            CompositeGraphics* compositeGraphics = dynamic_cast<CompositeGraphics*>((*iterator));
+            if(compositeGraphics) {
+                ret = compositeGraphics;
+                break;
+            }
+        }
+    }
+
+    changeFocusGraphic(ret);
+    Notify();
+    return  ret;
+}
+
+CompositeGraphics *GraphicsModel::getFocusedCompositeGraphic() {
+    return _focusedCompositeGraphic;
+}
+
+CompositeGraphics *GraphicsModel::hitCompositeGraphic(CompositeGraphics *domain, QPointF point) {
+    CompositeGraphics* ret = NULL;
+    vector<Graphics*>* content = domain->getContent();
+
+    for(vector<Graphics*>::iterator iterator = content->begin() ; iterator < content->end() ; iterator++){
+        if(IsPointInGraphicBoundingBox((*iterator),point)){
+            CompositeGraphics* compositeGraphics = dynamic_cast<CompositeGraphics*>((*iterator));
+            if(compositeGraphics) {
+                ret = compositeGraphics;
+                break;
+            }
+        }
+    }
+
+    changeFocusGraphic(ret);
+    Notify();
+    return  ret;
+}
+
+void GraphicsModel::changeFocusGraphic(CompositeGraphics *changeToGraphic) {
+    if(_focusedCompositeGraphic) {
+        _focusedCompositeGraphic->setFocused(false);
+        _focusedCompositeGraphic = changeToGraphic;
+    }else{
+        _focusedCompositeGraphic = changeToGraphic;
+    }
+    if(_focusedCompositeGraphic)
+        _focusedCompositeGraphic->setFocused(true);
+
     Notify();
 }
 
-void GraphicsModel::setAllGraphicsFocusToFalse() {
-    SetAllGraphicsFocusToFalseVisitor visitor;
-    for(vector<Graphics*>::iterator iterator = _graphicsVector->begin(); iterator!=_graphicsVector->end() ; iterator++){
-        (*iterator)->accept(visitor);
+Graphics *GraphicsModel::hitGraphicInGraphicVector(vector<Graphics *> *graphicVector, QPointF position) {
+    Graphics* ret = NULL;
+
+    for(vector<Graphics*>::iterator iterator = graphicVector->begin() ; iterator < graphicVector->end() ; iterator++){
+        if(IsPointInGraphicBoundingBox((*iterator),position)){
+            ret = (*iterator);
+            break;
+        }
     }
 
+    return ret;
+}
+
+void GraphicsModel::setGraphicBeFocused(Graphics *graphicsToSet, bool focused) {
+    if(focused)
+        _graphicBeFocus = graphicsToSet;
+    graphicsToSet->setFocused(focused);
+    Notify();
+}
+
+Graphics *GraphicsModel::getGraphicBeFocus() {
+    return _graphicBeFocus;
+}
+
+void GraphicsModel::cleanGraphicBeFocus() {
+    if(_graphicBeFocus){
+        _graphicBeFocus->setFocused(false);
+        _graphicBeFocus = NULL;
+    }
+    Notify();
+}
+
+void GraphicsModel::moveGraphicUpInVector(vector<Graphics *> *content, Graphics* moveGraphics) {
+    int indexInContent = find(content->begin(),content->end(),moveGraphics) - content->begin();
+    if(indexInContent == 0 || content->size() < 1 || indexInContent >= content->size())
+        return;
+    iter_swap(content->begin()+indexInContent,content->begin()+indexInContent-1);
+    Notify();
+}
+
+void GraphicsModel::moveGraphicDownInVector(vector<Graphics *> *content, Graphics* moveGraphics) {
+    int indexInContent = find(content->begin(),content->end(),moveGraphics) - content->begin();
+    if(indexInContent == content->size()-1 || content->size() < 1 || indexInContent >= content->size())
+        return;
+    iter_swap(content->begin()+indexInContent,content->begin()+indexInContent+1);
     Notify();
 }
