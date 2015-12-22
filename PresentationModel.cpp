@@ -15,6 +15,11 @@ PresentationModel::PresentationModel() {
 }
 
 void PresentationModel::checkMoveUpDownButtonEnable(vector<Graphics *> *content, Graphics *graphicsToLocate) {
+    if(!content || !graphicsToLocate){
+        this->SetMoveDownEnabled(false);
+        this->SetMoveUpEnabled(false);
+        return;
+    }
     int layerSize = content->size();
     int position  = find(content->begin(),content->end(),graphicsToLocate) - content->begin();
     if(layerSize<=1){

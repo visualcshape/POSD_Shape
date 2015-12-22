@@ -20,6 +20,8 @@ public:
 	
 	virtual void add(Graphics* graphic){ throw std::string("Cannot add child"); }
 
+	virtual void addFromFront(Graphics* graphicsToAdd){throw std::string("Cannot add child");}
+
 	virtual void accept(GraphicsVisitor &graphicVisitor) {};
 
 	virtual double calculateArea(){return 0.;}

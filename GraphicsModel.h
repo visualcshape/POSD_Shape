@@ -79,6 +79,8 @@ public:
     void moveGraphicUpInVector(vector<Graphics*>* content,Graphics* moveGraphic);
 
     void moveGraphicDownInVector(vector<Graphics*>* content,Graphics* moveIndex);
+
+    CompositeGraphics* updateGraphics(CompositeGraphics* graphicsToUpdate);
 private:
     vector<Graphics*>* _graphicsVector;
 
@@ -87,6 +89,8 @@ private:
     CompositeGraphics* _focusedCompositeGraphic;
 
     Graphics* _graphicBeFocus;
+
+    CompositeGraphics *findCompositeInGraphics(CompositeGraphics *compositeGraphics, Graphics *sample);
 };
 
 

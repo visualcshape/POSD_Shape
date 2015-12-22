@@ -153,3 +153,9 @@ void CompositeGraphics::deleteRedundantRectangle() {
         }
     }
 }
+
+void CompositeGraphics::addFromFront(Graphics *graphicsToAdd) {
+    graphicsToAdd->increaseCompositeLevel();
+    _graphics.insert(_graphics.begin(),graphicsToAdd);
+    calculateBoundingBox();
+}

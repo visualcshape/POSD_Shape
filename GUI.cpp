@@ -186,11 +186,19 @@ void GUI::SaveFileDialog() {
 void GUI::Undo() {
     _commandManager->Undo();
     setGroupUngroupAndDeleteButtons(false);
+    _graphicsModel->cleanGraphicBeFocus();
+    _scene->setFocusMode(false);
+    _presentationModel->checkMoveUpDownButtonEnable(NULL,NULL);
+    _graphicsModel->changeFocusGraphic(NULL);
 }
 
 void GUI::Redo() {
     _commandManager->Redo();
     setGroupUngroupAndDeleteButtons(false);
+    _graphicsModel->cleanGraphicBeFocus();
+    _scene->setFocusMode(false);
+    _presentationModel->checkMoveUpDownButtonEnable(NULL,NULL);
+    _graphicsModel->changeFocusGraphic(NULL);
 }
 
 void GUI::DrawSquare() {

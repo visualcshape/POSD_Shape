@@ -30,6 +30,8 @@ private:
     void checkDeleteButtonCanEnable();
 public:
     CustomCanvasGraphicsScene(GraphicsModel* graphicsModel, PresentationModel* presentationModel);
+
+    void setFocusMode(bool isFocus){_focusMode = isFocus;}
 protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent* event);

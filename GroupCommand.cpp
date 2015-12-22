@@ -41,10 +41,13 @@ void GroupCommand::Execute(GraphicsModel *model) {
 }
 
 void GroupCommand::Unexecute(GraphicsModel *model) {
+
+    //CompositeGraphics* converted = dynamic_cast<CompositeGraphics*>()
+
     bool isFound = false;
     //Find the composite graphic...
     vector<Graphics*>* graphic = model->getGraphicsVector();
-    for(vector<Graphics*>::iterator iterator = graphic->begin() ; iterator != graphic->end(), !isFound ; iterator++){
+    for(vector<Graphics*>::iterator iterator = graphic->begin() ; iterator < graphic->end() && !isFound ; iterator++){
         CompositeGraphics* compositeGraphics = dynamic_cast<CompositeGraphics*>(*iterator);
         if(compositeGraphics == NULL)
             continue;

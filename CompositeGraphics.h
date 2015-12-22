@@ -42,7 +42,9 @@ public:
 
     virtual void setFocused(bool isFocused);
 
-    virtual bool isFocused();
+	virtual void addFromFront(Graphics *graphicsToAdd);
+
+	virtual bool isFocused();
 
     void deleteRedundantRectangle();
 };

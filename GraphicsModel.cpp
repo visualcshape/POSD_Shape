@@ -99,8 +99,8 @@ Graphics * GraphicsModel::groupGraphics(vector<Graphics *> *graphicsToGroup) {
     Graphics* groupedGraphics = new CompositeGraphics();
     if(!graphicsToGroup)
         return NULL;
-    for(vector<Graphics*>::iterator iterator = graphicsToGroup->begin() ; iterator != graphicsToGroup->end() ; iterator++){
-        groupedGraphics->add((*iterator));
+    for(vector<Graphics*>::reverse_iterator iterator = graphicsToGroup->rbegin() ; iterator != graphicsToGroup->rend() ; iterator++){
+        groupedGraphics->addFromFront((*iterator));
         //Remove the graphics form model
         this->deleteGraphic((*iterator), false);
     }
@@ -292,4 +292,37 @@ void GraphicsModel::moveGraphicDownInVector(vector<Graphics *> *content, Graphic
         return;
     iter_swap(content->begin()+indexInContent,content->begin()+indexInContent+1);
     Notify();
+}
+
+CompositeGraphics *GraphicsModel::updateGraphics(CompositeGraphics *graphicsToUpdate) {
+    CompositeGraphics* ret = NULL;
+
+    for(vector<Graphics*>::iterator iterator = _graphicsVector->begin() ; iterator < _graphicsVector->end() ; iterator++){
+        CompositeGraphics* compositeGraphics = dynamic_cast<CompositeGraphics*>((*iterator));
+        if(!compositeGraphics){
+            continue;
+        }
+        Graphics* sample = (*graphicsToUpdate->getContent())[0];
+        //not this composite -> keep
+        ret = findCompositeInGraphics(compositeGraphics, sample);
+    }
+
+    return ret;
+}
+
+CompositeGraphics *GraphicsModel::findCompositeInGraphics(CompositeGraphics *compositeGraphics, Graphics *sample) {
+    CompositeGraphics* graphics = NULL;
+    vector<Graphics*>* content = compositeGraphics->getContent();
+    for(vector<Graphics*>::iterator iterator = content->begin() ; iterator < content->end() ; iterator++){
+        if((*iterator)==sample){
+            return compositeGraphics;
+        }
+        CompositeGraphics* innerComposite = dynamic_cast<CompositeGraphics*>((*iterator));
+        if(!innerComposite){
+            continue;
+        }
+        graphics = findCompositeInGraphics(innerComposite,sample);
+    }
+
+    return graphics;
 }
