@@ -16,15 +16,13 @@ void GroupCommand::Execute(GraphicsModel *model) {
         _graphicsToGroup = *model->getSelectedGraphics();
     else {
         //Find and update...
-        for (vector<Graphics *>::iterator iterator = _graphicsToGroup.begin();
-             iterator != _graphicsToGroup.end(); iterator++) {
+        for (vector<Graphics *>::iterator iterator = _graphicsToGroup.begin(); iterator != _graphicsToGroup.end(); iterator++) {
             CompositeGraphics *converted = dynamic_cast<CompositeGraphics *>(*iterator);
             if (!converted)
                 continue;
             vector<Graphics *> *modelContent = model->getGraphicsVector();
-            for (vector<Graphics *>::iterator modelIterator = modelContent->begin();
-                 modelIterator != modelContent->end(); modelIterator++) {
-                CompositeGraphics *modelCompositeGraphics = dynamic_cast<CompositeGraphics *>(*modelIterator);
+            for (vector<Graphics *>::iterator modelIterator = modelContent->begin(); modelIterator != modelContent->end(); modelIterator++) {
+                 CompositeGraphics *modelCompositeGraphics = dynamic_cast<CompositeGraphics *>(*modelIterator);
                 if (!modelCompositeGraphics)
                     continue;
                 //if same, replace it.

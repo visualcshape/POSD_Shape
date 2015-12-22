@@ -39,7 +39,22 @@ void UngroupCommand::Execute(GraphicsModel *model) {
 }
 
 void UngroupCommand::Unexecute(GraphicsModel *model) {
-    //TODO:Bug fix Ungroup update composite graphic.
+    for(vector<Graphics*>::iterator iterator = _ungropupedGraphics.begin() ; iterator < _ungropupedGraphics.end() ; iterator++){
+        CompositeGraphics* compositeGraphics = dynamic_cast<CompositeGraphics*>((*iterator));
+        if(!compositeGraphics)
+            continue;
+        vector<Graphics*> *modelContent = model->getGraphicsVector();
+        for(vector<Graphics*>::iterator modelIterator  = modelContent->begin() ; modelIterator < modelContent->end() ; modelIterator++){
+            CompositeGraphics* modelCompositeGraphic = dynamic_cast<CompositeGraphics*>((*modelIterator));
+            if(!modelCompositeGraphic)
+                continue;
+            if(modelCompositeGraphic->isSameGraphic((*compositeGraphics->getContent())[0])){
+                int index = iterator - _ungropupedGraphics.begin();
+                _ungropupedGraphics[index] = modelCompositeGraphic;
+                break;
+            }
+        }
+    }
     _graphicToUngroup = model->groupGraphics(&_ungropupedGraphics);
     qDebug() << "Ungroup unexecuted";
 }
